@@ -3,6 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1d140d">
 <title>Daughter of Choirokoitia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
@@ -33,24 +36,29 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
 
 /* HUD */
 #hud{position:fixed;inset:0;pointer-events:none;padding:calc(env(safe-area-inset-top,0px) + 12px) 12px 12px}
-#quest{position:absolute;left:12px;top:calc(env(safe-area-inset-top,0px) + 12px);max-width:min(360px,calc(100vw - 150px));padding:.7rem .9rem;pointer-events:auto}
-#quest .eyebrow{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ochre);font-weight:700}
+#quest{position:absolute;left:calc(env(safe-area-inset-left,0px) + 12px);top:calc(env(safe-area-inset-top,0px) + 12px);max-width:min(360px,calc(100vw - 150px));padding:.7rem .9rem;pointer-events:auto}
+#quest .eyebrow{display:flex;justify-content:space-between;gap:.5rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ochre);font-weight:700}
 #quest h3{font-size:1.15rem;margin:.15rem 0 .3rem}
 #quest p{margin:0;font-size:.95rem;line-height:1.35;color:var(--plaster)}
 #steps{display:flex;gap:3px;margin-top:.55rem}
 #steps i{flex:1;height:5px;border-radius:2px;background:#5e4430}
 #steps i.done{background:var(--ochre)}
 #steps i.now{background:var(--picrolite)}
-#topright{position:absolute;right:12px;top:calc(env(safe-area-inset-top,0px) + 12px);display:flex;flex-direction:column;align-items:flex-end;gap:8px;pointer-events:auto}
+#topright{position:absolute;right:calc(env(safe-area-inset-right,0px) + 12px);top:calc(env(safe-area-inset-top,0px) + 12px);display:flex;flex-direction:column;align-items:flex-end;gap:8px;pointer-events:auto}
 #topright .row{display:flex;gap:6px}
-#topright button{background:var(--clay);color:var(--plaster);border:2px solid #6b4a30;border-radius:4px;padding:.4rem .7rem;font-weight:700}
-#inv{padding:.45rem .6rem;font-size:.9rem;max-width:220px;display:flex;flex-wrap:wrap;gap:4px 8px;justify-content:flex-end}
+.hbtn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:40px;min-width:40px;box-sizing:border-box;background:var(--clay);color:var(--plaster);border:2px solid #6b4a30;border-radius:4px;padding:.35rem .7rem;font-weight:700;touch-action:manipulation}
+.hbtn .ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.hbtn .q{font-size:1.1rem;line-height:1}
+.hbtn.off{color:var(--ash)}
+#factCount{font-variant-numeric:tabular-nums;color:var(--ochre)}
+#inv{position:absolute;right:calc(env(safe-area-inset-right,0px) + 12px);top:calc(env(safe-area-inset-top,0px) + 64px);padding:.45rem .6rem;font-size:.9rem;max-width:220px;display:flex;flex-wrap:wrap;gap:4px 8px;justify-content:flex-end}
 #inv:empty{display:none}
 #inv span{white-space:nowrap}
 #compass{position:absolute;left:50%;top:calc(env(safe-area-inset-top,0px) + 14px);transform:translateX(-50%);width:54px;height:54px;border-radius:50%;display:grid;place-items:center}
 #compass svg{width:30px;height:30px;transition:transform .08s linear}
 #compass small{position:absolute;bottom:-18px;font-size:.75rem;color:var(--plaster);text-shadow:0 1px 2px #000;font-variant-numeric:tabular-nums;white-space:nowrap}
 #prompt{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 28px);transform:translateX(-50%);padding:.5rem 1rem;font-weight:700;white-space:nowrap}
+#prompt.tap{pointer-events:auto;cursor:pointer}
 #prompt kbd{background:var(--ochre);color:#2a1709;border-radius:3px;padding:0 .4rem;margin-right:.4rem;font-family:var(--body)}
 #toast{position:absolute;left:50%;top:30%;transform:translateX(-50%);font-family:var(--display);font-size:1.6rem;color:var(--plaster);text-shadow:0 2px 6px #000;opacity:0;transition:opacity .3s;white-space:nowrap}
 
@@ -68,6 +76,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
 .card p{line-height:1.5;margin:.5rem 0}
 .card .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:1rem}
 .fact-art{font-size:2.6rem;line-height:1}
+.fsnote{font-size:.85rem;color:var(--ash)}
 
 /* Title */
 #title{background:radial-gradient(ellipse at 50% 30%,rgba(60,38,20,.35),rgba(20,12,6,.88));}
@@ -105,14 +114,94 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
 #act{position:fixed;right:24px;bottom:calc(env(safe-area-inset-bottom,0px) + 40px);width:86px;height:86px;border-radius:50%;border:0;background:var(--ochre);color:#2a1709;font-weight:700;font-size:1.05rem;touch-action:none}
 #runBtn{position:fixed;right:124px;bottom:calc(env(safe-area-inset-bottom,0px) + 30px);width:60px;height:60px;border-radius:50%;border:2px solid rgba(241,226,196,.4);background:rgba(59,42,30,.6);color:var(--plaster);font-weight:700;touch-action:none}
 #runBtn.on{background:var(--picrolite);color:#14302a}
+#joy{left:calc(env(safe-area-inset-left,0px) + 24px)}
+#act{right:calc(env(safe-area-inset-right,0px) + 24px)}
+#runBtn{right:calc(env(safe-area-inset-right,0px) + 124px)}
+
+/* ---- Touch screens: phones and tablets ---- */
+@media (pointer:coarse){
+  .hbtn{min-height:46px;min-width:46px;padding:.3rem .55rem;gap:.25rem}
+  .hbtn .lbl{display:none}
+  .btn{min-height:50px;padding:.75rem 1.3rem;font-size:1.05rem}
+  .opts button{min-height:52px;font-size:1.05rem}
+  #quest{cursor:pointer}
+  #quest .chev::after{content:"\25B4";font-size:.9rem;color:var(--ash)}
+  #quest.collapsed .chev::after{content:"\25BE"}
+  #quest.collapsed p,#quest.collapsed #steps{display:none}
+  #quest.collapsed h3{margin-bottom:0}
+  #prompt{padding:.7rem 1.2rem;font-size:1.05rem;border-color:var(--ochre)}
+  #dialog{cursor:default}
+  .sliders input{height:32px}
+  #mg .bar{height:44px}
+}
+/* Tablets: bigger text, roomier panels, larger controls */
+@media (pointer:coarse) and (min-width:700px) and (min-height:520px){
+  html,body{font-size:18px}
+  #quest{max-width:min(440px,calc(100vw - 300px))}
+  #inv{top:calc(env(safe-area-inset-top,0px) + 74px);max-width:260px}
+  #dialog{width:min(780px,calc(100vw - 48px));padding:1.2rem 1.5rem 1.4rem}
+  #dialog .txt{font-size:1.2rem}
+  #dialog .who{font-size:1.3rem}
+  .card{width:min(640px,100%);padding:1.7rem 1.9rem}
+  .card h2{font-size:1.9rem}
+  #compass{width:62px;height:62px;top:auto;left:auto;transform:none;right:calc(env(safe-area-inset-right,0px) + 54px);bottom:calc(env(safe-area-inset-bottom,0px) + 196px)} #compass svg{width:34px;height:34px}
+  #joy{width:156px;height:156px;bottom:calc(env(safe-area-inset-bottom,0px) + 32px);left:calc(env(safe-area-inset-left,0px) + 32px)}
+  #knob{width:66px;height:66px;margin:-33px 0 0 -33px}
+  #act{width:108px;height:108px;font-size:1.2rem;right:calc(env(safe-area-inset-right,0px) + 32px);bottom:calc(env(safe-area-inset-bottom,0px) + 48px)}
+  #runBtn{width:74px;height:74px;right:calc(env(safe-area-inset-right,0px) + 158px);bottom:calc(env(safe-area-inset-bottom,0px) + 36px)}
+  #prompt{bottom:calc(env(safe-area-inset-bottom,0px) + 40px)}
+}
+/* Phones in portrait: icon buttons stacked on the right, quest panel uses the rest */
 @media (max-width:560px){
-  #quest{max-width:calc(100vw - 168px);padding:.55rem .7rem}
-  #topright button{padding:.3rem .5rem;font-size:.85rem}
-  #inv{max-width:130px;font-size:.78rem;justify-content:flex-start}
-  #inv span{white-space:normal}
-  #quest h3{font-size:1rem} #quest p{font-size:.86rem}
-  #compass{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 150px);left:auto;right:30px;transform:none}
-  #prompt{bottom:calc(env(safe-area-inset-bottom,0px) + 150px);font-size:.9rem}
+  html,body{font-size:15px}
+  .hbtn .lbl{display:none}
+  .hbtn{padding:.3rem;gap:.15rem}
+  #topright .row{flex-direction:column;gap:6px}
+  #quest{max-width:calc(100vw - 92px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));padding:.55rem .7rem;box-sizing:border-box}
+  #quest h3{font-size:1.02rem} #quest p{font-size:.92rem}
+  #inv{top:calc(env(safe-area-inset-top,0px) + 232px);max-width:150px;font-size:.82rem;justify-content:flex-end}
+  #inv span{white-space:normal;text-align:right}
+  #compass{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 158px);left:auto;right:calc(env(safe-area-inset-right,0px) + 34px);transform:none;width:50px;height:50px}
+  #prompt{bottom:calc(env(safe-area-inset-bottom,0px) + 158px);max-width:calc(100vw - 120px);white-space:normal;text-align:center;left:16px;transform:none}
+  #dialog{width:calc(100vw - 20px);bottom:calc(env(safe-area-inset-bottom,0px) + 10px);padding:.9rem 1rem 1.6rem}
+  #dialog .txt{font-size:1.05rem}
+  .modal{padding:10px}
+  .card{padding:1.15rem 1.15rem;max-height:calc(100% - 20px)}
+  .card h2{font-size:1.4rem}
+  .fact-art{font-size:2.1rem}
+  #title h1{font-size:2rem}
+  #toast{font-size:1.25rem;top:40%}
+  #joy{width:116px;height:116px;left:calc(env(safe-area-inset-left,0px) + 18px);bottom:calc(env(safe-area-inset-bottom,0px) + 20px)}
+  #act{width:84px;height:84px;right:calc(env(safe-area-inset-right,0px) + 18px);bottom:calc(env(safe-area-inset-bottom,0px) + 34px)}
+  #runBtn{width:58px;height:58px;right:calc(env(safe-area-inset-right,0px) + 112px);bottom:calc(env(safe-area-inset-bottom,0px) + 22px)}
+}
+/* Phones in landscape: short screens, keep the middle of the view clear */
+@media (max-height:500px){
+  html,body{font-size:14px}
+  .hbtn .lbl{display:none}
+  .hbtn{padding:.3rem}
+  #quest{max-width:min(340px,40vw);padding:.45rem .65rem;top:calc(env(safe-area-inset-top,0px) + 8px)}
+  #quest p{font-size:.9rem;line-height:1.3}
+  #steps{display:none}
+  #topright{top:calc(env(safe-area-inset-top,0px) + 8px)}
+  #inv{top:calc(env(safe-area-inset-top,0px) + 62px);max-width:200px;font-size:.82rem}
+  #compass{top:calc(env(safe-area-inset-top,0px) + 8px);width:46px;height:46px}
+  #compass svg{width:26px;height:26px}
+  #prompt{bottom:calc(env(safe-area-inset-bottom,0px) + 18px);max-width:calc(100vw - 340px);white-space:normal;text-align:center}
+  #dialog{width:min(640px,calc(100vw - 40px));bottom:calc(env(safe-area-inset-bottom,0px) + 8px);padding:.7rem 1rem 1.4rem}
+  #dialog .txt{font-size:1.05rem;line-height:1.38}
+  #dialog .who{font-size:1.05rem;margin-bottom:.1rem}
+  .modal{padding:8px}
+  .card{max-height:calc(100% - 16px);padding:.95rem 1.2rem;width:min(620px,100%)}
+  .card h2{font-size:1.3rem;margin:.15rem 0 .35rem}
+  .card p{margin:.35rem 0}
+  .fact-art{font-size:1.7rem}
+  .card .actions{margin-top:.6rem}
+  #title h1{font-size:1.8rem}
+  .controls{grid-template-columns:auto 1fr auto 1fr;gap:.2rem .7rem}
+  #joy{width:112px;height:112px;left:calc(env(safe-area-inset-left,0px) + 20px);bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
+  #act{width:80px;height:80px;right:calc(env(safe-area-inset-right,0px) + 20px);bottom:calc(env(safe-area-inset-bottom,0px) + 24px)}
+  #runBtn{width:56px;height:56px;right:calc(env(safe-area-inset-right,0px) + 112px);bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
 }
 @media (prefers-reduced-motion:reduce){#compass svg,#toast{transition:none}}
 #loading{position:fixed;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:1.4rem;background:#1d140d;z-index:9}
@@ -123,7 +212,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
 
 <div id="hud" hidden>
   <div id="quest" class="panel">
-    <div class="eyebrow" id="qStep">Chore 1 of 11</div>
+    <div class="eyebrow"><span id="qStep">Chore 1 of 11</span><span class="chev" aria-hidden="true"></span></div>
     <h3 id="qTitle">Good morning</h3>
     <p id="qText"></p>
     <div id="steps"></div>
@@ -134,12 +223,13 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
   </div>
   <div id="topright">
     <div class="row">
-      <button id="journalBtn" type="button" title="Journal (J)">Journal <span id="factCount">0</span></button>
-      <button id="soundBtn" type="button" title="Sound (M to mute)">Sound</button>
-      <button id="helpBtn" type="button" title="Help (H)">?</button>
+      <button id="journalBtn" class="hbtn" type="button" title="Journal (J)" aria-label="Journal"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H19"/></svg><span class="lbl">Journal</span> <span id="factCount">0</span></button>
+      <button id="soundBtn" class="hbtn" type="button" title="Sound (M to mute)" aria-label="Sound"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM16.5 9.5a3.5 3.5 0 0 1 0 5M19 7a7 7 0 0 1 0 10"/></svg><span class="lbl">Sound</span></button>
+      <button id="fsBtn" class="hbtn" type="button" title="Full screen (F)" aria-label="Full screen"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg><span class="lbl">Full screen</span></button>
+      <button id="helpBtn" class="hbtn" type="button" title="Help (H)" aria-label="Help"><span class="q">?</span></button>
     </div>
-    <div id="inv" class="panel"></div>
   </div>
+  <div id="inv" class="panel"></div>
   <div id="prompt" class="panel" hidden></div>
   <div id="toast"></div>
 </div>
@@ -147,7 +237,7 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
 <div id="dialog" class="panel" hidden role="dialog" aria-live="polite">
   <div class="who" id="dWho"></div>
   <div class="txt" id="dTxt"></div>
-  <div class="more">E / Space / tap to continue</div>
+  <div class="more" id="dMore">E / Space / tap to continue</div>
 </div>
 
 <div id="title" class="modal" hidden>
@@ -165,7 +255,11 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
       <b>Touch</b><span>Joystick on the left, drag to look, big button to act</span>
       <b>Sound</b><span>Turn your volume up. Press M to mute</span>
     </div>
-    <div class="actions"><button id="startBtn" class="btn" type="button">Begin the day</button></div>
+    <div class="actions">
+      <button id="startBtn" class="btn" type="button">Begin the day</button>
+      <button id="titleFsBtn" class="btn ghost" type="button">Play full screen</button>
+    </div>
+    <p class="fsnote" id="fsNote" hidden>Tip: on iPhone, tap Share then "Add to Home Screen" to play full screen.</p>
   </div>
 </div>
 
@@ -1027,7 +1121,7 @@ function refreshHUD(){
   for (let i = 1; i <= TOTAL_STAGES; i++){ const e = document.createElement('i'); if (i < S.stage) e.className = 'done'; else if (i === S.stage) e.className = 'now'; steps.appendChild(e); }
   updateInv();
 }
-function advance(to){ S.stage = to; refreshHUD(); Sound.quest(); toast(to <= TOTAL_STAGES ? STAGE_TITLES[to] : 'Well done!'); }
+function advance(to){ S.stage = to; $('quest').classList.remove('collapsed'); refreshHUD(); Sound.quest(); toast(to <= TOTAL_STAGES ? STAGE_TITLES[to] : 'Well done!'); }
 
 function remind(who){ say([[who, 'Remember: ' + objective().d]]); }
 const TALK = {
@@ -1194,6 +1288,7 @@ addEventListener('keydown', e => {
   }
   if (k === 'j' && ui.started && !ui.dialog && !ui.fact && !ui.mg){ ui.modal === 'journal' ? closeModal('journal') : !ui.modal && openJournal(); }
   if (k === 'h' && ui.started && !busy()) openModal('help');
+  if (k === 'f' && fsSupported) toggleFullscreen();
   if (k === 'm' && ui.started){ const m = Sound.toggleMute(); syncSoundUI(); toast(m ? 'Sound off' : 'Sound on'); }
   if (k === 'escape' && ui.modal && ui.modal !== 'quiz') closeModal(ui.modal);
 });
@@ -1223,7 +1318,8 @@ joyEl.addEventListener('pointerup', joyEnd); joyEl.addEventListener('pointercanc
 $('act').addEventListener('pointerdown', e => { e.preventDefault(); if (ui.dialog) nextLine(); else if (ui.fact) closeFact(); else if (ui.mg) mgHit(); else interact(); });
 $('runBtn').addEventListener('pointerdown', e => { e.preventDefault(); running = !running; $('runBtn').classList.toggle('on', running); });
 const isTouch = matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
-addEventListener('touchstart', () => { if (ui.started) $('touch').hidden = false; }, { once: true, passive: true });
+let touchMode = isTouch;
+addEventListener('touchstart', () => { touchMode = true; }, { once: true, passive: true });
 
 /* ======================= TIME OF DAY ======================= */
 const SKY = [[0, 0xc7dcea], [0.35, 0xa6cdea], [0.7, 0xb9cfe0], [0.88, 0xeeaa78], [1, 0x2c3150]];
@@ -1339,17 +1435,18 @@ function update(dt, t){
     const dx = tp.x - pg.position.x, dz = tp.z - pg.position.z;
     const rel = Math.atan2(dx, dz) - Math.atan2(fx, fz);
     $('compass').querySelector('svg').style.transform = `rotate(${-rel}rad)`;
-    $('dist').textContent = Math.round(Math.hypot(dx, dz)) + ' steps';
+    { const n = Math.round(Math.hypot(dx, dz)); $('dist').textContent = n + (n === 1 ? ' step' : ' steps'); }
   }
 
   // interaction prompt
   const pr = $('prompt');
   if (!busy()){
     const it = currentInteraction();
-    if (it){ pr.hidden = false; pr.innerHTML = isTouch ? it.label : `<kbd>E</kbd>${it.label}`; $('act').textContent = 'Act'; }
+    if (it){ pr.hidden = false; const html = touchMode ? `\u261D ${it.label}` : `<kbd>E</kbd>${it.label}`; if (pr.dataset.h !== html){ pr.innerHTML = html; pr.dataset.h = html; } pr.classList.toggle('tap', touchMode); }
     else pr.hidden = true;
   } else pr.hidden = true;
 
+  syncTouch();
   // minigame marker
   if (ui.mg && !ui.mg.done2){ const m = ui.mg, sp = 0.75 + m.hits * 0.18; m.pos += m.dir * dt * sp; if (m.pos > 1){ m.pos = 1; m.dir = -1; } if (m.pos < 0){ m.pos = 0; m.dir = 1; } $('mgMark').style.left = m.pos * 100 + '%'; }
 }
@@ -1360,7 +1457,9 @@ function frame(){
   renderer.render(scene, camera);
   requestAnimationFrame(frame);
 }
-addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); });
+function onResize(){ camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); }
+addEventListener('resize', onResize);
+addEventListener('orientationchange', () => setTimeout(onResize, 200));
 
 /* ======================= END & QUIZ ======================= */
 function showEnd(){
@@ -1407,13 +1506,52 @@ const _openJournal = openJournal;
 function syncSoundUI(){
   $('musicVol').value = Sound.pref.music; $('sfxVol').value = Sound.pref.sfx;
   $('muteBtn').textContent = Sound.pref.muted ? 'Turn sound on' : 'Mute all';
-  $('soundBtn').textContent = Sound.pref.muted ? 'Sound off' : 'Sound';
+  const sb = $('soundBtn'); sb.classList.toggle('off', Sound.pref.muted);
+  sb.querySelector('.lbl').textContent = Sound.pref.muted ? 'Sound off' : 'Sound';
+  sb.setAttribute('aria-label', Sound.pref.muted ? 'Sound (muted)' : 'Sound');
+  sb.querySelector('path').setAttribute('d', Sound.pref.muted ? 'M4 9h4l5-4v14l-5-4H4zM16 9.5l5 5M21 9.5l-5 5' : 'M4 9h4l5-4v14l-5-4H4zM16.5 9.5a3.5 3.5 0 0 1 0 5M19 7a7 7 0 0 1 0 10');
 }
 $('soundBtn').addEventListener('click', () => { Sound.init(); syncSoundUI(); openModal('soundPanel'); });
 $('musicVol').addEventListener('input', e => { Sound.pref.music = +e.target.value; Sound.apply(); });
 $('sfxVol').addEventListener('input', e => { Sound.pref.sfx = +e.target.value; Sound.apply(); Sound.click(); });
 $('muteBtn').addEventListener('click', () => { Sound.toggleMute(); syncSoundUI(); });
 syncSoundUI();
+
+/* full screen */
+const fsRoot = document.documentElement;
+const fsSupported = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+const isFS = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+async function toggleFullscreen(){
+  try {
+    if (isFS()) await (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    else {
+      await (fsRoot.requestFullscreen || fsRoot.webkitRequestFullscreen).call(fsRoot, { navigationUI: 'hide' });
+      // phones play best sideways; ignore browsers that refuse
+      if (isTouch && Math.min(screen.width, screen.height) < 600 && screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {});
+    }
+  } catch (e) { toast('Full screen is not available here'); }
+}
+function syncFS(){
+  const on = isFS(), b = $('fsBtn');
+  b.querySelector('.lbl').textContent = on ? 'Exit full screen' : 'Full screen';
+  b.setAttribute('aria-label', on ? 'Exit full screen' : 'Full screen');
+  b.querySelector('path').setAttribute('d', on ? 'M9 4v5H4M15 4v5h5M20 15h-5v5M4 15h5v5' : 'M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5');
+  $('titleFsBtn').textContent = on ? 'Exit full screen' : 'Play full screen';
+}
+['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => { syncFS(); setTimeout(onResize, 120); }));
+$('fsBtn').addEventListener('click', toggleFullscreen);
+$('titleFsBtn').addEventListener('click', toggleFullscreen);
+if (!fsSupported){ $('fsBtn').hidden = true; $('titleFsBtn').hidden = true; if (isTouch) $('fsNote').hidden = false; }
+
+/* touch-friendly HUD */
+if (isTouch) $('dMore').textContent = 'Tap to continue';
+$('quest').addEventListener('click', () => { if (isTouch) $('quest').classList.toggle('collapsed'); });
+$('prompt').addEventListener('click', () => interact());
+let touchShown = null;
+function syncTouch(){
+  const show = ui.started && touchMode && !busy();
+  if (show !== touchShown){ touchShown = show; $('touch').hidden = !show; }
+}
 
 /* ======================= START ======================= */
 $('loading').hidden = true;
@@ -1422,7 +1560,6 @@ function begin(){
   NAME = ($('nameInput').value.trim() || 'Ana').slice(0, 16);
   Sound.init();
   closeModal('title'); ui.started = true; $('hud').hidden = false;
-  if (isTouch) $('touch').hidden = false;
   refreshHUD();
   setTimeout(() => say([['me', 'What a beautiful morning in Choirokoitia! I can smell the smoke from our hearth.'], ['me', 'Mother is calling me. I should go and see what she needs.']]), 400);
 }

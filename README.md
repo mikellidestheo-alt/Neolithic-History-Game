@@ -15,6 +15,16 @@ Open `index.html` in a modern browser. It loads Three.js from a CDN, so you need
 | Talk / act | E or Space | Act button |
 | Journal | J | Journal button |
 | Sound settings / mute | Sound button, M to mute | Sound button |
+| Full screen | Full screen button, F | Full screen button |
+
+## Phones and tablets
+
+The layout adapts to phones (portrait and landscape) and tablets:
+- Touch screens get larger buttons and text, icon-only HUD buttons, and space around the camera notch.
+- Tap the quest panel to collapse it and see more of the village. It opens again when a new chore starts.
+- When an action is available you can tap the prompt itself (for example "Talk to Mother"), as well as the Act button.
+- The joystick and buttons hide while dialogue or a card is open, so text is never covered.
+- The full-screen button turns phones sideways where the browser allows it. iPhone Safari has no full-screen mode for web pages, so the title screen suggests "Add to Home Screen" instead.
 
 ## Sound
 
