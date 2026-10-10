@@ -1,8 +1,8 @@
-# Daughter of Choirokoitia
+# Children of Choirokoitia
 
 An educational 3D game set in the Aceramic (pre-pottery) Neolithic village of **Choirokoitia (Khirokitia)** in Cyprus, about 9,000 years ago.
 
-You play a young girl helping her family through one day. Each chore is based on what archaeologists have found at the site. Finishing a chore adds a "Did you know?" fact to your journal.
+You choose to play a girl or a boy and help your family through one day. Each chore is based on what archaeologists have found at the site. Finishing a chore adds a "Did you know?" fact to your journal.
 
 ## Village quiz
 

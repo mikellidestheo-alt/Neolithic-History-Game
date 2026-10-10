@@ -6,7 +6,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#1d140d">
-<title>Daughter of Choirokoitia</title>
+<title>Children of Choirokoitia</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
 <style>
@@ -85,6 +85,14 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
 #title .date{font-family:var(--display);color:var(--ochre);font-size:1.05rem;margin-top:.3rem}
 #title label{display:block;font-weight:700;margin:1rem 0 .3rem}
 #title input{width:100%;box-sizing:border-box;font:inherit;font-size:1.1rem;padding:.6rem .7rem;border-radius:4px;border:2px solid #7a5838;background:#2a1d13;color:var(--plaster)}
+.hero{border:0;padding:0;margin:1rem 0 0}
+.hero legend{font-weight:700;padding:0;margin-bottom:.4rem}
+.choice{display:flex;gap:10px}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+#title .choice label{display:flex;align-items:center;gap:.6rem;margin:0;flex:1;max-width:200px;padding:.45rem .9rem .45rem .5rem;border:2px solid #7a5838;border-radius:6px;background:#2a1d13;cursor:pointer;font-family:var(--display);font-weight:400;font-size:1.15rem;min-height:56px;box-sizing:border-box}
+.choice svg{width:34px;height:48px;flex:none}
+.choice input:checked + label{border-color:var(--ochre);background:var(--clay-2);box-shadow:0 0 0 2px var(--ochre) inset}
+.choice input:focus-visible + label{outline:3px solid var(--picrolite);outline-offset:2px}
 .controls{display:grid;grid-template-columns:auto 1fr;gap:.25rem .8rem;font-size:.92rem;color:var(--ash);margin-top:1rem}
 .controls b{color:var(--plaster)}
 
@@ -257,9 +265,16 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
 <div id="title" class="modal" hidden>
   <div class="card panel">
     <div class="eyebrow">Neolithic Cyprus · Larnaca district</div>
-    <h1>Daughter of Choirokoitia</h1>
+    <h1>Children of Choirokoitia</h1>
     <div class="date">A day in a stone-age village, about 9,000 years ago</div>
-    <p>On a steep hill above the Maroni river stands a village of round stone houses, wrapped in a great stone wall. There is no pottery and no metal yet, only stone, bone, wood, clay and clever hands. You are a young girl who lives here, and today the whole family needs your help.</p>
+    <p>On a steep hill above the Maroni river stands a village of round stone houses, wrapped in a great stone wall. There is no pottery and no metal yet, only stone, bone, wood, clay and clever hands. You are a child who lives here, and today the whole family needs your help.</p>
+    <fieldset class="hero">
+      <legend>Who will you play?</legend>
+      <div class="choice">
+        <input type="radio" name="hero" id="heroGirl" value="girl" checked><label for="heroGirl"><svg viewBox="0 0 40 56" aria-hidden="true"><path d="M27 14c3 4 3 10 1 15" stroke="#24170e" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="20" cy="12" r="8" fill="#a8714b"/><path d="M12 11a8 8 0 0 1 16 0c-3-3-13-3-16 0z" fill="#24170e"/><path d="M15 21h10l6 26H9z" fill="#b5532c"/><rect x="13" y="30" width="14" height="3" fill="#7fc3b0"/><path d="M15 47v7M25 47v7" stroke="#a8714b" stroke-width="3"/></svg><span>Girl</span></label>
+        <input type="radio" name="hero" id="heroBoy" value="boy"><label for="heroBoy"><svg viewBox="0 0 40 56" aria-hidden="true"><circle cx="20" cy="12" r="8" fill="#a8714b"/><path d="M12 11a8 8 0 0 1 16 0c-4-2-12-2-16 0z" fill="#24170e"/><path d="M15 21h10l5 22H10z" fill="#c08a3e"/><rect x="13" y="30" width="14" height="3" fill="#7fc3b0"/><path d="M15 43v11M25 43v11" stroke="#a8714b" stroke-width="3"/></svg><span>Boy</span></label>
+      </div>
+    </fieldset>
     <label for="nameInput">What is your name?</label>
     <input id="nameInput" maxlength="16" value="Ana" autocomplete="off">
     <div class="controls">
@@ -833,7 +848,19 @@ const markerRing = mesh(new THREE.TorusGeometry(0.55, 0.05, 6, 24), new THREE.Me
 markerRing.rotation.x = Math.PI / 2; scene.add(marker, markerRing);
 
 /* ======================= PLAYER ======================= */
-const player = makePerson({ tunic: 0xb5532c, braid: true, scale: 0.8, necklace: null, belt: 0x7fc3b0 });
+const HERO_LOOK = {
+  girl: { tunic: 0xb5532c, braid: true, scale: 0.8, belt: 0x7fc3b0 },
+  boy: { tunic: 0xc08a3e, scale: 0.82, belt: 0x7fc3b0 },
+};
+const HERO_NAME = { girl: 'Ana', boy: 'Ari' };
+let HERO = 'girl';
+const player = makePerson(HERO_LOOK.girl);
+function setHero(kind){
+  HERO = kind;
+  const old = player.group, np = makePerson(HERO_LOOK[kind]);
+  np.group.position.copy(old.position); np.group.rotation.copy(old.rotation);
+  scene.remove(old); scene.add(np.group); Object.assign(player, np);
+}
 player.group.position.set(4.8, heightAt(4.8, 6.4), 6.4); player.group.rotation.y = -2.4;
 scene.add(player.group);
 const pState = { vel: new V3(), speed: 0 };
@@ -1059,7 +1086,7 @@ function say(lines, done){ dq = lines.slice(); dDone = done || null; ui.dialog =
 function nextLine(){
   if (!dq || !dq.length){ $('dialog').hidden = true; ui.dialog = false; const d = dDone; dq = dDone = null; d && d(); return; }
   Sound.blip();
-  const [who, txt] = dq.shift(); $('dWho').textContent = who === 'me' ? NAME : who; $('dTxt').textContent = txt.replaceAll('{N}', NAME);
+  const [who, txt] = dq.shift(); $('dWho').textContent = who === 'me' ? NAME : who; $('dTxt').textContent = txt.replaceAll('{N}', NAME).replaceAll('{child}', HERO === 'boy' ? 'son' : 'daughter');
 }
 $('dialog').addEventListener('click', nextLine);
 
@@ -1168,7 +1195,7 @@ const TALK = {
       [M, 'There you are, {N}. Come and sit by the fire. I made lentil stew and barley bread.'],
       [M, 'You carried water, gathered wood, harvested, ground grain, found the goats, picked fruit, traded across the sea, mended our house and helped Grandmother.'],
       ['me', 'And the Elder gave me this picrolite pendant!'],
-      [M, 'Then you are truly a daughter of Choirokoitia. Sleep well, little one.'],
+      [M, 'Then you are truly a {child} of Choirokoitia. Sleep well, little one.'],
     ], () => facts(['discovery'], () => { advance(12); S.done = true; showEnd(); }));
     if (S.stage > 11) return say([[M, 'The stars are out. Have you tried the village quiz in your journal?']], () => showEnd());
     remind(M);
@@ -1236,7 +1263,7 @@ const TALK = {
       [E, 'You worked hard for the village today. Take this pendant of picrolite, the blue-green stone of our island.'],
     ], () => facts(['wall', 'ancestors'], () => { S.pendant = true; advance(11); }));
     if (S.stage < 10) return say([[E, 'Hello, child. Come back and see me when the sun is low. I have a story for you.']]);
-    say([[E, 'Wear your pendant with pride, daughter of Choirokoitia.']]);
+    say([[E, 'Wear your pendant with pride, {child} of Choirokoitia.']]);
   },
   knapper(){ say([['Flint-knapper', 'Tap, tap, crack! I strike this chert with a hammerstone to break off sharp blades.'], ['Flint-knapper', 'Knives, scrapers, borers and sickle blades. Nearly every tool in the village begins like this.']], () => { if (!learned.includes('chert')) fact('chert'); }); },
   weaver(){ say([['Basket-weaver', 'I weave reeds and rushes from the river into baskets and mats.'], ['Basket-weaver', 'With no pots, baskets hold our grain, our fruit, everything!']], () => { if (!learned.includes('baskets')) fact('baskets'); }); },
@@ -1419,8 +1446,8 @@ function update(dt, t){
       const tx = pg.position.x + back.x, tz = pg.position.z + back.z, dx = tx - pos.x, dz = tz - pos.z, d = Math.hypot(dx, dz);
       if (d > 0.4){ const s = Math.min(d * 2.5, 10); const st = Math.min(d, s * dt); moveWithCollision(pos, dx / d * st, dz / d * st, 0.3); g.group.rotation.y = Math.atan2(dx, dz); g.speed = s; } else g.speed = 0;
       animateLegs(g, g.speed, dt);
-      const dGoat = Math.hypot(pos.x - PEN.x, pos.z - PEN.z), dGirl = Math.hypot(pg.position.x - PEN.x, pg.position.z - PEN.z);
-      if (dGoat < PEN_R - 1 || (dGirl < PEN_R && dGoat < PEN_R + 5)){
+      const dGoat = Math.hypot(pos.x - PEN.x, pos.z - PEN.z), dKid = Math.hypot(pg.position.x - PEN.x, pg.position.z - PEN.z);
+      if (dGoat < PEN_R - 1 || (dKid < PEN_R && dGoat < PEN_R + 5)){
         g.state = 'penned'; g.home = PEN.clone(); g.target.set(PEN.x + rr(-2, 2), 0, PEN.z + rr(-2, 2)); S.penned++;
         toast(`Goat in the pen! ${S.penned}/3`); Sound.bleat(0.8); refreshHUD();
         if (S.penned >= 3) setTimeout(() => say([['me', 'All the goats are safe! Now, Mother wanted fruit from the wild trees north-west of the village…']], () => facts(['animals'], () => advance(6))), 400);
@@ -1643,8 +1670,14 @@ function syncTouch(){
 /* ======================= START ======================= */
 $('loading').hidden = true;
 openModal('title'); $('nameInput').focus(); $('nameInput').select();
+document.querySelectorAll('input[name="hero"]').forEach(r => r.addEventListener('change', () => {
+  const kind = r.value, ni = $('nameInput');
+  if (!ni.value.trim() || Object.values(HERO_NAME).includes(ni.value.trim())) ni.value = HERO_NAME[kind];
+}));
 function begin(){
-  NAME = ($('nameInput').value.trim() || 'Ana').slice(0, 16);
+  const kind = document.querySelector('input[name="hero"]:checked').value;
+  if (kind !== HERO) setHero(kind);
+  NAME = ($('nameInput').value.trim() || HERO_NAME[kind]).slice(0, 16);
   Sound.init();
   closeModal('title'); ui.started = true; $('hud').hidden = false;
   refreshHUD();
