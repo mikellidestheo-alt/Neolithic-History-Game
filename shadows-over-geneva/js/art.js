@@ -3,8 +3,13 @@ window.ART = {
   "portraits": {
     "avenol": "art/portraits/avenol.jpg",
     "briand": "art/portraits/briand.jpg",
+    "bruning": "art/portraits/bruning.jpg",
+    "chamberlainA": "art/portraits/chamberlainA.jpg",
+    "cuno": "art/portraits/cuno.jpg",
+    "drummond": "art/portraits/drummond.jpg",
     "franco": "art/portraits/franco.jpg",
     "hitler": "art/portraits/hitler.jpg",
+    "hugenberg": "art/portraits/hugenberg.jpg",
     "kellogg": "art/portraits/kellogg.jpg",
     "mussolini": "art/portraits/mussolini.jpg",
     "nchamberlain": "art/portraits/nchamberlain.jpg",

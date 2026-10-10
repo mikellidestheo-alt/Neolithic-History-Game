@@ -45,21 +45,24 @@ def panel_box(img):
 
 
 def find_face(img):
+    """Largest plausible face: near the horizontal centre, in the upper two-thirds, not tiny."""
     try:
         import cv2
     except ImportError:
         return None
     g = np.asarray(img.convert('L'))
-    best = None
-    for name in ('haarcascade_frontalface_default.xml', 'haarcascade_frontalface_alt2.xml'):
+    H, W = g.shape
+    found = []
+    for name in ('haarcascade_frontalface_default.xml', 'haarcascade_frontalface_alt2.xml', 'haarcascade_frontalface_alt.xml'):
         cc = cv2.CascadeClassifier(os.path.join(cv2.data.haarcascades, name))
-        faces = cc.detectMultiScale(g, scaleFactor=1.08, minNeighbors=5, minSize=(g.shape[1] // 8, g.shape[1] // 8))
-        for f in faces:
-            if best is None or f[2] * f[3] > best[2] * best[3]:
-                best = f
-        if best is not None:
-            break
-    return None if best is None else tuple(int(v) for v in best)
+        for n in (5, 3):
+            r = cc.detectMultiScale(g, scaleFactor=1.06, minNeighbors=n, minSize=(W // 6, W // 6))
+            found += [tuple(int(v) for v in f) for f in (r if len(r) else [])]
+    ok = [f for f in found
+          if 0.28 * W < f[0] + f[2] / 2 < 0.72 * W and 0.12 * H < f[1] + f[3] / 2 < 0.68 * H and f[2] > W * 0.2]
+    if not ok:
+        return None
+    return max(ok, key=lambda f: f[2])
 
 
 def crop_ratio(img, ratio, cx, cy, height):
@@ -84,9 +87,11 @@ def portrait(key, src, face_y=0.42):
         cy = y + h / 2 + (0.5 - face_y) * height  # place the face slightly above centre
         how = 'face found'
     else:
-        height = W / 0.8
-        cx, cy = W / 2, H * 0.45
-        how = 'no face found: centre crop'
+        # illustrations centre the sitter: assume a face about a third of the panel wide
+        h = W * 0.34
+        height = h * 3.3
+        cx, cy = W / 2, H * 0.40 + (0.5 - face_y) * height
+        how = 'no face found: centred crop'
     out = crop_ratio(img, 0.8, cx, cy, height).resize((600, 750), Image.LANCZOS)
     dest = os.path.join(ROOT, 'portraits', key + '.jpg')
     out.save(dest, quality=82, optimize=True, progressive=True)
