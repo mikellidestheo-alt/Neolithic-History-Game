@@ -22,11 +22,16 @@ window.ART = {
     "ribbentrop": "art/portraits/ribbentrop.jpg",
     "schuschnigg": "art/portraits/schuschnigg.jpg",
     "selassie": "art/portraits/selassie.jpg",
+    "stalin": "art/portraits/stalin.jpg",
     "stresemann": "art/portraits/stresemann.jpg",
+    "wilson": "art/portraits/wilson.jpg",
     "wirth": "art/portraits/wirth.jpg"
   },
   "scenes": {
     "germany": "art/scenes/germany.jpg",
-    "ousted": "art/scenes/ousted.jpg"
+    "italy": "art/scenes/italy.jpg",
+    "ousted": "art/scenes/ousted.jpg",
+    "title": "art/scenes/title.jpg",
+    "war": "art/scenes/war.jpg"
   }
 };

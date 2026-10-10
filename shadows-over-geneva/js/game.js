@@ -578,8 +578,18 @@
 
   function init() {
     const t = $('#s-title');
-    if (sceneArt('title')) { t.classList.add('has-art'); t.style.setProperty('--title-art', `url("${sceneArt('title')}")`); }
-    if (sceneArt('title-mobile')) { t.classList.add('has-art', 'has-mobile-art'); t.style.setProperty('--title-art-m', `url("${sceneArt('title-mobile')}")`); if (!sceneArt('title')) t.style.setProperty('--title-art', `url("${sceneArt('title-mobile')}")`); }
+    // Title background: absolute URLs, because url() inside a CSS variable resolves against the stylesheet's folder
+    const abs = u => new URL(u, document.baseURI).href;
+    const setTitleArt = () => {
+      const tall = matchMedia('(orientation: portrait)').matches && sceneArt('title-mobile');
+      const src = tall ? sceneArt('title-mobile') : (sceneArt('title') || sceneArt('title-mobile'));
+      if (!src) return;
+      t.classList.add('has-art');
+      t.style.backgroundImage = `linear-gradient(rgba(12, 11, 10, ${tall ? .35 : .55}), rgba(12, 11, 10, .92) ${tall ? 80 : 75}%), url("${abs(src)}")`;
+      t.style.backgroundPosition = tall ? 'center top' : 'center 30%';
+    };
+    setTitleArt();
+    matchMedia('(orientation: portrait)').addEventListener('change', setTitleArt);
     const snd = store.get(SOUND_KEY);
     if (snd === false) window.Sound.setEnabled(false);
     hydratePortraits();

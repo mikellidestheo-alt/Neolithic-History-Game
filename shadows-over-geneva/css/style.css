@@ -444,8 +444,8 @@ details.note[open] summary { margin-bottom: 6px; }
 
 /* ---------- illustrated artwork (art/) ---------- */
 img.portrait.art { object-fit: cover; object-position: 50% 30%; background: var(--smoke); }
-.title-screen.has-art { background: linear-gradient(rgba(12, 11, 10, .5), rgba(12, 11, 10, .9) 75%), var(--title-art) center 30% / cover no-repeat, var(--ink); }
-@media (orientation: portrait) { .title-screen.has-art.has-mobile-art { background-image: linear-gradient(rgba(12, 11, 10, .35), rgba(12, 11, 10, .9) 80%), var(--title-art-m); background-position: center top; } }
+.title-screen.has-art { background-color: var(--ink); background-size: cover; background-repeat: no-repeat; }
+.title-screen.has-art .blinds { opacity: .5; }
 .scene-art { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border: 3px solid #000; box-shadow: 5px 5px 0 rgba(0, 0, 0, .55); }
 .brief-paper .scene-art { margin: 4px 0 16px; }
 .newspaper .scene-art { margin: 4px 0 12px; filter: sepia(.2) contrast(1.05); }
