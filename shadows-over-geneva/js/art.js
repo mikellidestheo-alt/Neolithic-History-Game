@@ -5,7 +5,9 @@ window.ART = {
     "briand": "art/portraits/briand.jpg",
     "bruning": "art/portraits/bruning.jpg",
     "chamberlainA": "art/portraits/chamberlainA.jpg",
+    "ciano": "art/portraits/ciano.jpg",
     "cuno": "art/portraits/cuno.jpg",
+    "dannunzio": "art/portraits/dannunzio.jpg",
     "drummond": "art/portraits/drummond.jpg",
     "franco": "art/portraits/franco.jpg",
     "hitler": "art/portraits/hitler.jpg",
@@ -14,6 +16,7 @@ window.ART = {
     "mussolini": "art/portraits/mussolini.jpg",
     "nchamberlain": "art/portraits/nchamberlain.jpg",
     "papen": "art/portraits/papen.jpg",
+    "pilsudski": "art/portraits/pilsudski.jpg",
     "poincare": "art/portraits/poincare.jpg",
     "rathenau": "art/portraits/rathenau.jpg",
     "ribbentrop": "art/portraits/ribbentrop.jpg",
@@ -22,5 +25,8 @@ window.ART = {
     "stresemann": "art/portraits/stresemann.jpg",
     "wirth": "art/portraits/wirth.jpg"
   },
-  "scenes": {}
+  "scenes": {
+    "germany": "art/scenes/germany.jpg",
+    "ousted": "art/scenes/ousted.jpg"
+  }
 };
