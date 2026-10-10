@@ -3,14 +3,19 @@ window.ART = {
   "portraits": {
     "avenol": "art/portraits/avenol.jpg",
     "briand": "art/portraits/briand.jpg",
+    "franco": "art/portraits/franco.jpg",
+    "hitler": "art/portraits/hitler.jpg",
     "kellogg": "art/portraits/kellogg.jpg",
     "mussolini": "art/portraits/mussolini.jpg",
     "nchamberlain": "art/portraits/nchamberlain.jpg",
+    "papen": "art/portraits/papen.jpg",
+    "poincare": "art/portraits/poincare.jpg",
     "rathenau": "art/portraits/rathenau.jpg",
     "ribbentrop": "art/portraits/ribbentrop.jpg",
     "schuschnigg": "art/portraits/schuschnigg.jpg",
     "selassie": "art/portraits/selassie.jpg",
-    "stresemann": "art/portraits/stresemann.jpg"
+    "stresemann": "art/portraits/stresemann.jpg",
+    "wirth": "art/portraits/wirth.jpg"
   },
   "scenes": {}
 };
