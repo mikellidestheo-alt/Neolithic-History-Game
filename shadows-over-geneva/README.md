@@ -58,7 +58,7 @@ cd tools && node bundle.mjs
 
 ### Illustrations
 
-Character portraits and scenes live in `art/portraits/<key>.jpg` and `art/scenes/<name>.jpg`
+Character portraits and scenes live in `art/portraits/<key>.webp` and `art/scenes/<name>.webp`
 (scenes: `title`, `title-mobile`, `league`, `germany`, `italy`, `war`, `ousted`), stored as WebP. Any character without
 an illustration falls back to its drawn portrait. To add or replace one:
 
