@@ -2,13 +2,13 @@
 
 Usage:
   python3 prep-art.py portrait <key> <source-image> [--face-y 0.42]
-  python3 prep-art.py scene <name> <source-image>
+  python3 prep-art.py scene <name> <source-image> [--no-trim]
 
 Portraits: trims the paper margin around the drawn panel, finds the face
 (OpenCV Haar cascade, if installed) and crops a 4:5 frame around it,
-saved as art/portraits/<key>.jpg (600x750).
-Scenes: trims the margin and crops to 16:9 (1600x900), or 9:16 for names
-ending in -mobile (720x1280), saved as art/scenes/<name>.jpg.
+saved as art/portraits/<key>.webp (480x600).
+Scenes: trims the margin and crops to 16:9 (1280x720), or 9:16 for names
+ending in -mobile (630x1120), saved as art/scenes/<name>.webp.
 """
 import sys, os
 import numpy as np
@@ -75,6 +75,17 @@ def crop_ratio(img, ratio, cx, cy, height):
     return img.crop((round(x0), round(y0), round(x0 + width), round(y0 + height)))
 
 
+def save(img, folder, name, quality):
+    """Save as WebP, removing any older copy of the same image in another format."""
+    for ext in ('jpg', 'jpeg', 'png', 'webp'):
+        old = os.path.join(ROOT, folder, f'{name}.{ext}')
+        if os.path.exists(old):
+            os.remove(old)
+    dest = os.path.join(ROOT, folder, name + '.webp')
+    img.save(dest, 'WEBP', quality=quality, method=6)
+    return dest
+
+
 def portrait(key, src, face_y=0.42):
     img = Image.open(src).convert('RGB')
     img = img.crop(panel_box(img))
@@ -92,25 +103,24 @@ def portrait(key, src, face_y=0.42):
         height = h * 3.3
         cx, cy = W / 2, H * 0.40 + (0.5 - face_y) * height
         how = 'no face found: centred crop'
-    out = crop_ratio(img, 0.8, cx, cy, height).resize((600, 750), Image.LANCZOS)
-    dest = os.path.join(ROOT, 'portraits', key + '.jpg')
-    out.save(dest, quality=82, optimize=True, progressive=True)
+    out = crop_ratio(img, 0.8, cx, cy, height).resize((480, 600), Image.LANCZOS)
+    dest = save(out, 'portraits', key, 74)
     print(f'{key}: {how} -> {dest}')
 
 
-def scene(name, src):
+def scene(name, src, trim=True):
     img = Image.open(src).convert('RGB')
-    img = img.crop(panel_box(img))
+    if trim:
+        img = img.crop(panel_box(img))
     W, H = img.size
     mobile = name.endswith('-mobile')
-    ratio, size = (9 / 16, (720, 1280)) if mobile else (16 / 9, (1600, 900))
+    ratio, size = (9 / 16, (630, 1120)) if mobile else (16 / 9, (1280, 720))
     out = crop_ratio(img, ratio, W / 2, H / 2, H).resize(size, Image.LANCZOS)
-    dest = os.path.join(ROOT, 'scenes', name + '.jpg')
-    out.save(dest, quality=80, optimize=True, progressive=True)
+    dest = save(out, 'scenes', name, 70)
     print(f'{name}: scene -> {dest}')
 
 
 if __name__ == '__main__':
     kind, key, src = sys.argv[1:4]
     fy = float(sys.argv[sys.argv.index('--face-y') + 1]) if '--face-y' in sys.argv else 0.42
-    portrait(key, src, fy) if kind == 'portrait' else scene(key, src)
+    portrait(key, src, fy) if kind == 'portrait' else scene(key, src, '--no-trim' not in sys.argv)

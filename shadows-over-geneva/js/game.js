@@ -465,7 +465,7 @@
       <div class="np-mast"><div class="np-name">${R.paper}</div><div class="np-line"><span>${R.city}</span><span>${esc(date)}</span><span>Late edition</span></div></div>
       <h2 class="np-head ${completed ? 'red' : ''}">${head}</h2>
       ${sceneImg(completed ? 'war' : 'ousted')}
-      <div class="np-cols"><div class="face">${window.Portraits.render(face, { decorative: true })}</div><div>${body}</div></div>
+      <div class="np-cols${sceneArt(completed ? 'war' : 'ousted') ? ' no-face' : ''}">${sceneArt(completed ? 'war' : 'ousted') ? '' : `<div class="face">${window.Portraits.render(face, { decorative: true })}</div>`}<div>${body}</div></div>
       <div class="np-score"><span>Correct <b>${right}</b> / ${total}</span><span>Mistakes <b>${st.strikes}</b></span><span>Rank <b>${rank}</b></span></div>`;
     renderDebrief($('#debrief'));
     store.del(SAVE_KEY);
@@ -585,7 +585,7 @@
       const src = tall ? sceneArt('title-mobile') : (sceneArt('title') || sceneArt('title-mobile'));
       if (!src) return;
       t.classList.add('has-art');
-      t.style.backgroundImage = `linear-gradient(rgba(12, 11, 10, ${tall ? .35 : .55}), rgba(12, 11, 10, .92) ${tall ? 80 : 75}%), url("${abs(src)}")`;
+      t.style.backgroundImage = `linear-gradient(rgba(12, 11, 10, ${tall ? .55 : .55}), rgba(12, 11, 10, .92) ${tall ? 80 : 75}%), url("${abs(src)}")`;
       t.style.backgroundPosition = tall ? 'center top' : 'center 30%';
     };
     setTitleArt();

@@ -59,12 +59,12 @@ cd tools && node bundle.mjs
 ### Illustrations
 
 Character portraits and scenes live in `art/portraits/<key>.jpg` and `art/scenes/<name>.jpg`
-(scenes: `title`, `title-mobile`, `league`, `germany`, `italy`, `war`, `ousted`). Any character without
+(scenes: `title`, `title-mobile`, `league`, `germany`, `italy`, `war`, `ousted`), stored as WebP. Any character without
 an illustration falls back to its drawn portrait. To add or replace one:
 
 ```sh
 python3 tools/prep-art.py portrait hitler ~/Downloads/hitler.jpg   # trims the paper border, centres the face
-python3 tools/prep-art.py scene title ~/Downloads/title.jpg
+python3 tools/prep-art.py scene title ~/Downloads/title.jpg      # add --no-trim to keep the paper border
 cd tools && node art-manifest.mjs && node bundle.mjs
 ```
 

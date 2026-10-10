@@ -147,7 +147,6 @@ button { font: inherit; color: inherit; }
   border: 3px solid var(--ink); border-radius: var(--r);
   padding: 22px 20px 20px; box-shadow: 7px 7px 0 var(--red-deep);
   transition: transform .15s, box-shadow .15s;
-  background-image: radial-gradient(circle at 85% 12%, rgba(120, 90, 40, .14) 0 40px, transparent 41px), linear-gradient(transparent 0 0);
 }
 .pick-card:hover, .pick-card:focus-visible { transform: translate(-2px, -2px); box-shadow: 10px 10px 0 var(--red); }
 .pick-card h3 { font-family: var(--f-comic); font-weight: 700; text-transform: uppercase; font-size: 1.8rem; letter-spacing: .02em; margin: 6px 0 4px; line-height: 1; }
@@ -449,3 +448,4 @@ img.portrait.art { object-fit: cover; object-position: 50% 30%; background: var(
 .scene-art { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border: 3px solid #000; box-shadow: 5px 5px 0 rgba(0, 0, 0, .55); }
 .brief-paper .scene-art { margin: 4px 0 16px; }
 .newspaper .scene-art { margin: 4px 0 12px; filter: sepia(.2) contrast(1.05); }
+.np-cols.no-face { grid-template-columns: 1fr; }
