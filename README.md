@@ -14,6 +14,17 @@ Open `index.html` in a modern browser. It loads Three.js from a CDN, so you need
 | Look | Drag the mouse, scroll to zoom | Drag the screen |
 | Talk / act | E or Space | Act button |
 | Journal | J | Journal button |
+| Sound settings / mute | Sound button, M to mute | Sound button |
+
+## Sound
+
+All audio is generated live in the browser with the Web Audio API, so there are no sound files to download.
+
+- **Music:** a calm, never-repeating tune on a reed-flute voice over a low drone, with a soft frame drum and lyre plucks. It slows down and drops lower as evening falls.
+- **Ambience:** wind, the Maroni river (louder as you get closer), the crackling hearth, birdsong by day and crickets at dusk.
+- **Effects:** footsteps (rustling in the wheat), branches, sheaves, fruit, clay, water bubbles, the grinding stone, goat bleats, plaster smears, dialogue blips, a ringing stone chime for each new fact, and quiz feedback.
+
+Sound starts when you press **Begin the day**, because browsers only allow audio after a click. Volume settings are remembered between visits.
 
 ## The chores and the history behind them
 
