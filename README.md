@@ -2,7 +2,11 @@
 
 An educational 3D game set in the Aceramic (pre-pottery) Neolithic village of **Choirokoitia (Khirokitia)** in Cyprus, about 9,000 years ago.
 
-You play a young girl helping her family through one day. Each chore is based on what archaeologists have found at the site. Finishing a chore adds a "Did you know?" fact to your journal, and the day ends with an 8-question quiz.
+You play a young girl helping her family through one day. Each chore is based on what archaeologists have found at the site. Finishing a chore adds a "Did you know?" fact to your journal.
+
+## Village quiz
+
+The **Village quiz** button on the start screen (and in the journal and at the end of the day) opens a 15-question multiple-choice quiz with one question for every journal fact. Questions are picked at random from a bank of 22 and shuffled, so each attempt is different. After each answer the player sees a short explanation. At the end, any facts they got wrong are listed so they can read them again.
 
 ## Play
 

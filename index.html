@@ -103,6 +103,20 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
 #journalList div{border-left:4px solid var(--ochre);padding:.2rem 0 .2rem .7rem}
 #journalList b{font-family:var(--display);font-weight:400;font-size:1.05rem}
 #journalList p{margin:.15rem 0 0;font-size:.93rem;color:var(--ash)}
+.qzTop{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.qzScore{font-family:var(--display);color:var(--ochre);font-variant-numeric:tabular-nums}
+.qzBar{height:6px;background:#5e4430;border-radius:3px;margin:.5rem 0 .8rem;overflow:hidden}
+.qzBar i{display:block;height:100%;width:0;background:var(--picrolite);transition:width .3s}
+.qzFact{font-size:.82rem;color:var(--ash)}
+.qzFact:empty{display:none}
+#qzFeedback:empty{display:none}
+#qzFeedback{border-left:4px solid var(--picrolite);padding:.3rem 0 .3rem .7rem}
+#qzFeedback.no{border-color:var(--bad)}
+#qzReview:empty{display:none}
+#qzReview h3{font-size:1.1rem;margin:.8rem 0 .4rem;color:var(--plaster)}
+#qzReview details{border-left:4px solid var(--ochre);padding:.25rem 0 .25rem .7rem;margin:.4rem 0}
+#qzReview summary{cursor:pointer;font-weight:700}
+#qzReview details p{font-size:.93rem;color:var(--ash);margin:.3rem 0}
 .opts{display:flex;flex-direction:column;gap:8px;margin-top:.8rem}
 .opts button{text-align:left;background:var(--clay-2);color:var(--plaster);border:2px solid #6b4a30;border-radius:4px;padding:.65rem .8rem}
 .opts button.right{border-color:var(--good);background:#3f5a33}
@@ -257,8 +271,10 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
     </div>
     <div class="actions">
       <button id="startBtn" class="btn" type="button">Begin the day</button>
+      <button id="titleQuizBtn" class="btn ghost" type="button">Village quiz</button>
       <button id="titleFsBtn" class="btn ghost" type="button">Play full screen</button>
     </div>
+    <p class="fsnote">Already played? The <b>Village quiz</b> has a question about every fact in the journal, to check what you remember.</p>
     <p class="fsnote" id="fsNote" hidden>Tip: on iPhone, tap Share then "Add to Home Screen" to play full screen.</p>
   </div>
 </div>
@@ -328,12 +344,19 @@ h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
 </div>
 
 <div id="quiz" class="modal" hidden>
-  <div class="card panel">
-    <div class="eyebrow" id="qzStep"></div>
+  <div class="card panel" role="dialog" aria-labelledby="qzQ">
+    <div class="qzTop"><span class="eyebrow" id="qzStep"></span><span class="qzScore" id="qzScore"></span></div>
+    <div class="qzBar" aria-hidden="true"><i id="qzFill"></i></div>
     <h2 id="qzQ"></h2>
     <div class="opts" id="qzOpts"></div>
-    <p id="qzFeedback"></p>
-    <div class="actions"><button id="qzNext" class="btn" type="button" hidden>Next</button></div>
+    <p id="qzFeedback" aria-live="polite"></p>
+    <div class="qzFact" id="qzFact"></div>
+    <div id="qzReview"></div>
+    <div class="actions">
+      <button id="qzNext" class="btn" type="button" hidden>Next</button>
+      <button id="qzAgain" class="btn" type="button" hidden>Try a new quiz</button>
+      <button id="qzLeave" class="btn ghost" type="button">Leave quiz</button>
+    </div>
   </div>
 </div>
 
@@ -1290,7 +1313,8 @@ addEventListener('keydown', e => {
   if (k === 'h' && ui.started && !busy()) openModal('help');
   if (k === 'f' && fsSupported) toggleFullscreen();
   if (k === 'm' && ui.started){ const m = Sound.toggleMute(); syncSoundUI(); toast(m ? 'Sound off' : 'Sound on'); }
-  if (k === 'escape' && ui.modal && ui.modal !== 'quiz') closeModal(ui.modal);
+  if (k === 'escape' && ui.modal === 'quiz') leaveQuiz();
+  else if (k === 'escape' && ui.modal && ui.modal !== 'title') closeModal(ui.modal);
 });
 addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
 addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
@@ -1468,39 +1492,102 @@ function showEnd(){
   $('endText').innerHTML = `<p>You helped your family through a whole day in Choirokoitia, one of the oldest villages in Cyprus. You learned <b>${learned.length} of ${Object.keys(FACTS).length}</b> facts. Open your journal to read them again.</p><p>Think you remember everything? Try the village quiz, or keep exploring under the stars.</p>`;
   openModal('end');
 }
-const QUIZ = [
-  ['What did the people of Choirokoitia NOT have yet?', ['Pottery', 'Fire', 'Stone tools', 'Houses'], 0, 'Right! It was the Aceramic, or pre-pottery, Neolithic. They carved bowls from stone instead.'],
-  ['What shape were their houses?', ['Square', 'Round', 'Triangular', 'They lived in tents'], 1, 'Yes! Round houses of stone and mudbrick, grouped around courtyards.'],
-  ['Where did the shiny black obsidian come from?', ['The Maroni river', 'The Troodos mountains', 'Anatolia, across the sea', 'It was made in the hearth'], 2, 'Correct! Obsidian came over the sea from central Anatolia, proof of sailing and trade.'],
-  ['Which wild animal did the villagers hunt most?', ['Mammoth', 'Fallow deer', 'Lion', 'Bear'], 1, 'Yes! The Mesopotamian fallow deer gave meat, hides and bone for tools.'],
-  ['Which crop did they grow?', ['Einkorn wheat', 'Potatoes', 'Maize (corn)', 'Rice'], 0, 'Right! Einkorn and emmer wheat, barley and lentils. Potatoes and maize come from the Americas.'],
-  ['How did goats and sheep first get to Cyprus?', ['They swam', 'People brought them in boats', 'They were always there', 'They walked across a bridge'], 1, 'Exactly! Neolithic settlers carried their animals across the sea by boat.'],
-  ['Where did families bury their dead?', ['In a big cemetery far away', 'In the river', 'Under the floors of their houses', 'On the roof'], 2, 'Yes. Burials under the house floor kept the ancestors close to the family.'],
-  ['What surrounded the village?', ['A moat of water', 'A massive stone wall', 'A wooden fence', 'Nothing at all'], 1, 'Correct! A great stone wall with a stairway entrance built into it.'],
+/* Quiz bank: every journal fact has at least one question. The first option is the correct one; options are shuffled when shown. */
+const QUIZ_BANK = [
+  { f: 'water', q: 'What does "Aceramic Neolithic" mean?', o: ['The Neolithic without pottery', 'The Neolithic with metal tools', 'The time of the first cities', 'The Neolithic of the islands'], why: 'The villagers had not started making clay pots yet.' },
+  { f: 'water', q: 'What did craftspeople carve their bowls from?', o: ['Andesite stone from the river', 'Clay from the riverbank', 'Bronze', 'Glass'], why: 'Without pottery, hard grey andesite stone was carved into beautiful bowls.' },
+  { f: 'hearth', q: 'What was the hearth in each house used for?', o: ['Cooking and keeping warm', 'Storing grain', 'Keeping the goats', 'Burying the dead'], why: 'Archaeologists find ash, burnt bones and charred seeds in the hearths.' },
+  { f: 'farming', q: 'Which crops did the villagers grow?', o: ['Einkorn wheat, barley and lentils', 'Potatoes and maize', 'Rice and tea', 'Oranges and tomatoes'], why: 'Wheat, barley and lentils came from the Near East. Potatoes and maize come from the Americas and arrived thousands of years later.' },
+  { f: 'farming', q: 'What were the blades of their sickles made of?', o: ['Chert, a flint-like stone', 'Iron', 'Bronze', 'Shell'], why: 'There was no metal yet. Sharp chert blades were set into wooden handles.' },
+  { f: 'quern', q: 'How did people turn grain into flour?', o: ['By rubbing it between grinding stones', 'In a water mill', 'By pounding it with metal hammers', 'By soaking it in the river'], why: 'Many querns and rubbing stones have been found in the houses.' },
+  { f: 'animals', q: 'How did goats, sheep and pigs first reach Cyprus?', o: ['People brought them in boats', 'They swam across the sea', 'They walked over a land bridge', 'They had always lived on the island'], why: 'Neolithic settlers carried their animals across the sea from the mainland.' },
+  { f: 'animals', q: 'Which farm animal had disappeared from Cyprus by the time of Choirokoitia?', o: ['Cattle', 'Goats', 'Sheep', 'Pigs'], why: 'Cattle had been brought earlier but vanished, and did not return for thousands of years.' },
+  { f: 'fruit', q: 'Which wild foods did the villagers gather?', o: ['Figs, olives and pistachios', 'Bananas and coconuts', 'Potatoes and pumpkins', 'Cocoa beans'], why: 'Seeds found at the site show they collected wild fruits and nuts as well as farming.' },
+  { f: 'obsidian', q: 'Where did the shiny black obsidian come from?', o: ['Central Anatolia, across the sea', 'The Troodos mountains', 'The Maroni river', 'It was made in the hearth'], why: 'There is no obsidian on Cyprus, so it proves Neolithic people sailed and traded.' },
+  { f: 'obsidian', q: 'What is picrolite?', o: ['A soft blue-green stone from Cyprus used for jewellery', 'A kind of wheat', 'A type of boat', 'A volcanic glass from Anatolia'], why: 'Craftspeople made pendants and beads from picrolite.' },
+  { f: 'house', q: 'What shape were the houses of Choirokoitia?', o: ['Round', 'Square', 'Triangular', 'They lived in tents'], why: 'Round houses of stone and mudbrick were grouped around small courtyards.' },
+  { f: 'house', q: 'What do most archaeologists now think the roofs were like?', o: ['Flat, made of branches, reeds and earth', 'Covered in clay tiles', 'Tall and pointed, made of straw', 'There were no roofs'], why: 'Flat roofs could also be used for drying food and working.' },
+  { f: 'deer', q: 'Which wild animal did the villagers hunt most?', o: ['Mesopotamian fallow deer', 'Mammoth', 'Lion', 'Brown bear'], why: 'Fallow deer from the woods gave meat, hides and bone.' },
+  { f: 'deer', q: 'What were deer bones made into?', o: ['Needles, awls and points', 'Bowls and cups', 'Roof beams', 'Coins'], why: 'Nothing was wasted. Bone tools were used for sewing and making things.' },
+  { f: 'wall', q: 'How did people get through the great village wall?', o: ['By a stairway built into the wall', 'Through a gate on wheels', 'Over a drawbridge', 'Through a tunnel under the river'], why: 'The entrance was a clever stairway built into the thick stone wall.' },
+  { f: 'ancestors', q: 'Where did families bury their dead?', o: ['Under the floors of their houses', 'In a cemetery far away', 'In the river', 'On the flat roofs'], why: 'Burials under the floor kept the ancestors close to the family.' },
+  { f: 'discovery', q: 'When did Choirokoitia become a UNESCO World Heritage Site?', o: ['1998', '1934', '1878', '2020'], why: 'It was discovered in 1934 and listed by UNESCO in 1998.' },
+  { f: 'discovery', q: 'Who first excavated Choirokoitia?', o: ['Porphyrios Dikaios', 'Howard Carter', 'Arthur Evans', 'Heinrich Schliemann'], why: 'Dikaios of the Cyprus Department of Antiquities began the excavations after the site was found in 1934.' },
+  { f: 'chert', q: 'What is "knapping"?', o: ['Striking stone to break off sharp flakes', 'Weaving reeds into baskets', 'Grinding grain into flour', 'Sewing hides together'], why: 'Knappers made knives, scrapers, borers and sickle blades from chert.' },
+  { f: 'baskets', q: 'Why were baskets and mats so important in the village?', o: ['With no pottery, they held grain and food', 'They were used as boats', 'They were used as money', 'They were only for decoration'], why: 'Reeds and rushes from the river were woven into containers.' },
+  { f: 'boats', q: 'Why must the first farmers of Cyprus have used boats?', o: ['Cyprus is an island', 'The rivers were too deep to cross', 'Boats were faster than walking', 'They lived on the boats'], why: 'People, seeds and animals all had to cross at least 60 km of sea.' },
 ];
-let qi = 0, qScore = 0;
-function startQuiz(){ closeModal('end'); qi = 0; qScore = 0; openModal('quiz'); showQ(); }
+const shuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+let quiz = null;
+function buildQuiz(){
+  // one question for every fact, picked at random when a fact has several, in random order
+  const byFact = {};
+  for (const item of QUIZ_BANK) (byFact[item.f] = byFact[item.f] || []).push(item);
+  return shuffle(Object.keys(FACTS).map(f => { const list = byFact[f]; return list[Math.floor(Math.random() * list.length)]; }));
+}
+function startQuiz(){
+  Sound.init();
+  quiz = { items: buildQuiz(), i: 0, score: 0, missed: [], from: ui.started ? 'game' : 'title' };
+  closeModal('end'); closeModal('title'); closeModal('journal');
+  openModal('quiz'); showQ();
+}
+function leaveQuiz(){
+  closeModal('quiz');
+  if (quiz && quiz.from === 'title') openModal('title');
+  quiz = null;
+}
 function showQ(){
-  if (qi >= QUIZ.length){
-    $('qzStep').textContent = 'Quiz complete'; $('qzQ').textContent = `You scored ${qScore} out of ${QUIZ.length}`;
-    $('qzOpts').innerHTML = ''; $('qzFeedback').textContent = qScore >= 7 ? 'Amazing! You could be an archaeologist.' : qScore >= 5 ? 'Great work! Read your journal to learn even more.' : 'Good try! Explore the village and read your journal, then try again.';
-    const b = $('qzNext'); b.hidden = false; b.textContent = 'Back to the village'; b.onclick = () => closeModal('quiz'); return;
+  const z = quiz, n = z.items.length;
+  $('qzScore').textContent = `${z.score} correct`;
+  $('qzFill').style.width = (z.i / n * 100) + '%';
+  $('qzReview').innerHTML = ''; $('qzFeedback').textContent = ''; $('qzFeedback').className = '';
+  $('qzAgain').hidden = true; $('qzNext').hidden = true;
+  if (z.i >= n){
+    const pct = z.score / n;
+    $('qzStep').textContent = 'Quiz complete'; $('qzFact').textContent = '';
+    $('qzQ').textContent = `You scored ${z.score} out of ${n}`;
+    $('qzOpts').innerHTML = '';
+    $('qzFeedback').textContent = pct === 1 ? 'Perfect! You remembered every fact. You could be an archaeologist.' : pct >= 0.8 ? 'Excellent work! You really understand life in Neolithic Choirokoitia.' : pct >= 0.5 ? 'Good work! Read the facts below, then try a new quiz.' : 'Good try! Read the facts below, play the game again, and have another go.';
+    if (z.missed.length){
+      const uniq = [...new Set(z.missed)];
+      $('qzReview').innerHTML = '<h3>Facts to look at again</h3>' + uniq.map(k => `<details><summary>${FACTS[k].art} ${FACTS[k].title}</summary>${FACTS[k].text}</details>`).join('');
+    }
+    $('qzAgain').hidden = false; $('qzLeave').textContent = z.from === 'title' ? 'Back to the start' : 'Back to the village';
+    if (pct >= 0.8) Sound.finale();
+    $('qzAgain').focus(); return;
   }
-  const [q, opts, ans, fb] = QUIZ[qi];
-  $('qzStep').textContent = `Question ${qi + 1} of ${QUIZ.length}`; $('qzQ').textContent = q; $('qzFeedback').textContent = ''; $('qzNext').hidden = true;
+  const item = z.items[z.i];
+  $('qzStep').textContent = `Question ${z.i + 1} of ${n}`;
+  $('qzFact').textContent = '';
+  $('qzQ').textContent = item.q;
+  $('qzLeave').textContent = 'Leave quiz';
   const O = $('qzOpts'); O.innerHTML = '';
-  opts.forEach((o, i) => { const b = document.createElement('button'); b.type = 'button'; b.textContent = o; b.onclick = () => {
-    [...O.children].forEach(c => c.disabled = true); O.children[ans].classList.add('right');
-    if (i === ans){ qScore++; Sound.right(); $('qzFeedback').textContent = fb; } else { Sound.wrong(); b.classList.add('wrong'); $('qzFeedback').textContent = 'Not quite. ' + fb.replace(/^(Right|Yes|Correct|Exactly)!\s*/, '').replace(/^Yes\.\s*/, ''); }
-    const n = $('qzNext'); n.hidden = false; n.textContent = qi === QUIZ.length - 1 ? 'See my score' : 'Next question'; n.onclick = () => { qi++; showQ(); }; n.focus();
-  }; O.appendChild(b); });
+  const correct = item.o[0];
+  shuffle(item.o).forEach(text => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = text;
+    b.onclick = () => {
+      [...O.children].forEach(c => { c.disabled = true; if (c.textContent === correct) c.classList.add('right'); });
+      const fb = $('qzFeedback');
+      if (text === correct){ z.score++; Sound.right(); fb.textContent = 'Correct! ' + item.why; }
+      else { z.missed.push(item.f); Sound.wrong(); b.classList.add('wrong'); fb.className = 'no'; fb.textContent = `Not quite. The answer is "${correct}". ${item.why}`; }
+      $('qzScore').textContent = `${z.score} correct`;
+      $('qzFact').textContent = `From your journal: ${FACTS[item.f].art} ${FACTS[item.f].title}`;
+      const nx = $('qzNext'); nx.hidden = false; nx.textContent = z.i === n - 1 ? 'See my score' : 'Next question';
+      nx.onclick = () => { z.i++; showQ(); }; nx.focus();
+    };
+    O.appendChild(b);
+  });
+  O.firstChild.focus({ preventScroll: true });
+  $('quiz').querySelector('.card').scrollTop = 0;
 }
 $('quizBtn').addEventListener('click', startQuiz);
-// journal gets a quiz button once the day is done
+$('titleQuizBtn').addEventListener('click', startQuiz);
+$('qzAgain').addEventListener('click', () => { const from = quiz.from; startQuiz(); quiz.from = from; });
+$('qzLeave').addEventListener('click', leaveQuiz);
+// the journal always offers the quiz
 const jActions = document.querySelector('#journal .actions');
-const jq = document.createElement('button'); jq.className = 'btn ghost'; jq.type = 'button'; jq.textContent = 'Take the quiz'; jq.hidden = true;
-jq.onclick = () => { closeModal('journal'); startQuiz(); }; jActions.appendChild(jq);
-const _openJournal = openJournal;
+const jq = document.createElement('button'); jq.className = 'btn ghost'; jq.type = 'button'; jq.textContent = 'Take the quiz';
+jq.onclick = startQuiz; jActions.appendChild(jq);
 
 /* sound panel */
 function syncSoundUI(){
@@ -1565,7 +1652,6 @@ function begin(){
 }
 $('startBtn').addEventListener('click', begin);
 $('nameInput').addEventListener('keydown', e => { if (e.key === 'Enter') begin(); });
-setInterval(() => { jq.hidden = !S.done; }, 500);
 frame();
 </script>
 </body>
