@@ -1,0 +1,111 @@
+"""Crop and resize illustrations for the game.
+
+Usage:
+  python3 prep-art.py portrait <key> <source-image> [--face-y 0.42]
+  python3 prep-art.py scene <name> <source-image>
+
+Portraits: trims the paper margin around the drawn panel, finds the face
+(OpenCV Haar cascade, if installed) and crops a 4:5 frame around it,
+saved as art/portraits/<key>.jpg (600x750).
+Scenes: trims the margin and crops to 16:9 (1600x900), or 9:16 for names
+ending in -mobile (720x1280), saved as art/scenes/<name>.jpg.
+"""
+import sys, os
+import numpy as np
+from PIL import Image
+
+ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'art')
+
+
+def panel_box(img):
+    """Bounding box inside the inked panel frame, dropping the plain paper border.
+
+    The frame is a thin dark line with light paper on its outer side, so each edge
+    is the outermost line that is mostly dark and has mostly light pixels just outside it.
+    """
+    g = np.asarray(img.convert('L')).astype(int)
+    h, w = g.shape
+    dark, light = g < 95, g > 165
+
+    def edge(dark_frac, light_frac, n, forward):
+        rng = range(8, n // 2) if forward else range(n - 9, n // 2, -1)
+        for r in rng:
+            out = light_frac[r - 8:r - 3] if forward else light_frac[r + 4:r + 9]
+            if dark_frac[r] > 0.45 and len(out) and out.mean() > 0.6:
+                return r
+        return None
+
+    rd, rl = dark.mean(axis=1), light.mean(axis=1)
+    cd, cl = dark.mean(axis=0), light.mean(axis=0)
+    top, bot = edge(rd, rl, h, True), edge(rd, rl, h, False)
+    lef, rig = edge(cd, cl, w, True), edge(cd, cl, w, False)
+    pad = 5  # step inside the inked line
+    return (lef + pad if lef is not None else 0, top + pad if top is not None else 0,
+            rig - pad if rig is not None else w, bot - pad if bot is not None else h)
+
+
+def find_face(img):
+    try:
+        import cv2
+    except ImportError:
+        return None
+    g = np.asarray(img.convert('L'))
+    best = None
+    for name in ('haarcascade_frontalface_default.xml', 'haarcascade_frontalface_alt2.xml'):
+        cc = cv2.CascadeClassifier(os.path.join(cv2.data.haarcascades, name))
+        faces = cc.detectMultiScale(g, scaleFactor=1.08, minNeighbors=5, minSize=(g.shape[1] // 8, g.shape[1] // 8))
+        for f in faces:
+            if best is None or f[2] * f[3] > best[2] * best[3]:
+                best = f
+        if best is not None:
+            break
+    return None if best is None else tuple(int(v) for v in best)
+
+
+def crop_ratio(img, ratio, cx, cy, height):
+    """Crop a ratio (w/h) box of the given height centred on (cx, cy), clamped to the image."""
+    W, H = img.size
+    height = min(height, H, W / ratio)
+    width = height * ratio
+    x0 = min(max(cx - width / 2, 0), W - width)
+    y0 = min(max(cy - height / 2, 0), H - height)
+    return img.crop((round(x0), round(y0), round(x0 + width), round(y0 + height)))
+
+
+def portrait(key, src, face_y=0.42):
+    img = Image.open(src).convert('RGB')
+    img = img.crop(panel_box(img))
+    W, H = img.size
+    face = find_face(img)
+    if face:
+        x, y, w, h = face
+        height = h * 3.3                      # head and shoulders
+        cx = x + w / 2
+        cy = y + h / 2 + (0.5 - face_y) * height  # place the face slightly above centre
+        how = 'face found'
+    else:
+        height = W / 0.8
+        cx, cy = W / 2, H * 0.45
+        how = 'no face found: centre crop'
+    out = crop_ratio(img, 0.8, cx, cy, height).resize((600, 750), Image.LANCZOS)
+    dest = os.path.join(ROOT, 'portraits', key + '.jpg')
+    out.save(dest, quality=82, optimize=True, progressive=True)
+    print(f'{key}: {how} -> {dest}')
+
+
+def scene(name, src):
+    img = Image.open(src).convert('RGB')
+    img = img.crop(panel_box(img))
+    W, H = img.size
+    mobile = name.endswith('-mobile')
+    ratio, size = (9 / 16, (720, 1280)) if mobile else (16 / 9, (1600, 900))
+    out = crop_ratio(img, ratio, W / 2, H / 2, H).resize(size, Image.LANCZOS)
+    dest = os.path.join(ROOT, 'scenes', name + '.jpg')
+    out.save(dest, quality=80, optimize=True, progressive=True)
+    print(f'{name}: scene -> {dest}')
+
+
+if __name__ == '__main__':
+    kind, key, src = sys.argv[1:4]
+    fy = float(sys.argv[sys.argv.index('--face-y') + 1]) if '--face-y' in sys.argv else 0.42
+    portrait(key, src, fy) if kind == 'portrait' else scene(key, src)

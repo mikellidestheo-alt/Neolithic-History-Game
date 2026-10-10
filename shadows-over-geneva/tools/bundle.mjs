@@ -12,7 +12,15 @@ const read = f => fs.readFileSync(path.join(root, f), 'utf8');
 let html = read('index.html');
 
 html = html.replace(/<link rel="stylesheet" href="css\/([^"]+)">/g, (_, f) => `<style>\n${read('css/' + f)}\n</style>`);
-html = html.replace(/<script src="js\/([^"]+)"><\/script>/g, (_, f) => `<script>\n${read('js/' + f).replace(/<\/script/gi, '<\\/script')}\n</script>`);
+// illustrations become data URIs so the single file carries them
+const MIME = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
+const inlineArt = src => src.replace(/"(art\/[^"]+\.(jpe?g|png|webp))"/gi, (_, f, ext) =>
+  `"data:${MIME[ext.toLowerCase()]};base64,${fs.readFileSync(path.join(root, f)).toString('base64')}"`);
+html = html.replace(/<script src="js\/([^"]+)"><\/script>/g, (_, f) => {
+  let src = read('js/' + f);
+  if (f === 'art.js') src = inlineArt(src);
+  return `<script>\n${src.replace(/<\/script/gi, '<\\/script')}\n</script>`;
+});
 
 // single-file builds have no manifest or icon next to them
 html = html.replace(/<link rel="(manifest|apple-touch-icon)"[^>]*>\n?/g, '');

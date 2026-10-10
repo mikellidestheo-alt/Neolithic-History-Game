@@ -167,7 +167,7 @@
     const R = ROLES[pick.role];
     $('#brief-eyebrow').textContent = `${pick.level === 'alevel' ? 'A-Level' : 'IGCSE'} file · ${R.desk}`;
     $('#brief-title').textContent = pick.role === 'league' ? 'Your seat at the Council' : `Adviser to ${R.name}`;
-    $('#brief-body').innerHTML = R.intro.map(p => `<p>${p}</p>`).join('');
+    $('#brief-body').innerHTML = sceneImg(pick.role) + R.intro.map(p => `<p>${p}</p>`).join('');
     $('#brief-fail').textContent = R.fail;
     $('#brief-hints').innerHTML = pick.level === 'igcse'
       ? '<b>Three adviser hints.</b> Each one crosses out a wrong option. Use them wisely.'
@@ -464,6 +464,7 @@
     $('#newspaper').innerHTML = `
       <div class="np-mast"><div class="np-name">${R.paper}</div><div class="np-line"><span>${R.city}</span><span>${esc(date)}</span><span>Late edition</span></div></div>
       <h2 class="np-head ${completed ? 'red' : ''}">${head}</h2>
+      ${sceneImg(completed ? 'war' : 'ousted')}
       <div class="np-cols"><div class="face">${window.Portraits.render(face, { decorative: true })}</div><div>${body}</div></div>
       <div class="np-score"><span>Correct <b>${right}</b> / ${total}</span><span>Mistakes <b>${st.strikes}</b></span><span>Rank <b>${rank}</b></span></div>`;
     renderDebrief($('#debrief'));
@@ -572,7 +573,13 @@
     } else b.hidden = true;
   }
 
+  const sceneArt = k => (window.ART && window.ART.scenes && window.ART.scenes[k]) || null;
+  const sceneImg = k => sceneArt(k) ? `<img class="scene-art" src="${sceneArt(k)}" alt="" decoding="async">` : '';
+
   function init() {
+    const t = $('#s-title');
+    if (sceneArt('title')) { t.classList.add('has-art'); t.style.setProperty('--title-art', `url("${sceneArt('title')}")`); }
+    if (sceneArt('title-mobile')) { t.classList.add('has-art', 'has-mobile-art'); t.style.setProperty('--title-art-m', `url("${sceneArt('title-mobile')}")`); if (!sceneArt('title')) t.style.setProperty('--title-art', `url("${sceneArt('title-mobile')}")`); }
     const snd = store.get(SOUND_KEY);
     if (snd === false) window.Sound.setEnabled(false);
     hydratePortraits();

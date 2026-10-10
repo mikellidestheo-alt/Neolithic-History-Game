@@ -126,7 +126,7 @@ button { font: inherit; color: inherit; }
 .cast.c1 { transform: translateY(8px); }
 .cast.c2 { width: 118px; z-index: 2; margin: 0 8px; }
 .cast.c3 { transform: translateY(8px); }
-.cast svg, .role-art svg { width: 100%; height: 100%; display: block; }
+.cast svg, .role-art svg, .cast img, .role-art img { width: 100%; height: 100%; display: block; }
 .title-actions { display: grid; gap: 12px; justify-items: center; width: 100%; max-width: 360px; margin-top: 10px; }
 .title-actions .btn-primary { width: 100%; font-size: 1.15rem; }
 .title-actions #btn-resume { width: 100%; }
@@ -156,7 +156,7 @@ button { font: inherit; color: inherit; }
 .pick-card li { margin: 3px 0; }
 .stamp-chip { align-self: flex-start; display: inline-block; font-family: var(--f-type); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--red-deep); border: 2px solid var(--red-deep); padding: 2px 8px; transform: rotate(-2deg); }
 .role-art { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 3px solid var(--ink); margin-bottom: 10px; display: flex; background: var(--ink); gap: 3px; }
-.role-art svg { height: 100%; width: auto; flex: 1 1 0; min-width: 0; }
+.role-art svg, .role-art img { height: 100%; width: auto; flex: 1 1 0; min-width: 0; }
 .role-sub { font-family: var(--f-type); color: var(--red-deep); text-transform: uppercase; letter-spacing: .12em; font-size: .75rem !important; }
 .role-count { font-family: var(--f-type); font-size: .82rem !important; color: #5a5245; border-top: 1px dashed #a69a7f; padding-top: 8px; margin: 8px 0 0 !important; }
 .back { margin-top: 4px; }
@@ -290,7 +290,7 @@ button { font: inherit; color: inherit; }
 /* comic panel */
 .panel { display: grid; grid-template-columns: 128px 1fr; gap: 12px; align-items: start; }
 .panel .face { width: 128px; aspect-ratio: 5 / 6; box-shadow: 5px 5px 0 #000; border: 2px solid #000; }
-.panel .face svg { width: 100%; height: 100%; display: block; }
+.panel .face svg, .panel .face img { width: 100%; height: 100%; display: block; }
 .bubble-wrap { display: grid; gap: 6px; min-width: 0; padding-top: 4px; }
 .bubble { position: relative; background: #fbf8f0; color: var(--type); border: 2.5px solid #000; border-radius: 20px; padding: 11px 14px; font-family: var(--f-letter); font-weight: 700; text-transform: uppercase; font-size: .9rem; line-height: 1.3; box-shadow: 4px 4px 0 #000; min-height: 3.2em; }
 .bubble::before { content: ''; position: absolute; left: -17px; top: 18px; border: 9px solid transparent; border-right: 15px solid #000; }
@@ -381,7 +381,7 @@ details.note[open] summary { margin-bottom: 6px; }
 .np-head.red { color: var(--red); }
 .np-cols { display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: start; }
 .np-cols .face { aspect-ratio: 5 / 6; filter: grayscale(1) contrast(1.3); border: 2px solid #000; }
-.np-cols .face svg { width: 100%; height: 100%; display: block; }
+.np-cols .face svg, .np-cols .face img { width: 100%; height: 100%; display: block; }
 .np-cols p { margin: 0 0 8px; font-size: .95rem; }
 .np-cols p:first-child::first-letter { font-family: var(--f-display); font-size: 2.6em; float: left; line-height: .85; margin: 2px 6px 0 0; }
 .np-score { display: flex; flex-wrap: wrap; gap: 8px 18px; border-top: 2px solid var(--ink); margin-top: 10px; padding-top: 8px; font-family: var(--f-type); font-size: .85rem; }
@@ -441,3 +441,11 @@ details.note[open] summary { margin-bottom: 6px; }
 #btn-fs[aria-pressed="true"] { color: var(--amber); border-color: var(--amber); text-decoration: none; }
 #btn-fs[aria-pressed="false"] { text-decoration: none; }
 :fullscreen #app, :-webkit-full-screen #app { height: 100vh; height: 100dvh; }
+
+/* ---------- illustrated artwork (art/) ---------- */
+img.portrait.art { object-fit: cover; object-position: 50% 30%; background: var(--smoke); }
+.title-screen.has-art { background: linear-gradient(rgba(12, 11, 10, .5), rgba(12, 11, 10, .9) 75%), var(--title-art) center 30% / cover no-repeat, var(--ink); }
+@media (orientation: portrait) { .title-screen.has-art.has-mobile-art { background-image: linear-gradient(rgba(12, 11, 10, .35), rgba(12, 11, 10, .9) 80%), var(--title-art-m); background-position: center top; } }
+.scene-art { display: block; width: 100%; max-width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border: 3px solid #000; box-shadow: 5px 5px 0 rgba(0, 0, 0, .55); }
+.brief-paper .scene-art { margin: 4px 0 16px; }
+.newspaper .scene-art { margin: 4px 0 12px; filter: sepia(.2) contrast(1.05); }

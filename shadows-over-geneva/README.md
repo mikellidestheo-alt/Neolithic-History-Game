@@ -56,6 +56,20 @@ Portraits are graphic-novel style illustrations generated from parameters in `js
 cd tools && node bundle.mjs
 ```
 
+### Illustrations
+
+Character portraits and scenes live in `art/portraits/<key>.jpg` and `art/scenes/<name>.jpg`
+(scenes: `title`, `title-mobile`, `league`, `germany`, `italy`, `war`, `ousted`). Any character without
+an illustration falls back to its drawn portrait. To add or replace one:
+
+```sh
+python3 tools/prep-art.py portrait hitler ~/Downloads/hitler.jpg   # trims the paper border, centres the face
+python3 tools/prep-art.py scene title ~/Downloads/title.jpg
+cd tools && node art-manifest.mjs && node bundle.mjs
+```
+
+`prep-art.py` needs Pillow and NumPy; face centring uses OpenCV if installed (`pip install opencv-python-headless`).
+
 `tools/make-map.mjs` regenerates `js/mapdata.js` (it needs `npm install` in `tools/` and downloads the source GeoJSON).
 
 ## Credits

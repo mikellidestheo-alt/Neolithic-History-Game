@@ -371,6 +371,9 @@
 
   function render(key, opts = {}) {
     const p = PEOPLE[key] || PEOPLE.you;
+    // Illustrated artwork (art/portraits/<key>.jpg) replaces the drawn portrait when it exists.
+    const art = window.ART && window.ART.portraits && window.ART.portraits[key];
+    if (art) return `<img class="portrait art" src="${art}" alt="${opts.decorative ? '' : p.name}" decoding="async">`;
     const id = 'pt' + (++uid);
     const hw = p.hw || 40, chin = p.chin || 168, jaw = p.jaw ?? .72;
     const sk = SKIN[p.skin || 'light'];
