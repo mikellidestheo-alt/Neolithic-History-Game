@@ -2,6 +2,7 @@
 window.ART = {
   "portraits": {
     "avenol": "art/portraits/avenol.jpg",
+    "bauer": "art/portraits/bauer.jpg",
     "briand": "art/portraits/briand.jpg",
     "bruning": "art/portraits/bruning.jpg",
     "chamberlainA": "art/portraits/chamberlainA.jpg",
@@ -10,11 +11,15 @@ window.ART = {
     "dannunzio": "art/portraits/dannunzio.jpg",
     "drummond": "art/portraits/drummond.jpg",
     "franco": "art/portraits/franco.jpg",
+    "hacha": "art/portraits/hacha.jpg",
     "hitler": "art/portraits/hitler.jpg",
     "hugenberg": "art/portraits/hugenberg.jpg",
     "kellogg": "art/portraits/kellogg.jpg",
+    "laval": "art/portraits/laval.jpg",
+    "matsuoka": "art/portraits/matsuoka.jpg",
     "mussolini": "art/portraits/mussolini.jpg",
     "nchamberlain": "art/portraits/nchamberlain.jpg",
+    "orlando": "art/portraits/orlando.jpg",
     "papen": "art/portraits/papen.jpg",
     "pilsudski": "art/portraits/pilsudski.jpg",
     "poincare": "art/portraits/poincare.jpg",
