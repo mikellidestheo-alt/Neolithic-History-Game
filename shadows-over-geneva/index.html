@@ -5,10 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0c0b0a">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon.svg">
 <title>Shadows over Geneva</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Limelight&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,700;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Limelight&family=Oswald:wght@500;700&family=Special+Elite&display=swap">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -32,6 +36,7 @@
         <button class="btn" id="btn-resume" hidden>Resume saved file</button>
         <div class="title-row">
           <button class="btn btn-ghost" id="btn-sound-title" aria-pressed="true">♪ Music on</button>
+          <button class="btn btn-ghost fs-btn" id="btn-fs-title" aria-pressed="false">⛶ Full screen</button>
           <button class="btn btn-ghost" id="btn-about">About &amp; teachers</button>
         </div>
       </div>
@@ -79,21 +84,21 @@
     </header>
     <div class="pick-grid three" id="role-grid">
       <button class="pick-card role" data-role="league">
-        <div class="role-art" data-portrait="drummond"></div>
+        <div class="role-art" data-portrait="drummond,selassie,avenol"></div>
         <h3>The League Council</h3>
         <p class="role-sub">Geneva · 1920–1936</p>
         <p>Take a seat on the League of Nations Council, the League’s “security council”. Settle disputes, judge aggressors, and decide whether to impose sanctions.</p>
         <p class="role-count" data-count="league"></p>
       </button>
       <button class="pick-card role" data-role="germany">
-        <div class="role-art" data-portrait="stresemann"></div>
+        <div class="role-art" data-portrait="stresemann,hitler"></div>
         <h3>Germany</h3>
         <p class="role-sub">Berlin · 1919–1939</p>
         <p>Shape German foreign policy for each new leader: Bauer, Cuno, Stresemann, Brüning, Papen and Hitler.</p>
         <p class="role-count" data-count="germany"></p>
       </button>
       <button class="pick-card role" data-role="italy">
-        <div class="role-art" data-portrait="mussolini"></div>
+        <div class="role-art" data-portrait="orlando,mussolini"></div>
         <h3>Italy</h3>
         <p class="role-sub">Rome · 1919–1939</p>
         <p>Steer Italy from the “mutilated victory” of 1919, through Orlando and Giolitti, to Mussolini’s empire and the Axis.</p>
@@ -134,6 +139,7 @@
       <div class="hud-strikes" id="hud-strikes" aria-label="Mistakes"></div>
       <div class="hud-btns">
         <button class="icon-btn" id="btn-sound" aria-label="Toggle music" aria-pressed="true">♪</button>
+        <button class="icon-btn fs-btn" id="btn-fs" aria-label="Full screen" aria-pressed="false">⛶</button>
         <button class="icon-btn" id="btn-menu" aria-label="Menu">≡</button>
       </div>
     </header>
@@ -201,15 +207,17 @@
         <li>Use the end-of-game debrief as an exam-practice list: pick one failure and one success of the League and explain why.</li>
         <li>A-Level: use the Historian’s Desk notes as essay starters on debates over Hitler’s intentions, appeasement and the League.</li>
         <li>Progress is saved on the device, so a game can continue next lesson.</li>
+        <li>Tap <b>⛶ Full screen</b> (or press F) to hide the browser bars. On iPhone, use Share → Add to Home Screen and open the game from its icon.</li>
       </ul>
       <h4>A note on names</h4>
       <p>The League’s inner body was called the <b>Council</b>. The term “Security Council” belongs to the United Nations (1945). In this game the Council is described as the League’s “security council” to make the link.</p>
       <h4>Credits</h4>
-      <p>Map borders c.1930 adapted from <i>historical-basemaps</i> by A. Ourednik (GPL-3.0). The music is generated live in your browser. Portraits are original caricatures. Speech-bubble lines are written in character, except those marked as genuine quotations.</p>
+      <p>Map borders c.1930 adapted from <i>historical-basemaps</i> by A. Ourednik (GPL-3.0). The music is generated live in your browser. Portraits are original graphic-novel illustrations drawn in code. Speech-bubble lines are written in character, except those marked as genuine quotations.</p>
       <button class="btn btn-primary" id="about-close">Close</button>
     </div>
   </div>
 
+  <div class="toast" id="toast" role="status" hidden></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
 </div>

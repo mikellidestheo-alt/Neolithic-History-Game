@@ -14,6 +14,9 @@ let html = read('index.html');
 html = html.replace(/<link rel="stylesheet" href="css\/([^"]+)">/g, (_, f) => `<style>\n${read('css/' + f)}\n</style>`);
 html = html.replace(/<script src="js\/([^"]+)"><\/script>/g, (_, f) => `<script>\n${read('js/' + f).replace(/<\/script/gi, '<\\/script')}\n</script>`);
 
+// single-file builds have no manifest or icon next to them
+html = html.replace(/<link rel="(manifest|apple-touch-icon)"[^>]*>\n?/g, '');
+
 fs.mkdirSync(path.join(root, 'dist'), { recursive: true });
 fs.writeFileSync(path.join(root, 'dist/shadows-over-geneva.html'), html);
 

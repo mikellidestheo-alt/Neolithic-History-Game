@@ -35,7 +35,9 @@ as they did historically, and flashpoints are marked. The League authority and w
 - Music and sound are generated live with the Web Audio API and start when the player taps **Open the file**.
   There is a music toggle on the title screen and in the game.
 - Progress saves automatically on the device, so a game can be resumed next lesson.
-- Keyboard: `A`–`D` choose an option, `Enter` seals the decision.
+- **Full screen:** tap ⛶ on the title screen or in the game bar, or press `F`. On iPhone, where browsers don't allow
+  full screen, use Share → Add to Home Screen. When the folder is hosted, the included web-app manifest opens it full screen.
+- Keyboard: `A`–`D` choose an option, `Enter` seals the decision, `F` toggles full screen.
 
 ## Editing the content
 
@@ -48,7 +50,7 @@ All the history lives in `js/data-league.js`, `js/data-germany.js` and `js/data-
 - `fx`: changes to the meters (`auth`, `tens`), territory (`own`) and map markers (`mark`)
 - `focus`: `[lon, lat, zoom]` for the map camera
 
-Portraits are generated from parameters in `js/portraits.js`. After editing, rebuild the single-file version:
+Portraits are graphic-novel style illustrations generated from parameters in `js/portraits.js` (head shape, hair, facial hair, eyewear, clothing, expression, age and backdrop). After editing, rebuild the single-file version:
 
 ```sh
 cd tools && node bundle.mjs
@@ -60,5 +62,5 @@ cd tools && node bundle.mjs
 
 - Map borders (c.1930) are derived from [historical-basemaps](https://github.com/aourednik/historical-basemaps)
   by A. Ourednik, licensed **GPL-3.0**. `js/mapdata.js` is a derived work under the same licence.
-- Fonts: Limelight, Special Elite, Courier Prime and Bangers, loaded from Google Fonts. The game falls back to system fonts offline.
+- Fonts: Limelight, Special Elite, Courier Prime, Oswald and Comic Neue, loaded from Google Fonts. The game falls back to system fonts offline.
 - Speech bubbles are written in character unless marked "Genuine quotation" or "Attributed quotation".

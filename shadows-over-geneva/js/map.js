@@ -308,6 +308,7 @@
     build, reset, apply, focus, setTension, setPlayer,
     zoomIn: () => zoomBy(1.6), zoomOut: () => zoomBy(1 / 1.6),
     world: () => focus(25, 30, 1.3),
+    placeName: id => (PLACES[id] || [])[2],
     refocus: () => lastFocus && focus(...lastFocus),
     resize: () => setVB(vb, true)
   };

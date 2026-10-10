@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#0c0b0a">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Shadows over Geneva</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Limelight&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comic+Neue:ital,wght@0,700;1,700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Limelight&family=Oswald:wght@500;700&family=Special+Elite&display=swap">
 <style>
 /* Shadows over Geneva — film-noir comic dossier.
    Layout: one-screen app. Phone portrait stacks map over dossier; wide screens put them side by side. */
@@ -45,7 +47,8 @@
   --f-display: 'Limelight', 'Playfair Display', Georgia, serif;
   --f-type: 'Special Elite', 'Courier New', Courier, monospace;
   --f-body: 'Courier Prime', 'Courier New', Courier, monospace;
-  --f-comic: 'Bangers', Impact, 'Arial Narrow', sans-serif;
+  --f-comic: 'Oswald', 'Arial Narrow', Impact, sans-serif;
+  --f-letter: 'Comic Neue', 'Trebuchet MS', 'Segoe UI', sans-serif;
 
   --r: 3px;
   --gutter: 16px;
@@ -134,9 +137,9 @@ button { font: inherit; color: inherit; }
 .tagline { margin: 0; font-family: var(--f-type); color: var(--fog); max-width: 34ch; font-size: 1.02rem; text-wrap: balance; }
 .title-cast { display: flex; justify-content: center; align-items: flex-end; margin-top: 4px; }
 .cast { width: 96px; aspect-ratio: 5 / 6; max-width: 28vw; box-shadow: 6px 6px 0 rgba(0, 0, 0, .7); }
-.cast.c1 { transform: rotate(-7deg) translateY(10px); }
-.cast.c2 { width: 118px; z-index: 2; margin: 0 -10px; }
-.cast.c3 { transform: rotate(6deg) translateY(12px); }
+.cast.c1 { transform: translateY(8px); }
+.cast.c2 { width: 118px; z-index: 2; margin: 0 8px; }
+.cast.c3 { transform: translateY(8px); }
 .cast svg, .role-art svg { width: 100%; height: 100%; display: block; }
 .title-actions { display: grid; gap: 12px; justify-items: center; width: 100%; max-width: 360px; margin-top: 10px; }
 .title-actions .btn-primary { width: 100%; font-size: 1.15rem; }
@@ -160,14 +163,14 @@ button { font: inherit; color: inherit; }
   transition: transform .15s, box-shadow .15s;
   background-image: radial-gradient(circle at 85% 12%, rgba(120, 90, 40, .14) 0 40px, transparent 41px), linear-gradient(transparent 0 0);
 }
-.pick-card:hover, .pick-card:focus-visible { transform: translate(-2px, -2px) rotate(-.4deg); box-shadow: 10px 10px 0 var(--red); }
-.pick-card h3 { font-family: var(--f-comic); font-weight: 400; font-size: 2.1rem; letter-spacing: .03em; margin: 6px 0 4px; line-height: 1; }
+.pick-card:hover, .pick-card:focus-visible { transform: translate(-2px, -2px); box-shadow: 10px 10px 0 var(--red); }
+.pick-card h3 { font-family: var(--f-comic); font-weight: 700; text-transform: uppercase; font-size: 1.8rem; letter-spacing: .02em; margin: 6px 0 4px; line-height: 1; }
 .pick-card p { margin: 0 0 10px; font-size: .95rem; }
 .pick-card ul { margin: 0; padding-left: 1.1em; font-size: .9rem; }
 .pick-card li { margin: 3px 0; }
 .stamp-chip { align-self: flex-start; display: inline-block; font-family: var(--f-type); font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: var(--red-deep); border: 2px solid var(--red-deep); padding: 2px 8px; transform: rotate(-2deg); }
-.role-art { width: 100%; aspect-ratio: 16 / 10; overflow: hidden; border: 3px solid var(--ink); margin-bottom: 10px; }
-.role-art svg { height: 100%; }
+.role-art { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border: 3px solid var(--ink); margin-bottom: 10px; display: flex; background: var(--ink); gap: 3px; }
+.role-art svg { height: 100%; width: auto; flex: 1 1 0; min-width: 0; }
 .role-sub { font-family: var(--f-type); color: var(--red-deep); text-transform: uppercase; letter-spacing: .12em; font-size: .75rem !important; }
 .role-count { font-family: var(--f-type); font-size: .82rem !important; color: #5a5245; border-top: 1px dashed #a69a7f; padding-top: 8px; margin: 8px 0 0 !important; }
 .back { margin-top: 4px; }
@@ -211,7 +214,7 @@ button { font: inherit; color: inherit; }
 .meter.bump .m-bar { animation: bump .6s; }
 @keyframes bump { 30% { box-shadow: 0 0 0 2px var(--paper); } }
 .hud-strikes { display: flex; gap: 4px; }
-.strike { width: 24px; height: 24px; border: 1.5px dashed var(--ash); display: grid; place-items: center; font-family: var(--f-comic); font-size: 1.15rem; color: var(--red); line-height: 1; }
+.strike { width: 24px; height: 24px; border: 1.5px dashed var(--ash); display: grid; place-items: center; font-family: var(--f-comic); font-weight: 700; font-size: 1rem; color: var(--red); line-height: 1; }
 .strike.on { border: 2px solid var(--red); background: rgba(184, 50, 42, .12); animation: strikeIn .5s cubic-bezier(.2, 2, .4, 1); }
 .strike.last { border-color: var(--red); border-style: solid; color: var(--fog); font-size: .7rem; font-family: var(--f-type); }
 @keyframes strikeIn { from { transform: scale(2.4) rotate(-20deg); opacity: 0; } }
@@ -299,14 +302,15 @@ button { font: inherit; color: inherit; }
 .advising b { color: var(--paper); font-weight: 400; }
 
 /* comic panel */
-.panel { display: grid; grid-template-columns: 112px 1fr; gap: 12px; align-items: start; }
-.panel .face { width: 112px; aspect-ratio: 5 / 6; box-shadow: 5px 5px 0 #000; transform: rotate(-1.5deg); }
+.panel { display: grid; grid-template-columns: 128px 1fr; gap: 12px; align-items: start; }
+.panel .face { width: 128px; aspect-ratio: 5 / 6; box-shadow: 5px 5px 0 #000; border: 2px solid #000; }
 .panel .face svg { width: 100%; height: 100%; display: block; }
 .bubble-wrap { display: grid; gap: 6px; min-width: 0; padding-top: 4px; }
-.bubble { position: relative; background: #fbf7ec; color: var(--type); border: 3px solid #000; border-radius: 22px; padding: 12px 14px; font-family: var(--f-type); font-size: .98rem; line-height: 1.35; box-shadow: 4px 4px 0 #000; min-height: 3.2em; }
+.bubble { position: relative; background: #fbf8f0; color: var(--type); border: 2.5px solid #000; border-radius: 20px; padding: 11px 14px; font-family: var(--f-letter); font-weight: 700; text-transform: uppercase; font-size: .9rem; line-height: 1.3; box-shadow: 4px 4px 0 #000; min-height: 3.2em; }
 .bubble::before { content: ''; position: absolute; left: -17px; top: 18px; border: 9px solid transparent; border-right: 15px solid #000; }
-.bubble::after { content: ''; position: absolute; left: -10px; top: 21px; border: 6px solid transparent; border-right: 10px solid #fbf7ec; }
-.who { font-family: var(--f-comic); font-size: 1.15rem; letter-spacing: .04em; color: var(--amber); line-height: 1.1; }
+.bubble::after { content: ''; position: absolute; left: -10px; top: 21px; border: 6px solid transparent; border-right: 10px solid #fbf8f0; }
+.who { font-family: var(--f-letter); font-weight: 700; font-style: italic; text-transform: uppercase; font-size: 1rem; letter-spacing: .02em; color: var(--amber); line-height: 1.15; }
+.caption { background: #efe5cb; color: #15110d; border: 2.5px solid #000; padding: 8px 10px; font-family: var(--f-letter); font-weight: 700; font-style: italic; text-transform: uppercase; font-size: .86rem; line-height: 1.25; box-shadow: 3px 3px 0 #000; }
 .who small { display: block; font-family: var(--f-type); font-size: .7rem; letter-spacing: .06em; color: var(--fog); text-transform: none; }
 .genuine { display: inline-block; margin-top: 6px; font-size: .66rem; letter-spacing: .12em; text-transform: uppercase; color: var(--red-deep); border: 1.5px solid var(--red-deep); padding: 0 5px; }
 
@@ -324,7 +328,7 @@ button { font: inherit; color: inherit; }
   box-shadow: 4px 4px 0 #000; font-size: .97rem; line-height: 1.35;
   transition: transform .12s, box-shadow .12s, background .15s, opacity .3s;
 }
-.opt .lt { width: 38px; height: 38px; display: grid; place-items: center; border: 2px solid #000; font-family: var(--f-comic); font-size: 1.35rem; background: var(--paper-2); }
+.opt .lt { width: 38px; height: 38px; display: grid; place-items: center; border: 2px solid #000; font-family: var(--f-comic); font-weight: 700; font-size: 1.2rem; background: var(--paper-2); }
 .opt:hover { background: #fffaf0; }
 .opt[aria-pressed="true"] { background: #fff4d6; box-shadow: 4px 4px 0 var(--amber), 0 0 0 3px var(--amber); transform: translate(-1px, -1px); }
 .opt[aria-pressed="true"] .lt { background: var(--ink); color: var(--amber); }
@@ -343,7 +347,7 @@ button { font: inherit; color: inherit; }
 
 /* verdict */
 .verdict { position: relative; display: grid; gap: 12px; padding-top: 6px; }
-.stampbox { justify-self: center; font-family: var(--f-comic); font-size: clamp(2rem, 9vw, 2.9rem); letter-spacing: .05em; line-height: 1; padding: 8px 18px 4px; border: 5px solid currentColor; transform: rotate(-6deg); text-align: center; animation: stamp .45s cubic-bezier(.2, 1.6, .4, 1) both; mix-blend-mode: screen; }
+.stampbox { justify-self: center; font-family: var(--f-comic); font-weight: 700; text-transform: uppercase; font-size: clamp(1.7rem, 7.5vw, 2.4rem); letter-spacing: .06em; line-height: 1; padding: 8px 18px 4px; border: 5px solid currentColor; transform: rotate(-6deg); text-align: center; animation: stamp .45s cubic-bezier(.2, 1.6, .4, 1) both; mix-blend-mode: screen; }
 .stampbox small { display: block; font-family: var(--f-type); font-size: .78rem; letter-spacing: .14em; margin-top: 4px; }
 .stampbox.ok { color: var(--amber); }
 .stampbox.bad { color: #e2453a; }
@@ -353,7 +357,7 @@ button { font: inherit; color: inherit; }
 .headline { background: var(--paper); color: var(--ink); border: 2px solid #000; padding: 10px 12px; text-align: center; box-shadow: 5px 5px 0 #000; }
 .headline .paper-name { font-family: var(--f-display); font-size: .8rem; letter-spacing: .1em; border-bottom: 2px solid var(--ink); padding-bottom: 4px; margin-bottom: 6px; display: flex; justify-content: space-between; gap: 8px; }
 .headline .paper-name span:last-child { font-family: var(--f-type); font-size: .68rem; letter-spacing: .06em; align-self: end; }
-.headline h3 { margin: 0; font-family: var(--f-comic); font-weight: 400; font-size: clamp(1.4rem, 6vw, 1.9rem); line-height: 1.02; letter-spacing: .02em; text-wrap: balance; }
+.headline h3 { margin: 0; font-family: var(--f-comic); font-weight: 700; text-transform: uppercase; font-size: clamp(1.25rem, 5.4vw, 1.7rem); line-height: 1.02; letter-spacing: .02em; text-wrap: balance; }
 .record h4, .note h4 { margin: 0 0 6px; font-family: var(--f-type); font-weight: 400; text-transform: uppercase; letter-spacing: .14em; font-size: .78rem; color: var(--amber); }
 .record p { margin: 0; }
 .fx-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
@@ -377,17 +381,17 @@ details.note[open] summary { margin-bottom: 6px; }
 .modal-card .btn { margin-top: 12px; justify-self: start; }
 .log-list { display: grid; gap: 6px; font-size: .88rem; max-height: 50vh; overflow-y: auto; }
 .log-item { display: grid; grid-template-columns: 26px 1fr; gap: 8px; align-items: start; }
-.log-item .mk2 { font-family: var(--f-comic); font-size: 1.2rem; line-height: 1; }
+.log-item .mk2 { font-family: var(--f-comic); font-weight: 700; font-size: 1.2rem; line-height: 1; }
 .log-item .mk2.ok { color: var(--amber); } .log-item .mk2.bad { color: var(--red); }
 
 /* ---------- end ---------- */
 .end-screen { padding: 24px var(--gutter) 40px; display: grid; justify-items: center; align-content: start; gap: 22px; background: radial-gradient(ellipse at 50% 0%, #2a241d 0%, var(--ink) 60%); }
-.newspaper { width: 100%; max-width: 680px; background: var(--paper); color: var(--ink); border: 3px solid #000; padding: 18px clamp(14px, 4vw, 30px) 22px; box-shadow: 10px 10px 0 rgba(0, 0, 0, .6); transform: rotate(-.6deg); animation: spinIn .9s cubic-bezier(.2, .9, .3, 1) both; }
-@keyframes spinIn { from { transform: rotate(-200deg) scale(.1); opacity: 0; } }
+.newspaper { width: 100%; max-width: 680px; background: var(--paper); color: var(--ink); border: 3px solid #000; padding: 18px clamp(14px, 4vw, 30px) 22px; box-shadow: 10px 10px 0 rgba(0, 0, 0, .6); animation: spinIn .9s cubic-bezier(.2, .9, .3, 1) both; }
+@keyframes spinIn { from { transform: scale(.85) rotate(-4deg); opacity: 0; } }
 .np-mast { text-align: center; border-bottom: 4px double var(--ink); padding-bottom: 6px; }
 .np-mast .np-name { font-family: var(--f-display); font-size: clamp(1.6rem, 7vw, 2.6rem); line-height: 1; }
 .np-mast .np-line { display: flex; justify-content: space-between; font-family: var(--f-type); font-size: .72rem; text-transform: uppercase; letter-spacing: .08em; border-top: 1px solid var(--ink); margin-top: 6px; padding-top: 3px; gap: 8px; }
-.np-head { font-family: var(--f-comic); font-weight: 400; font-size: clamp(2.2rem, 11vw, 4rem); line-height: .95; text-align: center; margin: 14px 0 10px; text-wrap: balance; }
+.np-head { font-family: var(--f-comic); font-weight: 700; text-transform: uppercase; font-size: clamp(2rem, 9.5vw, 3.5rem); line-height: .95; text-align: center; margin: 14px 0 10px; text-wrap: balance; }
 .np-head.red { color: var(--red); }
 .np-cols { display: grid; grid-template-columns: 120px 1fr; gap: 14px; align-items: start; }
 .np-cols .face { aspect-ratio: 5 / 6; filter: grayscale(1) contrast(1.3); border: 2px solid #000; }
@@ -395,11 +399,11 @@ details.note[open] summary { margin-bottom: 6px; }
 .np-cols p { margin: 0 0 8px; font-size: .95rem; }
 .np-cols p:first-child::first-letter { font-family: var(--f-display); font-size: 2.6em; float: left; line-height: .85; margin: 2px 6px 0 0; }
 .np-score { display: flex; flex-wrap: wrap; gap: 8px 18px; border-top: 2px solid var(--ink); margin-top: 10px; padding-top: 8px; font-family: var(--f-type); font-size: .85rem; }
-.np-score b { font-family: var(--f-comic); font-size: 1.4rem; font-weight: 400; }
+.np-score b { font-family: var(--f-comic); font-size: 1.25rem; font-weight: 700; text-transform: uppercase; }
 .debrief { width: 100%; max-width: 680px; display: grid; gap: 10px; }
 .debrief h3 { margin: 0; font-family: var(--f-display); font-weight: 400; font-size: 1.6rem; color: var(--amber); }
 .db-item { background: var(--smoke); border: 1.5px solid var(--ash); padding: 10px 12px; display: grid; grid-template-columns: 30px 1fr; gap: 10px; }
-.db-item .mk2 { font-family: var(--f-comic); font-size: 1.5rem; line-height: 1; }
+.db-item .mk2 { font-family: var(--f-comic); font-weight: 700; font-size: 1.5rem; line-height: 1; }
 .db-item .mk2.ok { color: var(--amber); } .db-item .mk2.bad { color: var(--red); } .db-item .mk2.skip { color: var(--fog); }
 .db-item h4 { margin: 0; font-family: var(--f-type); font-weight: 400; font-size: .95rem; }
 .db-item h4 small { color: var(--fog); }
@@ -431,8 +435,9 @@ details.note[open] summary { margin-bottom: 6px; }
   .hud-year small { white-space: normal; max-width: 8.5em; line-height: 1.2; }
   .hud-meters, .meter { min-width: 0; }
   .meter { grid-template-columns: 1fr; gap: 2px; }
-  .panel { grid-template-columns: 88px 1fr; gap: 10px; }
-  .panel .face { width: 88px; }
+  .panel { grid-template-columns: 100px 1fr; gap: 10px; }
+  .panel .face { width: 100px; }
+  .bubble { font-size: .82rem; }
   .np-cols { grid-template-columns: 1fr; }
   .map-svg { --lbl: 9px; }
   .map-ctrls { grid-auto-flow: column; gap: 4px; right: 6px; top: 6px; }
@@ -443,6 +448,13 @@ details.note[open] summary { margin-bottom: 6px; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .grain, .blinds { animation: none; }
 }
+
+/* ---------- full screen + toast ---------- */
+.toast { position: absolute; left: 50%; bottom: calc(24px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 60; width: min(92%, 440px); background: var(--paper); color: var(--type); border: 2px solid #000; box-shadow: 5px 5px 0 #000; padding: 12px 14px; font-size: .9rem; }
+.toast b { font-family: var(--f-type); font-weight: 400; text-transform: uppercase; letter-spacing: .1em; font-size: .75rem; color: var(--red-deep); display: block; margin-bottom: 3px; }
+#btn-fs[aria-pressed="true"] { color: var(--amber); border-color: var(--amber); text-decoration: none; }
+#btn-fs[aria-pressed="false"] { text-decoration: none; }
+:fullscreen #app, :-webkit-full-screen #app { height: 100vh; height: 100dvh; }
 
 </style>
 </head>
@@ -467,6 +479,7 @@ details.note[open] summary { margin-bottom: 6px; }
         <button class="btn" id="btn-resume" hidden>Resume saved file</button>
         <div class="title-row">
           <button class="btn btn-ghost" id="btn-sound-title" aria-pressed="true">♪ Music on</button>
+          <button class="btn btn-ghost fs-btn" id="btn-fs-title" aria-pressed="false">⛶ Full screen</button>
           <button class="btn btn-ghost" id="btn-about">About &amp; teachers</button>
         </div>
       </div>
@@ -514,21 +527,21 @@ details.note[open] summary { margin-bottom: 6px; }
     </header>
     <div class="pick-grid three" id="role-grid">
       <button class="pick-card role" data-role="league">
-        <div class="role-art" data-portrait="drummond"></div>
+        <div class="role-art" data-portrait="drummond,selassie,avenol"></div>
         <h3>The League Council</h3>
         <p class="role-sub">Geneva · 1920–1936</p>
         <p>Take a seat on the League of Nations Council, the League’s “security council”. Settle disputes, judge aggressors, and decide whether to impose sanctions.</p>
         <p class="role-count" data-count="league"></p>
       </button>
       <button class="pick-card role" data-role="germany">
-        <div class="role-art" data-portrait="stresemann"></div>
+        <div class="role-art" data-portrait="stresemann,hitler"></div>
         <h3>Germany</h3>
         <p class="role-sub">Berlin · 1919–1939</p>
         <p>Shape German foreign policy for each new leader: Bauer, Cuno, Stresemann, Brüning, Papen and Hitler.</p>
         <p class="role-count" data-count="germany"></p>
       </button>
       <button class="pick-card role" data-role="italy">
-        <div class="role-art" data-portrait="mussolini"></div>
+        <div class="role-art" data-portrait="orlando,mussolini"></div>
         <h3>Italy</h3>
         <p class="role-sub">Rome · 1919–1939</p>
         <p>Steer Italy from the “mutilated victory” of 1919, through Orlando and Giolitti, to Mussolini’s empire and the Axis.</p>
@@ -569,6 +582,7 @@ details.note[open] summary { margin-bottom: 6px; }
       <div class="hud-strikes" id="hud-strikes" aria-label="Mistakes"></div>
       <div class="hud-btns">
         <button class="icon-btn" id="btn-sound" aria-label="Toggle music" aria-pressed="true">♪</button>
+        <button class="icon-btn fs-btn" id="btn-fs" aria-label="Full screen" aria-pressed="false">⛶</button>
         <button class="icon-btn" id="btn-menu" aria-label="Menu">≡</button>
       </div>
     </header>
@@ -636,15 +650,17 @@ details.note[open] summary { margin-bottom: 6px; }
         <li>Use the end-of-game debrief as an exam-practice list: pick one failure and one success of the League and explain why.</li>
         <li>A-Level: use the Historian’s Desk notes as essay starters on debates over Hitler’s intentions, appeasement and the League.</li>
         <li>Progress is saved on the device, so a game can continue next lesson.</li>
+        <li>Tap <b>⛶ Full screen</b> (or press F) to hide the browser bars. On iPhone, use Share → Add to Home Screen and open the game from its icon.</li>
       </ul>
       <h4>A note on names</h4>
       <p>The League’s inner body was called the <b>Council</b>. The term “Security Council” belongs to the United Nations (1945). In this game the Council is described as the League’s “security council” to make the link.</p>
       <h4>Credits</h4>
-      <p>Map borders c.1930 adapted from <i>historical-basemaps</i> by A. Ourednik (GPL-3.0). The music is generated live in your browser. Portraits are original caricatures. Speech-bubble lines are written in character, except those marked as genuine quotations.</p>
+      <p>Map borders c.1930 adapted from <i>historical-basemaps</i> by A. Ourednik (GPL-3.0). The music is generated live in your browser. Portraits are original graphic-novel illustrations drawn in code. Speech-bubble lines are written in character, except those marked as genuine quotations.</p>
       <button class="btn btn-primary" id="about-close">Close</button>
     </div>
   </div>
 
+  <div class="toast" id="toast" role="status" hidden></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="vignette" aria-hidden="true"></div>
 </div>
@@ -656,226 +672,349 @@ window.MAPDATA = {"w":2000,"h":1000,"k":429.1504183819801,"tx":971.4285714285716
 
 </script>
 <script>
-// Comic-book portrait generator: bold ink outlines, halftone shading, sunburst panel.
-// Every figure is assembled from a few parameters (head, hair, facial hair, eyewear, clothes).
+// Graphic-novel portrait generator.
+// Realistic proportions, fine ink lines, flat shadow tones with cross-hatching, muted period colours and
+// an architectural backdrop. Every figure is assembled from a few parameters.
 (function () {
-  const INK = '#0b0a09';
-  const SKIN = { light: '#ead2b2', mid: '#d6ad86', dark: '#6e4631' };
-  const HAIR = { black: '#15120f', dark: '#2e2520', grey: '#8d877f', white: '#e7e2d8', brown: '#4b3527' };
+  const INK = '#1b1612';
+  const SKIN = {
+    light: { base: '#d9b592', shade: '#b3896a', deep: '#8a6249', lip: '#b07b66' },
+    mid: { base: '#c99c76', shade: '#a2775a', deep: '#7c5640', lip: '#9c6a55' },
+    dark: { base: '#7d5640', shade: '#5f3f2e', deep: '#47291c', lip: '#5c3527' }
+  };
+  const HAIR = { black: '#1f1b18', dark: '#3b3029', brown: '#5b4333', grey: '#8f8a83', white: '#d9d4ca' };
   const CLOTH = {
-    suit: '#23201d', wing: '#23201d', black: '#0e0d0c', brown: '#6a5233', uniform: '#4b4d39',
-    tunic: '#6a6550', cape: '#191512', grey: '#55585c', navy: '#1e2733'
+    suit: '#2f3a48', wing: '#26272b', black: '#191817', brown: '#6b5638', uniform: '#535a43',
+    tunic: '#6d6a52', cape: '#24201d', grey: '#55595e', blue: '#2b3a52'
+  };
+  const SCENE = {
+    palais: { sky: '#b9c3bd', stone: '#d8ccb0', dark: '#9c907a' },
+    ministry: { sky: '#6f6658', stone: '#8d7f69', dark: '#4e463b' },
+    field: { sky: '#a9a594', stone: '#7f7a66', dark: '#55513f' },
+    noir: { sky: '#3a3631', stone: '#4c463e', dark: '#25221e' }
   };
 
   const PEOPLE = {
-    drummond:   { name: 'Sir Eric Drummond', role: 'Secretary-General of the League, 1920–33', hair: 'receding', hc: 'grey', stache: 'small', mc: 'grey', clothes: 'wing', brows: 'calm', mouth: 'flat', bg: '#c9a54a' },
-    avenol:     { name: 'Joseph Avenol', role: 'Secretary-General of the League, 1933–40', hair: 'bald', hc: 'grey', glasses: 'round', clothes: 'wing', brows: 'worried', mouth: 'flat', bg: '#c9a54a' },
-    pilsudski:  { name: 'Marshal Józef Piłsudski', role: 'Leader of Poland', hair: 'crop', hc: 'grey', stache: 'walrus', mc: 'grey', brows: 'bushy', clothes: 'uniform', mouth: 'flat', bg: '#7d8a99', jaw: .7 },
-    chamberlainA: { name: 'Sir Austen Chamberlain', role: 'British Foreign Secretary, 1924–29', hair: 'slick', hc: 'dark', glasses: 'monocle', clothes: 'wing', brows: 'raised', mouth: 'flat', bg: '#7d8a99', hw: 56, chin: 184 },
-    mussolini:  { name: 'Benito Mussolini', role: 'Il Duce, Prime Minister of Italy 1922–43', hair: 'bald', hc: 'dark', clothes: 'black', brows: 'angry', mouth: 'jut', jaw: .95, hw: 68, chin: 186, bg: '#a3261d' },
-    briand:     { name: 'Aristide Briand', role: 'French Foreign Minister', hair: 'messy', hc: 'grey', stache: 'walrus', mc: 'dark', clothes: 'suit', brows: 'worried', mouth: 'flat', bg: '#7d8a99', eyes: 'droop' },
-    matsuoka:   { name: 'Yōsuke Matsuoka', role: 'Japan’s delegate to the League', hair: 'crop', hc: 'black', glasses: 'round', stache: 'small', mc: 'black', clothes: 'suit', brows: 'stern', mouth: 'flat', bg: '#a3261d' },
-    hitler:     { name: 'Adolf Hitler', role: 'Führer of Germany, 1933–45', hair: 'sidepart', hc: 'black', stache: 'toothbrush', mc: 'black', clothes: 'brown', brows: 'angry', mouth: 'frown', bg: '#a3261d', hw: 58 },
-    selassie:   { name: 'Haile Selassie', role: 'Emperor of Abyssinia', skin: 'dark', hair: 'curly', hc: 'black', beard: 'full', mc: 'black', clothes: 'cape', brows: 'worried', mouth: 'flat', bg: '#c9a54a', hw: 54, chin: 182 },
-    laval:      { name: 'Pierre Laval', role: 'Prime Minister of France, 1935–36', hair: 'slick', hc: 'black', stache: 'small', mc: 'black', clothes: 'suit', tie: 'white', brows: 'raised', mouth: 'smirk', bg: '#7d8a99', skin: 'mid' },
-    bauer:      { name: 'Gustav Bauer', role: 'Chancellor of Germany, 1919–20', hair: 'crop', hc: 'dark', stache: 'walrus', mc: 'dark', clothes: 'wing', brows: 'worried', mouth: 'frown', bg: '#8d8378' },
-    wirth:      { name: 'Joseph Wirth', role: 'Chancellor of Germany, 1921–22', hair: 'crop', hc: 'dark', glasses: 'pince', clothes: 'suit', brows: 'calm', mouth: 'flat', bg: '#8d8378' },
-    rathenau:   { name: 'Walther Rathenau', role: 'German Foreign Minister, 1922', hair: 'bald', hc: 'dark', beard: 'trim', mc: 'dark', clothes: 'wing', brows: 'calm', mouth: 'flat', bg: '#8d8378', hw: 56 },
-    poincare:   { name: 'Raymond Poincaré', role: 'Prime Minister of France, 1922–24', hair: 'receding', hc: 'grey', beard: 'trim', mc: 'grey', clothes: 'wing', brows: 'stern', mouth: 'frown', bg: '#7d8a99' },
-    cuno:       { name: 'Wilhelm Cuno', role: 'Chancellor of Germany, 1922–23', hair: 'receding', hc: 'dark', clothes: 'wing', brows: 'worried', mouth: 'frown', bg: '#8d8378' },
-    stresemann: { name: 'Gustav Stresemann', role: 'Chancellor 1923, Foreign Minister 1923–29', hair: 'bald', hc: 'dark', stache: 'small', mc: 'dark', clothes: 'wing', brows: 'calm', mouth: 'smile', hw: 68, jaw: .85, bg: '#c9a54a' },
-    kellogg:    { name: 'Frank B. Kellogg', role: 'US Secretary of State', hair: 'messy', hc: 'white', clothes: 'suit', brows: 'calm', mouth: 'smile', bg: '#7d8a99' },
-    hugenberg:  { name: 'Alfred Hugenberg', role: 'Nationalist (DNVP) leader and press baron', hair: 'crop', hc: 'white', stache: 'walrus', mc: 'white', glasses: 'pince', clothes: 'wing', brows: 'angry', mouth: 'shout', hw: 64, bg: '#a3261d' },
-    bruning:    { name: 'Heinrich Brüning', role: 'Chancellor of Germany, 1930–32', hair: 'receding', hc: 'dark', glasses: 'round', clothes: 'suit', brows: 'worried', mouth: 'flat', hw: 54, chin: 184, bg: '#8d8378' },
-    papen:      { name: 'Franz von Papen', role: 'Chancellor of Germany, 1932', hair: 'slick', hc: 'grey', stache: 'small', mc: 'grey', clothes: 'wing', brows: 'raised', mouth: 'smirk', hw: 54, chin: 184, bg: '#8d8378' },
-    ribbentrop: { name: 'Joachim von Ribbentrop', role: 'German diplomat, Foreign Minister from 1938', hair: 'slick', hc: 'grey', clothes: 'suit', brows: 'raised', mouth: 'smirk', bg: '#a3261d' },
-    franco:     { name: 'General Francisco Franco', role: 'Leader of Spain’s Nationalists', hair: 'crop', hc: 'dark', stache: 'small', mc: 'dark', clothes: 'uniform', hat: 'cap', brows: 'stern', mouth: 'flat', hw: 64, jaw: .85, bg: '#a3261d' },
-    schuschnigg:{ name: 'Kurt von Schuschnigg', role: 'Chancellor of Austria, 1934–38', hair: 'slick', hc: 'dark', glasses: 'round', clothes: 'suit', brows: 'worried', mouth: 'flat', bg: '#7d8a99' },
-    nchamberlain:{ name: 'Neville Chamberlain', role: 'British Prime Minister, 1937–40', hair: 'slick', hc: 'grey', stache: 'small', mc: 'grey', clothes: 'wing', brows: 'bushy', mouth: 'flat', hw: 56, chin: 184, bg: '#7d8a99' },
-    hacha:      { name: 'Emil Hácha', role: 'President of Czechoslovakia, 1938–39', hair: 'bald', hc: 'grey', clothes: 'suit', brows: 'worried', mouth: 'frown', bg: '#7d8a99' },
-    stalin:     { name: 'Joseph Stalin', role: 'Dictator of the USSR', hair: 'swept', hc: 'dark', stache: 'walrus', mc: 'dark', clothes: 'tunic', brows: 'stern', mouth: 'flat', bg: '#a3261d', skin: 'mid' },
-    wilson:     { name: 'Woodrow Wilson', role: 'President of the United States', hair: 'receding', hc: 'grey', glasses: 'pince', clothes: 'wing', brows: 'stern', mouth: 'flat', hw: 52, chin: 188, jaw: .6, bg: '#7d8a99' },
-    orlando:    { name: 'Vittorio Orlando', role: 'Prime Minister of Italy, 1917–19', hair: 'crop', hc: 'white', stache: 'walrus', mc: 'white', clothes: 'wing', brows: 'worried', mouth: 'frown', bg: '#5e6b3a' },
-    giolitti:   { name: 'Giovanni Giolitti', role: 'Prime Minister of Italy, 1920–21', hair: 'crop', hc: 'white', stache: 'walrus', mc: 'white', clothes: 'wing', brows: 'stern', mouth: 'flat', hw: 58, chin: 186, bg: '#5e6b3a' },
-    dannunzio:  { name: 'Gabriele D’Annunzio', role: 'Poet, soldier, “Commandant” of Fiume', hair: 'bald', hc: 'dark', beard: 'goatee', stache: 'small', mc: 'dark', clothes: 'uniform', brows: 'raised', mouth: 'smirk', hw: 54, bg: '#a3261d' },
-    zog:        { name: 'Ahmed Zogu (King Zog)', role: 'Ruler of Albania', hair: 'slick', hc: 'brown', stache: 'pencil', mc: 'brown', clothes: 'uniform', brows: 'calm', mouth: 'flat', hw: 54, chin: 184, bg: '#5e6b3a' },
-    macdonald:  { name: 'Ramsay MacDonald', role: 'British Prime Minister', hair: 'messy', hc: 'grey', stache: 'walrus', mc: 'grey', clothes: 'wing', brows: 'worried', mouth: 'flat', bg: '#7d8a99' },
-    ciano:      { name: 'Count Galeazzo Ciano', role: 'Italian Foreign Minister, 1936–43', hair: 'slick', hc: 'black', clothes: 'black', brows: 'raised', mouth: 'smirk', hw: 60, bg: '#5e6b3a' },
-    you:        { name: 'You', role: 'The decision-maker', silhouette: true, bg: '#c9a54a' }
+    drummond:   { name: 'Sir Eric Drummond', role: 'Secretary-General of the League, 1920–33', hair: 'receding', hc: 'grey', stache: 'clipped', mc: 'grey', clothes: 'wing', tie: '#5a2a24', brows: 'calm', mouth: 'set', age: 1, scene: 'palais' },
+    avenol:     { name: 'Joseph Avenol', role: 'Secretary-General of the League, 1933–40', hair: 'bald', hc: 'grey', glasses: 'round', clothes: 'suit', brows: 'worried', mouth: 'set', age: 1, scene: 'palais' },
+    pilsudski:  { name: 'Marshal Józef Piłsudski', role: 'Leader of Poland', hair: 'crop', hc: 'grey', stache: 'walrus', mc: 'grey', brows: 'heavy', clothes: 'uniform', mouth: 'set', age: 2, jaw: .7, scene: 'field' },
+    chamberlainA: { name: 'Sir Austen Chamberlain', role: 'British Foreign Secretary, 1924–29', hair: 'slick', hc: 'dark', glasses: 'monocle', clothes: 'wing', brows: 'raised', mouth: 'set', hw: 38, chin: 172, age: 1, scene: 'palais' },
+    mussolini:  { name: 'Benito Mussolini', role: 'Il Duce, Prime Minister of Italy 1922–43', hair: 'bald', hc: 'dark', clothes: 'black', brows: 'angry', mouth: 'jut', jaw: .9, hw: 44, chin: 172, age: 1, scene: 'ministry' },
+    briand:     { name: 'Aristide Briand', role: 'French Foreign Minister', hair: 'wavy', hc: 'grey', stache: 'walrus', mc: 'dark', clothes: 'suit', brows: 'worried', mouth: 'set', age: 2, eyes: 'heavy', scene: 'palais' },
+    matsuoka:   { name: 'Yōsuke Matsuoka', role: 'Japan’s delegate to the League', hair: 'crop', hc: 'black', glasses: 'round', stache: 'clipped', mc: 'black', clothes: 'suit', brows: 'stern', mouth: 'set', iris: 'brown', age: 1, scene: 'palais' },
+    hitler:     { name: 'Adolf Hitler', role: 'Führer of Germany, 1933–45', hair: 'sidepart', hc: 'dark', stache: 'toothbrush', mc: 'dark', clothes: 'brown', brows: 'angry', mouth: 'set', hw: 39, age: 1, scene: 'ministry' },
+    selassie:   { name: 'Haile Selassie', role: 'Emperor of Abyssinia', skin: 'dark', hair: 'curly', hc: 'black', beard: 'full', mc: 'black', clothes: 'cape', brows: 'worried', mouth: 'set', hw: 37, chin: 172, iris: 'brown', scene: 'palais' },
+    laval:      { name: 'Pierre Laval', role: 'Prime Minister of France, 1935–36', hair: 'slick', hc: 'black', stache: 'clipped', mc: 'black', clothes: 'suit', tie: '#e6e0d2', brows: 'raised', mouth: 'smirk', skin: 'mid', iris: 'brown', scene: 'ministry' },
+    bauer:      { name: 'Gustav Bauer', role: 'Chancellor of Germany, 1919–20', hair: 'crop', hc: 'dark', stache: 'walrus', mc: 'dark', clothes: 'wing', brows: 'worried', mouth: 'frown', age: 1, scene: 'ministry' },
+    wirth:      { name: 'Joseph Wirth', role: 'Chancellor of Germany, 1921–22', hair: 'crop', hc: 'dark', glasses: 'pince', clothes: 'suit', brows: 'calm', mouth: 'set', scene: 'ministry' },
+    rathenau:   { name: 'Walther Rathenau', role: 'German Foreign Minister, 1922', hair: 'bald', hc: 'dark', beard: 'trim', stache: 'clipped', mc: 'dark', clothes: 'wing', brows: 'calm', mouth: 'set', hw: 39, iris: 'brown', age: 1, scene: 'ministry' },
+    poincare:   { name: 'Raymond Poincaré', role: 'Prime Minister of France, 1922–24', hair: 'receding', hc: 'grey', beard: 'trim', stache: 'clipped', mc: 'grey', clothes: 'wing', brows: 'stern', mouth: 'frown', age: 2, scene: 'ministry' },
+    cuno:       { name: 'Wilhelm Cuno', role: 'Chancellor of Germany, 1922–23', hair: 'receding', hc: 'dark', clothes: 'wing', brows: 'worried', mouth: 'frown', age: 1, scene: 'ministry' },
+    stresemann: { name: 'Gustav Stresemann', role: 'Chancellor 1923, Foreign Minister 1923–29', hair: 'bald', hc: 'dark', stache: 'clipped', mc: 'dark', clothes: 'wing', brows: 'calm', mouth: 'set', hw: 45, jaw: .85, chin: 172, age: 1, scene: 'palais' },
+    kellogg:    { name: 'Frank B. Kellogg', role: 'US Secretary of State', hair: 'wavy', hc: 'white', clothes: 'suit', brows: 'calm', mouth: 'smile', age: 2, scene: 'palais' },
+    hugenberg:  { name: 'Alfred Hugenberg', role: 'Nationalist (DNVP) leader and press baron', hair: 'crop', hc: 'white', stache: 'walrus', mc: 'white', glasses: 'pince', clothes: 'wing', brows: 'angry', mouth: 'frown', hw: 43, age: 2, scene: 'ministry' },
+    bruning:    { name: 'Heinrich Brüning', role: 'Chancellor of Germany, 1930–32', hair: 'receding', hc: 'dark', glasses: 'round', clothes: 'suit', brows: 'worried', mouth: 'set', hw: 37, chin: 172, scene: 'ministry' },
+    papen:      { name: 'Franz von Papen', role: 'Chancellor of Germany, 1932', hair: 'slick', hc: 'grey', stache: 'clipped', mc: 'grey', clothes: 'wing', brows: 'raised', mouth: 'smirk', hw: 37, chin: 172, age: 1, scene: 'ministry' },
+    ribbentrop: { name: 'Joachim von Ribbentrop', role: 'German diplomat, Foreign Minister from 1938', hair: 'slick', hc: 'grey', clothes: 'suit', brows: 'raised', mouth: 'smirk', age: 1, scene: 'ministry' },
+    franco:     { name: 'General Francisco Franco', role: 'Leader of Spain’s Nationalists', hair: 'crop', hc: 'dark', stache: 'clipped', mc: 'dark', clothes: 'uniform', hat: 'cap', brows: 'stern', mouth: 'set', hw: 43, jaw: .85, iris: 'brown', scene: 'field' },
+    schuschnigg:{ name: 'Kurt von Schuschnigg', role: 'Chancellor of Austria, 1934–38', hair: 'slick', hc: 'dark', glasses: 'round', clothes: 'suit', brows: 'worried', mouth: 'set', scene: 'ministry' },
+    nchamberlain:{ name: 'Neville Chamberlain', role: 'British Prime Minister, 1937–40', hair: 'slick', hc: 'grey', stache: 'clipped', mc: 'grey', clothes: 'wing', brows: 'heavy', mouth: 'set', hw: 38, chin: 172, age: 2, scene: 'ministry' },
+    hacha:      { name: 'Emil Hácha', role: 'President of Czechoslovakia, 1938–39', hair: 'bald', hc: 'grey', clothes: 'suit', brows: 'worried', mouth: 'frown', age: 2, scene: 'noir' },
+    stalin:     { name: 'Joseph Stalin', role: 'Dictator of the USSR', hair: 'swept', hc: 'dark', stache: 'walrus', mc: 'dark', clothes: 'tunic', brows: 'stern', mouth: 'set', skin: 'mid', iris: 'brown', age: 1, scene: 'ministry' },
+    wilson:     { name: 'Woodrow Wilson', role: 'President of the United States', hair: 'receding', hc: 'grey', glasses: 'pince', clothes: 'wing', brows: 'stern', mouth: 'set', hw: 36, chin: 176, jaw: .6, age: 2, scene: 'palais' },
+    orlando:    { name: 'Vittorio Orlando', role: 'Prime Minister of Italy, 1917–19', hair: 'crop', hc: 'white', stache: 'walrus', mc: 'white', clothes: 'wing', brows: 'worried', mouth: 'frown', age: 2, iris: 'brown', scene: 'palais' },
+    giolitti:   { name: 'Giovanni Giolitti', role: 'Prime Minister of Italy, 1920–21', hair: 'crop', hc: 'white', stache: 'walrus', mc: 'white', clothes: 'wing', brows: 'stern', mouth: 'set', hw: 40, chin: 174, age: 2, scene: 'ministry' },
+    dannunzio:  { name: 'Gabriele D’Annunzio', role: 'Poet, soldier, “Commandant” of Fiume', hair: 'bald', hc: 'dark', beard: 'goatee', stache: 'clipped', mc: 'dark', clothes: 'uniform', brows: 'raised', mouth: 'smirk', hw: 37, iris: 'brown', age: 1, scene: 'field' },
+    zog:        { name: 'Ahmed Zogu (King Zog)', role: 'Ruler of Albania', hair: 'slick', hc: 'brown', stache: 'pencil', mc: 'brown', clothes: 'uniform', brows: 'calm', mouth: 'set', hw: 37, chin: 172, iris: 'brown', scene: 'ministry' },
+    macdonald:  { name: 'Ramsay MacDonald', role: 'British Prime Minister', hair: 'wavy', hc: 'grey', stache: 'walrus', mc: 'grey', clothes: 'wing', brows: 'worried', mouth: 'set', age: 2, scene: 'palais' },
+    ciano:      { name: 'Count Galeazzo Ciano', role: 'Italian Foreign Minister, 1936–43', hair: 'slick', hc: 'black', clothes: 'black', brows: 'raised', mouth: 'smirk', hw: 42, iris: 'brown', scene: 'ministry' },
+    you:        { name: 'You', role: 'The decision-maker', silhouette: true, scene: 'noir' }
   };
 
   let uid = 0;
+  const f = n => +n.toFixed(1);
 
+  // ---------- geometry ----------
   function headPath(hw, chin, jaw) {
-    const L = 100 - hw, R = 100 + hw;
-    return `M${L},96 C${L},52 ${100 - hw * 0.6},28 100,28 C${100 + hw * 0.6},28 ${R},52 ${R},96 ` +
-      `C${R},132 ${100 + hw * jaw},${chin - 8} 100,${chin} C${100 - hw * jaw},${chin - 8} ${L},132 ${L},96 Z`;
+    const L = 100 - hw, R = 100 + hw, t = 40;
+    return `M100,${t} C${f(100 + hw * .62)},${t} ${R},${t + 18} ${R},${t + 46} ` +
+      `C${R},${t + 60} ${R - 1},${t + 72} ${R - 3},${t + 82} ` +
+      `C${R - 6},${t + 104} ${f(100 + hw * jaw)},${chin - 6} ${f(100 + hw * .3)},${chin - 1} ` +
+      `Q100,${chin + 3} ${f(100 - hw * .3)},${chin - 1} ` +
+      `C${f(100 - hw * jaw)},${chin - 6} ${L + 6},${t + 104} ${L + 3},${t + 82} ` +
+      `C${L + 1},${t + 72} ${L},${t + 60} ${L},${t + 46} C${L},${t + 18} ${f(100 - hw * .62)},${t} 100,${t} Z`;
   }
 
-  function clothes(p, id) {
+  // ---------- backdrops ----------
+  function backdrop(p, id) {
+    const s = SCENE[p.scene] || SCENE.ministry;
+    let out = `<rect width="200" height="240" fill="${s.sky}"/>`;
+    if (p.scene === 'palais') {
+      out += `<rect x="-5" y="34" width="210" height="190" fill="${s.stone}"/>
+        <rect x="-5" y="34" width="210" height="10" fill="${s.dark}" opacity=".5"/>
+        <rect x="-5" y="44" width="210" height="3" fill="${INK}" opacity=".25"/>`;
+      for (let x = 2; x < 200; x += 26) {
+        out += `<rect x="${x}" y="48" width="12" height="160" fill="#e6dcc4"/><rect x="${x + 8}" y="48" width="4" height="160" fill="${s.dark}" opacity=".45"/>
+          <rect x="${x + 13}" y="62" width="11" height="40" fill="#3d4651" opacity=".55"/><rect x="${x + 13}" y="118" width="11" height="40" fill="#3d4651" opacity=".55"/>`;
+      }
+      const flags = ['#8f3b33', '#3e5a7a', '#b49a4c', '#5b6e45', '#8f3b33'];
+      flags.forEach((c, i) => {
+        const x = 10 + i * 46;
+        out += `<line x1="${x}" y1="6" x2="${x}" y2="70" stroke="${INK}" stroke-width="1"/>
+          <path d="M${x},8 q8,-3 16,1 q-2,7 0,13 q-8,-4 -16,-1 Z" fill="${c}" stroke="${INK}" stroke-width=".7" opacity=".85"/>`;
+      });
+    } else if (p.scene === 'ministry') {
+      out += `<rect x="-5" y="0" width="210" height="240" fill="${s.stone}"/>
+        <rect x="20" y="14" width="66" height="150" fill="#b9b19c" stroke="${INK}" stroke-width="1.2"/>
+        <path d="M53,14 L53,164 M20,64 L86,64 M20,114 L86,114" stroke="${INK}" stroke-width="1.6"/>
+        <path d="M6,0 Q14,90 4,240 L-5,240 L-5,0 Z M100,0 Q86,80 96,240 L120,240 L120,0 Z" fill="#5c2f28" opacity=".8"/>
+        <path d="M100,0 Q86,80 96,240" stroke="${INK}" stroke-width="1" fill="none"/>
+        <rect x="140" y="0" width="70" height="240" fill="${s.dark}" opacity=".55"/>`;
+    } else if (p.scene === 'field') {
+      out += `<path d="M-5,40 Q40,20 80,36 T160,30 T210,38 L210,0 L-5,0 Z" fill="#c4c0ae" opacity=".7"/>
+        <path d="M-5,170 Q30,150 70,160 Q120,140 160,158 Q190,150 210,160 L210,240 L-5,240 Z" fill="${s.stone}"/>
+        <path d="M150,60 q-10,-20 6,-30 q16,-8 22,8 q12,-6 18,8 q6,16 -10,20 Z" fill="#8b877a" opacity=".6"/>`;
+    } else {
+      out += `<rect x="-5" y="0" width="210" height="240" fill="${s.stone}"/>
+        <path d="M-10,-10 L120,-10 L60,260 L-10,260 Z" fill="#000" opacity=".25"/>`;
+    }
+    // light hatching over the whole backdrop to push it back
+    out += `<rect width="200" height="240" fill="url(#${id}hx)" opacity=".35"/>
+      <rect width="200" height="240" fill="url(#${id}vg)"/>`;
+    return out;
+  }
+
+  // ---------- clothing ----------
+  function clothes(p, id, hw) {
     const c = CLOTH[p.clothes] || CLOTH.suit;
-    const shoulders = `<path d="M-5,245 L-5,224 Q18,194 70,190 L130,190 Q182,194 205,224 L205,245 Z" fill="${c}" stroke="${INK}" stroke-width="4"/>`;
-    let extra = '';
+    const nL = f(100 - hw * .58), nR = f(100 + hw * .58);
+    const base = `<path d="M-6,245 L-6,214 C16,198 44,190 ${nL},186 L${nR},186 C156,190 184,198 206,214 L206,245 Z" fill="${c}" stroke="${INK}" stroke-width="1.8" stroke-linejoin="round"/>
+      <path d="M150,192 C176,200 196,212 206,222 L206,245 L138,245 Z" fill="url(#${id}hd)" opacity=".7"/>`;
+    const shirt = '#e7e0d0';
+    const tie = p.tie || '#6b2a22';
     switch (p.clothes) {
       case 'suit':
-        extra = `<path d="M78,190 L100,232 L122,190 Z" fill="#efe8da" stroke="${INK}" stroke-width="3"/>
-          <path d="M95,198 L105,198 L108,236 L100,244 L92,236 Z" fill="${p.tie === 'white' ? '#efe8da' : '#7b1f19'}" stroke="${INK}" stroke-width="2.5"/>
-          <path d="M70,190 L92,236 M130,190 L108,236" stroke="${INK}" stroke-width="3"/>`;
-        break;
+        return base + `<path d="M78,188 L100,232 L122,188 Z" fill="${shirt}" stroke="${INK}" stroke-width="1.4"/>
+          <path d="M80,186 L92,206 L100,194 Z M120,186 L108,206 L100,194 Z" fill="#f2ece0" stroke="${INK}" stroke-width="1.3"/>
+          <path d="M96,196 L104,196 L102.5,205 L97.5,205 Z" fill="${tie}" stroke="${INK}" stroke-width="1.2"/>
+          <path d="M97.5,205 L102.5,205 L106,240 L94,240 Z" fill="${tie}" stroke="${INK}" stroke-width="1.2"/>
+          <path d="M100,205 L101,240" stroke="${INK}" stroke-width=".6" opacity=".5"/>
+          <path d="M68,190 L91,245 L86,214 L74,206 L82,196 Z" fill="${c}" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M132,190 L109,245 L114,214 L126,206 L118,196 Z" fill="${c}" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M132,190 L109,245 L114,214 L126,206 L118,196 Z" fill="url(#${id}hd)" opacity=".5"/>
+          <path d="M44,214 L52,214" stroke="#e7e0d0" stroke-width="2" opacity=".7"/>`;
       case 'wing':
-        extra = `<path d="M76,188 L100,236 L124,188 Z" fill="#efe8da" stroke="${INK}" stroke-width="3"/>
-          <path d="M84,186 L98,200 L88,206 Z M116,186 L102,200 L112,206 Z" fill="#fff" stroke="${INK}" stroke-width="2.5"/>
-          <path d="M96,202 L104,202 L106,236 L100,242 L94,236 Z" fill="#2c2a28" stroke="${INK}" stroke-width="2"/>
-          <path d="M68,190 L94,240 M132,190 L106,240" stroke="${INK}" stroke-width="3"/>`;
-        break;
+        return base + `<path d="M76,188 L100,236 L124,188 Z" fill="${shirt}" stroke="${INK}" stroke-width="1.4"/>
+          <path d="M86,186 L97,197 L90,201 Z M114,186 L103,197 L110,201 Z" fill="#fbf7ee" stroke="${INK}" stroke-width="1.2"/>
+          <path d="M95,197 L105,197 L103.5,205 L96.5,205 Z" fill="${tie}" stroke="${INK}" stroke-width="1.1"/>
+          <path d="M96.5,205 L103.5,205 L105,236 L95,236 Z" fill="${tie}" stroke="${INK}" stroke-width="1.1"/>
+          <path d="M84,206 L100,230 L116,206 L116,245 L84,245 Z" fill="#4a4740" stroke="${INK}" stroke-width="1.2"/>
+          <circle cx="100" cy="232" r="1.2" fill="#c9b27a"/><circle cx="100" cy="241" r="1.2" fill="#c9b27a"/>
+          <path d="M66,190 L88,245 L84,212 L72,204 L80,195 Z M134,190 L112,245 L116,212 L128,204 L120,195 Z" fill="${c}" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>`;
       case 'black':
-        extra = `<path d="M82,190 L100,214 L118,190" fill="none" stroke="#3a3632" stroke-width="3"/>
-          <path d="M100,214 L100,245" stroke="#3a3632" stroke-width="2"/>
-          <circle cx="100" cy="226" r="2.5" fill="#3a3632"/><circle cx="100" cy="238" r="2.5" fill="#3a3632"/>
-          <path d="M20,215 Q40,205 60,206" stroke="#3a3632" stroke-width="2" fill="none"/>`;
-        break;
+        return base + `<path d="M80,186 L93,206 L100,194 Z M120,186 L107,206 L100,194 Z" fill="#2a2826" stroke="${INK}" stroke-width="1.3"/>
+          <path d="M96,196 L104,196 L102.5,205 L97.5,205 Z M97.5,205 L102.5,205 L105,240 L95,240 Z" fill="#0e0d0c" stroke="#3a3632" stroke-width="1"/>
+          <path d="M60,200 Q70,230 66,245 M140,200 Q130,230 134,245" stroke="#3a3632" stroke-width="1.2" fill="none"/>
+          <rect x="128" y="214" width="16" height="12" fill="none" stroke="#3a3632" stroke-width="1"/>`;
       case 'brown':
-        extra = `<path d="M80,190 L100,218 L120,190" fill="#5a4329" stroke="${INK}" stroke-width="3"/>
-          <path d="M96,200 L104,200 L106,240 L94,240 Z" fill="#1a1613" stroke="${INK}" stroke-width="2"/>
-          <path d="M2,226 Q18,212 34,208 L40,226 Q22,230 6,240 Z" fill="#a3261d" stroke="${INK}" stroke-width="2.5"/>`;
-        break;
+        return base + `<path d="M80,186 L93,206 L100,194 Z M120,186 L107,206 L100,194 Z" fill="#7b6545" stroke="${INK}" stroke-width="1.3"/>
+          <path d="M96,196 L104,196 L102.5,205 L97.5,205 Z M97.5,205 L102.5,205 L105,240 L95,240 Z" fill="#3b2f22" stroke="${INK}" stroke-width="1"/>
+          <path d="M58,200 L58,245 M142,200 L142,245" stroke="${INK}" stroke-width="1" opacity=".5"/>
+          <rect x="62" y="212" width="18" height="13" fill="none" stroke="${INK}" stroke-width="1" opacity=".7"/>
+          <path d="M2,224 Q16,212 34,208 L38,224 Q20,228 6,238 Z" fill="#8a2a22" stroke="${INK}" stroke-width="1.4"/>`;
       case 'uniform':
-        extra = `<path d="M76,188 L124,188 L120,204 L80,204 Z" fill="${c}" stroke="${INK}" stroke-width="3"/>
-          <rect x="80" y="192" width="10" height="8" fill="#a3261d" stroke="${INK}" stroke-width="1.5"/>
-          <rect x="110" y="192" width="10" height="8" fill="#a3261d" stroke="${INK}" stroke-width="1.5"/>
-          <path d="M100,204 L100,245" stroke="${INK}" stroke-width="2.5"/>
-          <circle cx="106" cy="216" r="2.5" fill="#c9a54a"/><circle cx="106" cy="232" r="2.5" fill="#c9a54a"/>
-          <path d="M18,206 L52,198 L54,206 L20,214 Z M182,206 L148,198 L146,206 L180,214 Z" fill="#c9a54a" stroke="${INK}" stroke-width="2"/>`;
-        break;
+        return base + `<path d="M${nL - 2},180 L${nR + 2},180 L${nR + 4},198 L${nL - 4},198 Z" fill="${c}" stroke="${INK}" stroke-width="1.5"/>
+          <path d="M${nL},186 L${nL + 12},186 L${nL + 12},196 L${nL},196 Z M${nR},186 L${nR - 12},186 L${nR - 12},196 L${nR},196 Z" fill="#7a2a24" stroke="${INK}" stroke-width="1"/>
+          <path d="M100,198 L100,245" stroke="${INK}" stroke-width="1.4"/>
+          <circle cx="104" cy="212" r="1.8" fill="#b39a5c" stroke="${INK}" stroke-width=".6"/><circle cx="104" cy="228" r="1.8" fill="#b39a5c" stroke="${INK}" stroke-width=".6"/>
+          <path d="M22,204 L54,196 L56,203 L24,212 Z M178,204 L146,196 L144,203 L176,212 Z" fill="#a08a52" stroke="${INK}" stroke-width="1"/>
+          <path d="M60,196 L134,245" stroke="#3a3326" stroke-width="5"/><path d="M60,196 L134,245" stroke="${INK}" stroke-width=".7"/>
+          <rect x="60" y="214" width="20" height="14" fill="none" stroke="${INK}" stroke-width="1" opacity=".6"/>`;
       case 'tunic':
-        extra = `<path d="M78,186 L122,186 L120,202 L80,202 Z" fill="${c}" stroke="${INK}" stroke-width="3"/>
-          <path d="M100,202 L100,245" stroke="${INK}" stroke-width="2.5"/>
-          <path d="M60,214 L84,214 L84,226 L60,226 Z M116,214 L140,214 L140,226 L116,226 Z" fill="none" stroke="${INK}" stroke-width="2"/>`;
-        break;
+        return base + `<path d="M${nL - 2},178 L${nR + 2},178 L${nR + 3},196 L${nL - 3},196 Z" fill="${c}" stroke="${INK}" stroke-width="1.5"/>
+          <path d="M100,196 L100,245" stroke="${INK}" stroke-width="1.3"/>
+          <circle cx="103" cy="208" r="1.6" fill="#8d8669"/><circle cx="103" cy="222" r="1.6" fill="#8d8669"/><circle cx="103" cy="236" r="1.6" fill="#8d8669"/>
+          <path d="M62,212 L84,212 L84,226 L62,226 Z M116,212 L138,212 L138,226 L116,226 Z" fill="none" stroke="${INK}" stroke-width="1"/>`;
       case 'cape':
-        return `<path d="M-10,245 L-10,214 Q20,186 74,184 L126,184 Q180,186 210,214 L210,245 Z" fill="${CLOTH.cape}" stroke="${INK}" stroke-width="4"/>
-          <path d="M70,186 Q100,210 130,186" fill="none" stroke="#c9a54a" stroke-width="4"/>
-          <path d="M84,190 L100,226 L116,190 Z" fill="#efe8da" stroke="${INK}" stroke-width="2.5"/>
-          <path d="M30,208 Q60,200 76,196" stroke="#c9a54a" stroke-width="2" fill="none"/>`;
+        return `<path d="M-10,245 L-10,210 C18,190 50,184 ${nL},182 L${nR},182 C150,184 182,190 210,210 L210,245 Z" fill="${CLOTH.cape}" stroke="${INK}" stroke-width="1.8"/>
+          <path d="M${nL},184 Q100,206 ${nR},184" fill="none" stroke="#a88b4a" stroke-width="2.5"/>
+          <path d="M84,188 L100,228 L116,188 Z" fill="#e7e0d0" stroke="${INK}" stroke-width="1.3"/>
+          <path d="M30,206 Q58,196 74,192 M170,206 Q142,196 126,192" stroke="#a88b4a" stroke-width="1.2" fill="none"/>
+          <path d="M150,192 C176,200 196,212 206,222 L206,245 L138,245 Z" fill="url(#${id}hd)" opacity=".7"/>`;
     }
-    return shoulders + extra;
+    return base;
   }
 
-  function hair(p, hw, col) {
+  // ---------- hair ----------
+  function capPath(hw, hy, v, sy, wave) {
     const L = 100 - hw, R = 100 + hw;
-    const s = `stroke="${INK}" stroke-width="3.5" stroke-linejoin="round"`;
+    const edge = wave
+      ? `C${R - 6},${hy + 6} ${R - 12},${hy - 2} ${f(100 + hw * .5)},${hy} Q${f(100 + hw * .25)},${hy - 7} 100,${hy - 2} Q${f(100 - hw * .25)},${hy - 7} ${f(100 - hw * .5)},${hy} C${L + 12},${hy - 2} ${L + 6},${hy + 6}`
+      : `C${R - 5},${hy + 8} ${R - 14},${hy} ${f(100 + hw * .4)},${hy - 2} Q100,${hy - 6} ${f(100 - hw * .4)},${hy - 2} C${L + 14},${hy} ${L + 5},${hy + 8}`;
+    return `M${L - 1.5},${sy} C${L - 3},${58 - v} ${f(100 - hw * .72)},${36 - v} 100,${36 - v} C${f(100 + hw * .72)},${36 - v} ${R + 3},${58 - v} ${R + 1.5},${sy} L${R - 3},${sy} ${edge} ${L + 3},${sy} Z`;
+  }
+
+  function strands(hw, hy, col, n = 7, v = 0) {
+    let d = '';
+    for (let i = 0; i < n; i++) {
+      const x = 100 - hw * .75 + (i / (n - 1)) * hw * 1.5;
+      d += `M${f(x)},${hy - 1} Q${f(x + (x - 100) * .1 - 4)},${f((hy + 36 - v) / 2)} ${f(100 + (x - 100) * .4)},${f(38 - v)} `;
+    }
+    return `<path d="${d}" stroke="${col}" stroke-width=".8" fill="none" opacity=".75"/>`;
+  }
+
+  function hair(p, hw, id) {
+    const col = HAIR[p.hc] || HAIR.dark;
+    const hi = p.hc === 'black' || p.hc === 'dark' ? '#6b5d52' : p.hc === 'brown' ? '#8b6e57' : '#efebe3';
+    const L = 100 - hw, R = 100 + hw;
+    const s = `stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"`;
     switch (p.hair) {
       case 'bald':
-        return `<path d="M${L - 1},84 Q${L + 2},70 ${L + 8},66 L${L + 6},96 Z M${R + 1},84 Q${R - 2},70 ${R - 8},66 L${R - 6},96 Z" fill="${col}" ${s}/>`;
+        return `<path d="M${L - 1.5},106 C${L - 3},90 ${L - 1},76 ${L + 4},68 C${L + 6},80 ${L + 7},94 ${L + 6},108 Z" fill="${col}" ${s}/>
+          <path d="M${R + 1.5},106 C${R + 3},90 ${R + 1},76 ${R - 4},68 C${R - 6},80 ${R - 7},94 ${R - 6},108 Z" fill="${col}" ${s}/>
+          <path d="M${L + 1},84 l3,-8 M${L + 2},96 l3,-9 M${R - 1},84 l-3,-8 M${R - 2},96 l-3,-9" stroke="${hi}" stroke-width=".7"/>`;
       case 'receding':
-        return `<path d="M${L - 2},96 Q${L - 4},58 ${L + 16},44 Q${L + 18},62 ${L + 8},98 Z M${R + 2},96 Q${R + 4},58 ${R - 16},44 Q${R - 18},62 ${R - 8},98 Z" fill="${col}" ${s}/>
-          <path d="M${100 - hw * .45},34 Q100,26 ${100 + hw * .45},34 Q100,32 ${100 - hw * .45},34 Z" fill="${col}" ${s}/>`;
+        return `<path d="M${L - 1.5},106 C${L - 4},80 ${L},58 ${L + 14},50 C${L + 12},64 ${L + 9},84 ${L + 7},108 Z" fill="${col}" ${s}/>
+          <path d="M${R + 1.5},106 C${R + 4},80 ${R},58 ${R - 14},50 C${R - 12},64 ${R - 9},84 ${R - 7},108 Z" fill="${col}" ${s}/>
+          <path d="M${f(100 - hw * .55)},44 Q100,33 ${f(100 + hw * .55)},44 Q${f(100 + hw * .2)},52 100,50 Q${f(100 - hw * .2)},52 ${f(100 - hw * .55)},44 Z" fill="${col}" ${s}/>
+          <path d="M${L + 3},70 q2,12 3,26 M${R - 3},70 q-2,12 -3,26" stroke="${hi}" stroke-width=".7" fill="none"/>`;
       case 'sidepart':
-        return `<path d="M${L - 2},98 Q${L - 6},40 100,24 Q${R + 6},40 ${R + 2},98 Q${R - 6},70 ${R - 14},60 Q100,48 ${L + 14},60 Q${L + 4},70 ${L - 2},98 Z" fill="${col}" ${s}/>
-          <path d="M${100 + hw * .35},40 Q${100 - hw * .2},46 ${L + 8},86 Q${L + 18},62 ${100 + hw * .1},54 Z" fill="${col}" ${s}/>`;
+        return `<path d="${capPath(hw, 66, 2, 100)}" fill="${col}" ${s}/>
+          <path d="M${f(100 + hw * .3)},42 C${f(100 - hw * .1)},48 ${L + 10},62 ${L + 6},88 C${L + 14},74 ${f(100 - hw * .3)},64 ${f(100 + hw * .05)},60 Z" fill="${col}" ${s}/>
+          <path d="M${f(100 + hw * .3)},42 L${f(100 + hw * .45)},56" stroke="${hi}" stroke-width=".9"/>
+          ${strands(hw * .9, 64, hi, 6, 2)}`;
       case 'slick':
-        return `<path d="M${L - 2},94 Q${L - 6},34 100,22 Q${R + 6},34 ${R + 2},94 Q${R - 4},64 ${R - 12},58 Q100,50 ${L + 12},58 Q${L + 4},64 ${L - 2},94 Z" fill="${col}" ${s}/>
-          <path d="M${L + 20},48 Q100,36 ${R - 16},44 M${L + 24},40 Q100,30 ${R - 22},36" stroke="${col === HAIR.white || col === HAIR.grey ? '#5b5650' : '#4a423c'}" stroke-width="2" fill="none"/>`;
-      case 'messy':
-        return `<path d="M${L - 4},96 L${L - 10},70 L${L - 2},64 L${L - 6},44 L${L + 10},44 L${L + 10},28 L${100 - 14},32 L100,16 L${100 + 14},30 L${R - 10},24 L${R - 8},42 L${R + 8},44 L${R + 4},64 L${R + 10},70 L${R + 4},96 Q${R - 6},64 ${R - 18},58 Q100,52 ${L + 18},58 Q${L + 6},64 ${L - 4},96 Z" fill="${col}" ${s}/>`;
-      case 'curly': {
-        let b = '';
-        for (let i = 0; i <= 8; i++) {
-          const a = Math.PI * (1 + i / 8);
-          b += `<circle cx="${100 + Math.cos(a) * (hw + 2)}" cy="${78 + Math.sin(a) * 52}" r="14" fill="${col}" ${s}/>`;
-        }
-        return b;
-      }
+        return `<path d="${capPath(hw, 60, 3, 98)}" fill="${col}" ${s}/>${strands(hw, 58, hi, 9, 3)}`;
       case 'crop':
-        return `<path d="M${L - 2},94 L${L - 4},50 Q${L + 4},28 100,26 Q${R - 4},28 ${R + 4},50 L${R + 2},94 Q${R - 4},66 ${R - 10},58 L${L + 10},58 Q${L + 4},66 ${L - 2},94 Z" fill="${col}" ${s}/>`;
+        return `<path d="${capPath(hw, 58, 1, 96)}" fill="${col}" ${s}/>
+          <path d="M${L + 6},64 l2,-6 M${L + 14},56 l2,-6 M${R - 6},64 l-2,-6 M${R - 14},56 l-2,-6 M96,48 l2,-6 M106,48 l2,-6 M86,50 l2,-6" stroke="${hi}" stroke-width=".8"/>`;
+      case 'wavy':
+        return `<path d="${capPath(hw + 2, 60, 9, 100, true)}" fill="${col}" ${s}/>${strands(hw, 58, hi, 8, 9)}
+          <path d="M${L - 2},84 q-4,-8 0,-16 M${R + 2},84 q4,-8 0,-16" stroke="${INK}" stroke-width="1" fill="none"/>`;
       case 'swept':
-        return `<path d="M${L - 4},100 Q${L - 12},30 100,14 Q${R + 12},30 ${R + 4},100 Q${R - 2},62 ${R - 12},56 Q100,40 ${L + 12},56 Q${L + 2},62 ${L - 4},100 Z" fill="${col}" ${s}/>
-          <path d="M${L + 18},44 Q100,24 ${R - 18},44 M${L + 24},34 Q100,18 ${R - 24},34" stroke="#57504a" stroke-width="2" fill="none"/>`;
+        return `<path d="${capPath(hw + 2, 58, 13, 102)}" fill="${col}" ${s}/>${strands(hw, 56, hi, 10, 13)}`;
+      case 'curly': {
+        let b = `<path d="${capPath(hw + 3, 58, 9, 98)}" fill="${col}" ${s}/>`;
+        let d = '';
+        let k = 0;
+        for (let y = 32; y < 62; y += 4.5) for (let x = 100 - hw - 2; x <= 100 + hw + 2; x += 5) {
+          k++;
+          const jx = ((k * 37) % 7) / 3.5 - 1, jy = ((k * 53) % 5) / 2.5 - 1;
+          if (Math.hypot((x - 100) / (hw + 2), (y - 52) / 22) < 1) d += `M${f(x + jx + (k % 2) * 2.5)},${f(y + jy)} q1.4,-1.6 2.6,0 `;
+        }
+        return b + `<path d="${d}" stroke="${hi}" stroke-width=".6" fill="none" opacity=".55"/>`;
+      }
     }
     return '';
   }
 
-  function brows(p, ey) {
-    const w = p.brows === 'bushy' ? 6 : 4.2;
-    const col = HAIR[p.mc || p.hc] || INK;
-    const c = p.brows === 'bushy' ? col : INK;
+  // ---------- face ----------
+  function eyes(p, sk) {
+    const ey = 104;
+    const iris = p.iris === 'brown' ? '#3e2b20' : '#4b5866';
+    const heavy = p.eyes === 'heavy';
+    const one = (cx, side) => `
+      <path d="M${cx - 9},${ey} Q${cx - 1},${ey - (heavy ? 4 : 5.5)} ${cx + 9},${ey - .5} Q${cx},${ey + 3.6} ${cx - 9},${ey} Z" fill="#ece3d2"/>
+      <circle cx="${cx + side * .4}" cy="${ey - .3}" r="3.1" fill="${iris}"/><circle cx="${cx + side * .4}" cy="${ey - .3}" r="1.3" fill="${INK}"/>
+      <circle cx="${cx - .8}" cy="${ey - 1.4}" r=".7" fill="#fff" opacity=".8"/>
+      <path d="M${cx - 9},${ey} Q${cx - 1},${ey - (heavy ? 4 : 5.5)} ${cx + 9},${ey - .5}" fill="none" stroke="${INK}" stroke-width="1.7" stroke-linecap="round"/>
+      <path d="M${cx - 7},${ey + 2} Q${cx},${ey + 3.8} ${cx + 7},${ey + 1.4}" fill="none" stroke="${INK}" stroke-width=".7" opacity=".7"/>
+      <path d="M${cx - 8},${ey - 4.5} Q${cx},${ey - (heavy ? 6.5 : 9)} ${cx + 8},${ey - 4.5}" fill="none" stroke="${sk.deep}" stroke-width=".9"/>
+      ${(p.age || 0) > 0 ? `<path d="M${cx - 6},${ey + 5.5} Q${cx},${ey + 8} ${cx + 6},${ey + 5}" fill="none" stroke="${sk.deep}" stroke-width=".7"/>` : ''}
+      ${(p.age || 0) > 1 ? `<path d="M${cx + side * 10},${ey - 1} l${side * 4},-2 M${cx + side * 10},${ey + 2} l${side * 4},1" stroke="${sk.deep}" stroke-width=".6"/>` : ''}`;
+    return one(84, -1) + one(116, 1);
+  }
+
+  function brows(p) {
+    const col = HAIR[p.mc || p.hc] || HAIR.dark;
+    const c = p.hc === 'white' || p.hc === 'grey' ? '#6f6a63' : col;
+    const t = p.brows === 'heavy' ? 4.2 : 2.8;
     let l, r;
     switch (p.brows) {
-      case 'angry': l = `M70,${ey - 15} L94,${ey - 7}`; r = `M130,${ey - 15} L106,${ey - 7}`; break;
-      case 'worried': l = `M70,${ey - 9} Q82,${ey - 14} 93,${ey - 17}`; r = `M130,${ey - 9} Q118,${ey - 14} 107,${ey - 17}`; break;
-      case 'raised': l = `M70,${ey - 12} Q82,${ey - 22} 94,${ey - 14}`; r = `M130,${ey - 12} Q118,${ey - 18} 106,${ey - 12}`; break;
-      case 'stern': l = `M70,${ey - 13} L94,${ey - 10}`; r = `M130,${ey - 13} L106,${ey - 10}`; break;
-      case 'bushy': l = `M68,${ey - 12} Q82,${ey - 20} 95,${ey - 12}`; r = `M132,${ey - 12} Q118,${ey - 20} 105,${ey - 12}`; break;
-      default: l = `M71,${ey - 12} Q82,${ey - 17} 94,${ey - 12}`; r = `M129,${ey - 12} Q118,${ey - 17} 106,${ey - 12}`;
+      case 'angry': l = [74, 92, 90, 99]; r = [126, 92, 110, 99]; break;
+      case 'worried': l = [74, 97, 92, 92]; r = [126, 97, 108, 92]; break;
+      case 'raised': l = [74, 94, 92, 93]; r = [126, 92, 108, 94]; break;
+      case 'stern': l = [74, 94, 92, 96]; r = [126, 94, 108, 96]; break;
+      default: l = [74, 95, 92, 95]; r = [126, 95, 108, 95];
     }
-    const st = `fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round"`;
-    const out = p.brows === 'bushy' ? `<path d="${l}" ${st.replace(c, INK).replace(w, w + 3)}/><path d="${r}" ${st.replace(c, INK).replace(w, w + 3)}/>` : '';
-    return out + `<path d="${l}" ${st}/><path d="${r}" ${st}/>`;
+    const b = ([x1, y1, x2, y2]) => {
+      const mx = (x1 + x2) / 2, my = Math.min(y1, y2) - 3;
+      return `<path d="M${x1},${y1} Q${mx},${my} ${x2},${y2} Q${mx},${my + t} ${x1},${y1 + 1} Z" fill="${c}" stroke="${INK}" stroke-width=".8" stroke-linejoin="round"/>`;
+    };
+    return b(l) + b(r);
   }
 
-  function eyes(p, ey) {
-    const droop = p.eyes === 'droop';
-    const one = cx => `<path d="M${cx - 9},${ey} Q${cx},${ey - (droop ? 4 : 7)} ${cx + 9},${ey} Q${cx},${ey + 5} ${cx - 9},${ey} Z" fill="#f6f0e4" stroke="${INK}" stroke-width="2.4"/>
-      <circle cx="${cx + (p.brows === 'angry' ? 1 : 0)}" cy="${ey - 0.5}" r="3" fill="${INK}"/>` +
-      (droop ? `<path d="M${cx - 10},${ey - 3} Q${cx},${ey - 7} ${cx + 10},${ey - 3}" stroke="${INK}" stroke-width="3" fill="none"/>` : '');
-    return one(82) + one(118);
+  function nose(sk) {
+    return `<path d="M103,106 C104,114 107,121 109,128 Q106,132 101,131 Z" fill="${sk.shade}"/>
+      <path d="M97,107 C96,115 94,121 92,127" fill="none" stroke="${INK}" stroke-width=".8" opacity=".55"/>
+      <path d="M91,127 Q88,131 93,132.5 M109,127 Q112,131 107,132.5" fill="none" stroke="${INK}" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M95,131.5 Q97,130 99,132 M101,132 Q103,130 105,131.5" fill="none" stroke="${INK}" stroke-width="1.3" stroke-linecap="round"/>`;
   }
 
-  function nose(ey) {
-    return `<path d="M101,${ey + 2} Q104,${ey + 18} 108,${ey + 26} Q104,${ey + 31} 97,${ey + 29}" fill="none" stroke="${INK}" stroke-width="2.6" stroke-linecap="round"/>
-      <path d="M90,${ey + 27} Q93,${ey + 30} 96,${ey + 29}" fill="none" stroke="${INK}" stroke-width="2"/>`;
+  function mouth(p, sk) {
+    const y = 143;
+    const corners = { frown: 2.5, smile: -2.5, smirk: 0, jut: 1.5, set: .8 }[p.mouth] ?? .8;
+    const right = p.mouth === 'smirk' ? -2.5 : corners;
+    return `<path d="M89,${y + corners} Q94,${y - 1.5} 100,${y - .5} Q106,${y - 1.5} 111,${y + right}" fill="none" stroke="${INK}" stroke-width="1.6" stroke-linecap="round"/>
+      <path d="M93,${y + 1.5} Q100,${y + 6} 107,${y + 1.5} Q100,${y + 3} 93,${y + 1.5} Z" fill="${sk.lip}" opacity=".75"/>
+      <path d="M94,${y + 6.5} Q100,${y + 8.5} 106,${y + 6.5}" fill="none" stroke="${INK}" stroke-width=".9" opacity=".7"/>
+      ${p.mouth === 'jut' ? `<path d="M90,${y + 12} Q100,${y + 15} 110,${y + 12}" fill="none" stroke="${INK}" stroke-width="1" opacity=".7"/>` : ''}
+      <path d="M98,133 L98,${y - 3} M102,133 L102,${y - 3}" stroke="${sk.shade}" stroke-width=".9"/>`;
   }
 
-  function mouth(p, my) {
-    const st = `fill="none" stroke="${INK}" stroke-width="3" stroke-linecap="round"`;
-    switch (p.mouth) {
-      case 'frown': return `<path d="M88,${my + 3} Q100,${my - 5} 112,${my + 3}" ${st}/>`;
-      case 'smile': return `<path d="M86,${my - 2} Q100,${my + 8} 114,${my - 2}" ${st}/>`;
-      case 'smirk': return `<path d="M88,${my} Q102,${my + 3} 114,${my - 5}" ${st}/>`;
-      case 'shout': return `<path d="M88,${my - 3} Q100,${my - 6} 112,${my - 3} Q110,${my + 12} 100,${my + 13} Q90,${my + 12} 88,${my - 3} Z" fill="#2a0e0b" stroke="${INK}" stroke-width="2.6"/>
-        <path d="M91,${my - 2} L109,${my - 2} L108,${my + 1} L92,${my + 1} Z" fill="#f2ebdc"/>`;
-      case 'jut': return `<path d="M86,${my} Q100,${my - 6} 114,${my}" ${st}/><path d="M90,${my + 6} Q100,${my + 10} 110,${my + 6}" ${st}/>`;
-      default: return `<path d="M88,${my} L112,${my}" ${st}/>`;
-    }
+  function lines(p, sk, hw) {
+    const a = p.age || 0;
+    let d = `M91,128 Q86,136 88,${145 + a}`;
+    d += ` M109,128 Q114,136 112,${145 + a}`;
+    let out = `<path d="${d}" fill="none" stroke="${sk.deep}" stroke-width="${.8 + a * .2}"/>`;
+    if (a > 0) out += `<path d="M86,70 Q100,67 114,70 M88,76 Q100,73 112,76" fill="none" stroke="${sk.deep}" stroke-width=".6" opacity=".7"/>`;
+    if (a > 1) out += `<path d="M${100 - hw + 8},120 Q${100 - hw + 12},132 ${100 - hw + 16},140 M${100 + hw - 8},120 Q${100 + hw - 12},132 ${100 + hw - 16},140" fill="none" stroke="${sk.deep}" stroke-width=".6"/>`;
+    return out;
   }
 
-  function stache(p, my) {
-    const col = HAIR[p.mc] || INK;
-    const s = `fill="${col}" stroke="${INK}" stroke-width="2.4" stroke-linejoin="round"`;
+  function stache(p) {
+    const col = HAIR[p.mc] || HAIR.dark;
+    const s = `fill="${col}" stroke="${INK}" stroke-width="1.1" stroke-linejoin="round"`;
+    const tex = (d) => `<path d="${d}" stroke="${p.mc === 'white' || p.mc === 'grey' ? '#efe9de' : '#5a4c40'}" stroke-width=".6" fill="none" opacity=".8"/>`;
     switch (p.stache) {
-      case 'toothbrush': return `<path d="M92,${my - 13} L108,${my - 13} L107,${my - 4} L93,${my - 4} Z" fill="${INK}"/>`;
-      case 'small': return `<path d="M84,${my - 6} Q100,${my - 16} 116,${my - 6} Q100,${my - 9} 84,${my - 6} Z" ${s}/>`;
-      case 'pencil': return `<path d="M86,${my - 7} Q100,${my - 12} 114,${my - 7}" stroke="${INK}" stroke-width="2.4" fill="none"/>`;
-      case 'walrus': return `<path d="M74,${my + 4} Q78,${my - 16} 100,${my - 15} Q122,${my - 16} 126,${my + 4} Q118,${my + 2} 112,${my - 2} Q100,${my - 6} 88,${my - 2} Q82,${my + 2} 74,${my + 4} Z" ${s}/>`;
+      case 'toothbrush': return `<path d="M94,133.5 L106,133.5 L105.5,141 L94.5,141 Z" fill="${col}" stroke="${INK}" stroke-width="1"/>` + tex('M96,135 l0,5 M99,135 l0,5 M102,135 l0,5 M104.5,135 l0,5');
+      case 'clipped': return `<path d="M88,141 Q92,133 100,134 Q108,133 112,141 Q106,138.5 100,139.5 Q94,138.5 88,141 Z" ${s}/>` + tex('M92,138 l2,-3 M96,137.5 l1,-3 M104,137.5 l-1,-3 M108,138 l-2,-3');
+      case 'pencil': return `<path d="M89,139.5 Q100,135 111,139.5" stroke="${col}" stroke-width="1.8" fill="none"/>`;
+      case 'walrus': return `<path d="M82,146 Q84,132 100,132.5 Q116,132 118,146 Q113,143 108,141 Q100,139 92,141 Q87,143 82,146 Z" ${s}/>` + tex('M87,142 l3,-6 M92,140 l2,-6 M97,139 l1,-6 M103,139 l-1,-6 M108,140 l-2,-6 M113,142 l-3,-6');
     }
     return '';
   }
 
-  function beard(p, hw, chin, my) {
-    const col = HAIR[p.mc] || INK;
-    const s = `fill="${col}" stroke="${INK}" stroke-width="3" stroke-linejoin="round"`;
+  function beard(p, hw, chin) {
+    const col = HAIR[p.mc] || HAIR.dark;
+    const s = `fill="${col}" stroke="${INK}" stroke-width="1.3" stroke-linejoin="round"`;
     const L = 100 - hw, R = 100 + hw;
+    const hi = p.mc === 'white' || p.mc === 'grey' ? '#efe9de' : '#5a4c40';
     switch (p.beard) {
-      case 'full': return `<path d="M${L + 2},104 Q${L + 2},${chin + 12} 100,${chin + 18} Q${R - 2},${chin + 12} ${R - 2},104 Q${R - 10},${my + 4} 112,${my + 8} Q100,${my + 14} 88,${my + 8} Q${L + 10},${my + 4} ${L + 2},104 Z" ${s}/>
-        <path d="M80,${my - 6} Q100,${my - 16} 120,${my - 6} Q100,${my - 2} 80,${my - 6} Z" ${s}/>`;
-      case 'trim': return `<path d="M${L + 12},130 Q${L + 16},${chin + 4} 100,${chin + 8} Q${R - 16},${chin + 4} ${R - 12},130 Q112,${my + 12} 100,${my + 12} Q88,${my + 12} ${L + 12},130 Z" ${s}/>`;
-      case 'goatee': return `<path d="M92,${my + 8} Q100,${my + 30} 108,${my + 8} Q100,${my + 12} 92,${my + 8} Z" ${s}/>`;
+      case 'full': return `<path d="M${L + 2},112 C${L + 2},140 ${L + 12},${chin + 10} 100,${chin + 16} C${R - 12},${chin + 10} ${R - 2},140 ${R - 2},112 C${R - 8},132 ${R - 14},140 110,148 Q100,152 90,148 C${L + 14},140 ${L + 8},132 ${L + 2},112 Z" ${s}/>
+        <path d="M86,140 Q92,133 100,134 Q108,133 114,140 Q107,138 100,139 Q93,138 86,140 Z" ${s}/>
+        <path d="M${L + 8},128 q4,14 10,24 M${R - 8},128 q-4,14 -10,24 M96,156 l0,10 M104,156 l0,10 M90,154 l-2,8 M110,154 l2,8" stroke="${hi}" stroke-width=".6" fill="none"/>`;
+      case 'trim': return `<path d="M${L + 8},128 C${L + 12},${chin + 2} 90,${chin + 8} 100,${chin + 9} C110,${chin + 8} ${R - 12},${chin + 2} ${R - 8},128 C${R - 12},146 112,151 100,152 C88,151 ${L + 12},146 ${L + 8},128 Z" ${s}/>
+        <path d="M96,156 l0,8 M104,156 l0,8 M${L + 12},134 q4,10 8,16 M${R - 12},134 q-4,10 -8,16" stroke="${hi}" stroke-width=".6" fill="none"/>`;
+      case 'goatee': return `<path d="M93,151 Q100,${chin + 16} 107,151 Q100,154 93,151 Z" ${s}/>`;
     }
     return '';
   }
 
-  function glasses(p, ey) {
-    const st = `fill="rgba(255,255,255,.12)" stroke="${INK}" stroke-width="2.8"`;
+  function glasses(p) {
+    const rim = '#3a2a1c';
     switch (p.glasses) {
-      case 'round': return `<circle cx="82" cy="${ey}" r="12" ${st}/><circle cx="118" cy="${ey}" r="12" ${st}/>
-        <path d="M94,${ey - 1} Q100,${ey - 5} 106,${ey - 1}" stroke="${INK}" stroke-width="2.5" fill="none"/>
-        <path d="M76,${ey - 6} L80,${ey - 9}" stroke="#fff" stroke-width="2"/>`;
-      case 'pince': return `<ellipse cx="82" cy="${ey}" rx="11" ry="8" ${st}/><ellipse cx="118" cy="${ey}" rx="11" ry="8" ${st}/>
-        <path d="M93,${ey} L107,${ey}" stroke="${INK}" stroke-width="2.4"/>
-        <path d="M71,${ey + 2} Q60,${ey + 40} 70,${ey + 90}" stroke="${INK}" stroke-width="1.4" fill="none"/>`;
-      case 'monocle': return `<circle cx="118" cy="${ey}" r="13" fill="rgba(255,255,255,.16)" stroke="${INK}" stroke-width="3"/>
-        <path d="M130,${ey + 6} Q142,${ey + 50} 132,${ey + 100}" stroke="${INK}" stroke-width="1.4" fill="none"/>
-        <path d="M110,${ey - 8} L114,${ey - 11}" stroke="#fff" stroke-width="2"/>`;
+      case 'round': return `<circle cx="84" cy="104" r="10.5" fill="rgba(220,230,235,.12)" stroke="${rim}" stroke-width="2"/>
+        <circle cx="116" cy="104" r="10.5" fill="rgba(220,230,235,.12)" stroke="${rim}" stroke-width="2"/>
+        <path d="M94.5,103 Q100,99.5 105.5,103 M73.5,102 L62,99 M126.5,102 L138,99" stroke="${rim}" stroke-width="1.6" fill="none"/>
+        <path d="M78,98 l4,-2 M110,98 l4,-2" stroke="#fff" stroke-width="1" opacity=".7"/>`;
+      case 'pince': return `<ellipse cx="84" cy="104" rx="9.5" ry="7" fill="rgba(220,230,235,.1)" stroke="${INK}" stroke-width="1.2"/>
+        <ellipse cx="116" cy="104" rx="9.5" ry="7" fill="rgba(220,230,235,.1)" stroke="${INK}" stroke-width="1.2"/>
+        <path d="M93.5,103 Q100,100 106.5,103" stroke="${INK}" stroke-width="1.2" fill="none"/>
+        <path d="M74.5,106 Q66,150 76,200" stroke="${INK}" stroke-width=".6" fill="none"/>`;
+      case 'monocle': return `<circle cx="116" cy="104" r="11" fill="rgba(220,230,235,.14)" stroke="${INK}" stroke-width="1.6"/>
+        <path d="M126,110 Q136,150 128,200" stroke="${INK}" stroke-width=".6" fill="none"/>
+        <path d="M110,98 l4,-2" stroke="#fff" stroke-width="1" opacity=".7"/>`;
     }
     return '';
   }
@@ -883,62 +1022,74 @@ window.MAPDATA = {"w":2000,"h":1000,"k":429.1504183819801,"tx":971.4285714285716
   function hat(p, hw) {
     if (p.hat !== 'cap') return '';
     const L = 100 - hw, R = 100 + hw;
-    return `<path d="M${L - 10},62 Q${L - 6},18 100,10 Q${R + 6},18 ${R + 10},62 Z" fill="${CLOTH.uniform}" stroke="${INK}" stroke-width="4"/>
-      <path d="M${L - 4},62 L${R + 4},62 L${R},72 L${L},72 Z" fill="#1a1712" stroke="${INK}" stroke-width="3"/>
-      <path d="M${L + 4},70 Q100,96 ${R - 4},70" fill="#0e0d0b" stroke="${INK}" stroke-width="3"/>
-      <circle cx="100" cy="46" r="7" fill="#c9a54a" stroke="${INK}" stroke-width="2"/>`;
+    return `<path d="M${L - 12},60 C${L - 10},30 ${f(100 - hw * .6)},18 100,18 C${f(100 + hw * .6)},18 ${R + 10},30 ${R + 12},60 Z" fill="${CLOTH.uniform}" stroke="${INK}" stroke-width="1.6"/>
+      <path d="M${L - 4},60 L${R + 4},60 L${R + 2},70 L${L - 2},70 Z" fill="#2c2a22" stroke="${INK}" stroke-width="1.4"/>
+      <path d="M${L + 2},69 Q100,90 ${R - 2},69 Q100,78 ${L + 2},69 Z" fill="#141210" stroke="${INK}" stroke-width="1.2"/>
+      <circle cx="100" cy="46" r="5" fill="#a08a52" stroke="${INK}" stroke-width="1"/>
+      <path d="M${R - 10},28 C${R + 4},36 ${R + 8},48 ${R + 10},58 L${R - 2},58 Z" fill="url(#hdcap)" opacity=".4"/>`;
   }
 
-  function silhouette(id) {
-    return `<path d="M-5,245 L-5,222 Q18,192 70,188 L130,188 Q182,192 205,222 L205,245 Z" fill="#0e0d0c"/>
-      <path d="M78,188 L100,232 L122,188 Z" fill="#2a2724"/>
-      <ellipse cx="100" cy="112" rx="50" ry="64" fill="#0e0d0c"/>
-      <path d="M30,74 Q100,56 170,74 Q160,84 100,82 Q40,84 30,74 Z" fill="#0e0d0c"/>
-      <path d="M58,76 Q60,22 100,20 Q140,22 142,76 Z" fill="#0e0d0c"/>
-      <path d="M60,66 L140,66 L141,74 L59,74 Z" fill="#3a2a1a"/>
-      <path d="M62,100 Q100,92 138,100" stroke="#c9a54a" stroke-width="3" opacity=".7" fill="none"/>
-      <circle cx="122" cy="146" r="2.5" fill="#d64a2a"/>
-      <path d="M122,146 q8,-14 2,-30 q-6,-10 4,-22" stroke="#cfc7b8" stroke-width="2" fill="none" opacity=".6"/>`;
+  function silhouette() {
+    return `<path d="M-8,245 L-8,212 C18,192 52,184 76,180 L124,180 C148,184 182,192 208,212 L208,245 Z" fill="#2c2722" stroke="#000" stroke-width="1.5"/>
+      <path d="M76,180 L100,236 L88,245 L58,245 L60,196 Z M124,180 L100,236 L112,245 L142,245 L140,196 Z" fill="#3a332b" stroke="#000" stroke-width="1.4"/>
+      <path d="M86,182 L100,214 L114,182 Z" fill="#141210"/>
+      <path d="M66,114 C66,80 80,62 100,62 C120,62 134,80 134,114 C134,146 120,170 100,174 C80,170 66,146 66,114 Z" fill="#14110f"/>
+      <path d="M118,120 C126,134 124,156 104,172 C120,166 132,148 132,124 Z" fill="#6a5440" opacity=".55"/>
+      <path d="M36,78 Q100,60 164,78 Q156,88 100,86 Q44,88 36,78 Z" fill="#1d1916" stroke="#000" stroke-width="1.2"/>
+      <path d="M62,80 C62,46 78,30 100,30 C122,30 138,46 138,80 Z" fill="#26211c" stroke="#000" stroke-width="1.2"/>
+      <path d="M64,70 L136,70 L137,79 L63,79 Z" fill="#4a3a28"/>
+      <path d="M100,32 Q96,48 100,64" stroke="#000" stroke-width="1" fill="none"/>
+      <circle cx="122" cy="150" r="2" fill="#d6643a"/>
+      <path d="M123,148 q7,-14 1,-28 q-5,-10 4,-22" stroke="#cfc7b8" stroke-width="1.4" fill="none" opacity=".45"/>`;
   }
 
   function render(key, opts = {}) {
     const p = PEOPLE[key] || PEOPLE.you;
     const id = 'pt' + (++uid);
-    const hw = p.hw || 60, chin = p.chin || 180, jaw = p.jaw ?? .72;
-    const ey = 102, my = ey + 46;
-    const skin = SKIN[p.skin || 'light'];
-    const hc = HAIR[p.hc] || INK;
-    const bg = opts.bg || p.bg;
-    let rays = '';
-    for (let i = 0; i < 24; i++) {
-      const a1 = (i / 24) * Math.PI * 2, a2 = a1 + Math.PI / 48;
-      rays += `M100,110 L${100 + Math.cos(a1) * 260},${110 + Math.sin(a1) * 260} L${100 + Math.cos(a2) * 260},${110 + Math.sin(a2) * 260} Z `;
-    }
+    const hw = p.hw || 40, chin = p.chin || 168, jaw = p.jaw ?? .72;
+    const sk = SKIN[p.skin || 'light'];
+    const head = headPath(hw, chin, jaw);
     const defs = `<defs>
-      <pattern id="${id}d" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(30)"><circle cx="3" cy="3" r="1.6" fill="${INK}"/></pattern>
-      <pattern id="${id}b" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(20)"><circle cx="3.5" cy="3.5" r="1.4" fill="rgba(0,0,0,.28)"/></pattern>
-      <clipPath id="${id}h"><path d="${headPath(hw, chin, jaw)}"/></clipPath>
+      <pattern id="${id}hd" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><line x1="0" y1="0" x2="0" y2="3" stroke="${INK}" stroke-width=".9"/></pattern>
+      <pattern id="${id}hx" width="4" height="4" patternUnits="userSpaceOnUse" patternTransform="rotate(-35)"><line x1="0" y1="0" x2="0" y2="4" stroke="${INK}" stroke-width=".35"/></pattern>
+      <pattern id="${id}hc" width="3" height="3" patternUnits="userSpaceOnUse" patternTransform="rotate(-50)"><line x1="0" y1="0" x2="0" y2="3" stroke="${INK}" stroke-width=".6"/></pattern>
+      <radialGradient id="${id}vg" cx="50%" cy="42%" r="72%"><stop offset=".55" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".45"/></radialGradient>
+      <clipPath id="${id}h"><path d="${head}"/></clipPath>
     </defs>`;
-    const bgLayer = `<rect width="200" height="240" fill="${bg}"/><path d="${rays}" fill="rgba(255,255,255,.12)"/><rect width="200" height="240" fill="url(#${id}b)"/>`;
     let body;
     if (p.silhouette) {
-      body = silhouette(id);
+      body = silhouette();
     } else {
-      const neck = `<path d="M${100 - hw * .42},${chin - 34} L${100 - hw * .46},196 Q100,206 ${100 + hw * .46},196 L${100 + hw * .42},${chin - 34} Z" fill="${skin}" stroke="${INK}" stroke-width="3.5"/>
-        <path d="M${100 - hw * .44},${chin - 10} Q100,${chin + 12} ${100 + hw * .44},${chin - 10} L${100 + hw * .46},196 Q100,206 ${100 - hw * .46},196 Z" fill="url(#${id}d)" opacity=".7"/>`;
-      const ears = `<ellipse cx="${100 - hw - 2}" cy="108" rx="9" ry="15" fill="${skin}" stroke="${INK}" stroke-width="3.5"/>
-        <ellipse cx="${100 + hw + 2}" cy="108" rx="9" ry="15" fill="${skin}" stroke="${INK}" stroke-width="3.5"/>`;
-      const head = `<path d="${headPath(hw, chin, jaw)}" fill="${skin}" stroke="${INK}" stroke-width="4.5" stroke-linejoin="round"/>
+      const nL = f(100 - hw * .5), nR = f(100 + hw * .5);
+      const neck = `<path d="M${nL},${chin - 30} L${f(nL - 3)},190 Q100,200 ${f(nR + 3)},190 L${nR},${chin - 30} Z" fill="${sk.base}" stroke="${INK}" stroke-width="1.5"/>
+        <path d="M${f(nL - 2)},${chin - 6} Q100,${chin + 16} ${f(nR + 2)},${chin - 6} L${f(nR + 3)},190 Q100,200 ${f(nL - 3)},190 Z" fill="${sk.shade}"/>
+        <path d="M${f(nL - 2)},${chin - 2} Q100,${chin + 14} ${f(nR + 2)},${chin - 2} L${f(nR + 3)},190 L${f(100 + hw * .1)},190 Z" fill="url(#${id}hd)" opacity=".55"/>
+        <path d="M92,${chin + 8} L94,186 M108,${chin + 8} L106,186" stroke="${sk.deep}" stroke-width=".7"/>`;
+      const ear = (x, s) => `<path d="M${x},96 C${x + s * 9},92 ${x + s * 10},104 ${x + s * 8},114 C${x + s * 7},122 ${x + s * 3},126 ${x - s * 1},124" fill="${s > 0 ? sk.shade : sk.base}" stroke="${INK}" stroke-width="1.4"/>
+        <path d="M${x + s * 2},100 C${x + s * 6},100 ${x + s * 6},110 ${x + s * 3},116" fill="none" stroke="${sk.deep}" stroke-width=".8"/>`;
+      const ears = ear(100 - hw + 1, -1) + ear(100 + hw - 1, 1);
+      const face = `<path d="${head}" fill="${sk.base}"/>
         <g clip-path="url(#${id}h)">
-          <ellipse cx="${100 + hw * 1.05}" cy="112" rx="${hw * .62}" ry="100" fill="url(#${id}d)" opacity=".85"/>
-          <ellipse cx="100" cy="${chin + 6}" rx="${hw}" ry="20" fill="url(#${id}d)" opacity=".5"/>
-          <path d="M70,${ey - 6} Q82,${ey - 11} 94,${ey - 6} L94,${ey - 2} Q82,${ey - 6} 70,${ey - 2} Z M106,${ey - 6} Q118,${ey - 11} 130,${ey - 6} L130,${ey - 2} Q118,${ey - 6} 106,${ey - 2} Z" fill="rgba(0,0,0,.18)"/>
+          <path d="M${f(100 + hw * .42)},30 C${f(100 + hw * .62)},70 ${f(100 + hw * .5)},100 ${f(100 + hw * .62)},118 C${f(100 + hw * .5)},138 ${f(100 + hw * .32)},158 100,${chin + 4} L${100 + hw + 10},${chin + 10} L${100 + hw + 10},30 Z" fill="${sk.shade}"/>
+          <path d="M${f(100 + hw * .7)},40 C${f(100 + hw * .82)},80 ${f(100 + hw * .74)},110 ${f(100 + hw * .78)},124 C${f(100 + hw * .6)},150 ${f(100 + hw * .4)},162 ${f(100 + hw * .1)},${chin + 4} L${100 + hw + 10},${chin + 10} L${100 + hw + 10},30 Z" fill="url(#${id}hd)" opacity=".6"/>
+          <path d="M70,98 Q84,92 96,98 L96,103 Q84,98 70,103 Z M104,98 Q116,92 130,98 L130,103 Q116,98 104,103 Z" fill="${sk.shade}" opacity=".8"/>
+          <path d="M${100 - hw},${chin - 18} Q100,${chin + 6} ${100 + hw},${chin - 18} L${100 + hw},${chin + 10} L${100 - hw},${chin + 10} Z" fill="${sk.shade}" opacity=".45"/>
+          <path d="M${f(100 - hw * .78)},116 Q${f(100 - hw * .7)},124 ${f(100 - hw * .6)},130" stroke="${sk.deep}" stroke-width=".7" fill="none"/>
+          <path d="M${f(100 - hw * .2)},${chin - 4} Q100,${chin - 9} ${f(100 + hw * .2)},${chin - 4}" stroke="${sk.deep}" stroke-width=".7" fill="none"/>
         </g>
-        ${p.hair === 'bald' ? `<ellipse cx="${100 - hw * .3}" cy="48" rx="${hw * .28}" ry="9" fill="#fff" opacity=".45" transform="rotate(-18 ${100 - hw * .3} 48)"/>` : ''}`;
-      body = clothes(p, id) + neck + ears + head + hair(p, hw, hc) + beard(p, hw, chin, my) + eyes(p, ey) + brows(p, ey) + nose(ey) + mouth(p, my) + stache(p, my) + glasses(p, ey) + hat(p, hw);
+        <path d="${head}" fill="none" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/>
+        ${p.hair === 'bald' ? `<path d="M${f(100 - hw * .55)},58 Q${f(100 - hw * .3)},46 ${f(100 - hw * .02)},45" stroke="#f3e6d2" stroke-width="2.4" fill="none" opacity=".55" stroke-linecap="round"/>
+          <g clip-path="url(#${id}h)"><path d="M${f(100 + hw * .2)},34 C${f(100 + hw * .6)},44 ${100 + hw},60 ${100 + hw},80 L${100 + hw + 6},80 L${100 + hw + 6},30 Z" fill="url(#${id}hc)" opacity=".5"/></g>` : ''}`;
+      body = backdrop(p, id) + clothes(p, id, hw) + neck + ears + face + lines(p, sk, hw) + hair(p, hw, id) +
+        beard(p, hw, chin) + eyes(p, sk) + brows(p) + nose(sk) + mouth(p, sk) + stache(p) + glasses(p) + hat(p, hw).replace('url(#hdcap)', `url(#${id}hd)`);
+    }
+    if (p.silhouette) body = backdrop(p, id) + `<g transform="translate(100 250) scale(1.1) translate(-100 -250)">${body}</g>`;
+    else {
+      const bd = backdrop(p, id);
+      body = bd + `<g transform="translate(100 250) scale(1.13) translate(-100 -250)">${body.slice(bd.length)}</g>`;
     }
     const title = opts.decorative ? '' : `<title>${p.name}</title>`;
-    return `<svg viewBox="0 0 200 240" class="portrait" ${opts.decorative ? 'aria-hidden="true"' : 'role="img"'} preserveAspectRatio="xMidYMid slice">${title}${defs}${bgLayer}${body}<rect x="2" y="2" width="196" height="236" fill="none" stroke="${INK}" stroke-width="5"/></svg>`;
+    return `<svg viewBox="0 0 200 240" class="portrait" ${opts.decorative ? 'aria-hidden="true"' : 'role="img"'} preserveAspectRatio="xMidYMid slice">${title}${defs}${body}<rect x="1.5" y="1.5" width="197" height="237" fill="none" stroke="${INK}" stroke-width="3"/></svg>`;
   }
 
   window.Portraits = { render, PEOPLE };
@@ -2751,6 +2902,7 @@ window.SCENARIOS.italy = [
     build, reset, apply, focus, setTension, setPlayer,
     zoomIn: () => zoomBy(1.6), zoomOut: () => zoomBy(1 / 1.6),
     world: () => focus(25, 30, 1.3),
+    placeName: id => (PLACES[id] || [])[2],
     refocus: () => lastFocus && focus(...lastFocus),
     resize: () => setVB(vb, true)
   };
@@ -2866,7 +3018,7 @@ window.SCENARIOS.italy = [
 
   function hydratePortraits(root = document) {
     root.querySelectorAll('[data-portrait]').forEach(el => {
-      if (!el.firstChild) el.innerHTML = window.Portraits.render(el.dataset.portrait, { decorative: true });
+      if (!el.firstChild) el.innerHTML = el.dataset.portrait.split(',').map(k => window.Portraits.render(k, { decorative: true })).join('');
     });
   }
 
@@ -2997,6 +3149,7 @@ window.SCENARIOS.italy = [
       <div class="panel">
         <div class="face">${window.Portraits.render(s.speaker)}</div>
         <div class="bubble-wrap">
+          <div class="caption">${esc(captionFor(s))}</div>
           <div class="bubble" id="bubble" aria-label="${esc(sp.name)} says: ${esc(s.said)}"></div>
           <div class="who">${esc(sp.name)}<small>${esc(sp.role)}</small>${s.saidReal ? `<span class="genuine">${s.saidReal === 'attr' ? 'Attributed quotation' : 'Genuine quotation'}</span>` : ''}</div>
         </div>
@@ -3018,6 +3171,52 @@ window.SCENARIOS.italy = [
     renderHud();
     $('#dossier').scrollTop = 0;
     if (st.phase === 'decide') window.Sound.play('telegraph');
+  }
+
+  function captionFor(s) {
+    const m = s.fx && s.fx.mark && s.fx.mark[0];
+    const place = (m && window.GameMap.placeName(m.id)) || ROLES[st.role].city;
+    return `${place}, ${s.date}…`;
+  }
+
+  // ---------- full screen ----------
+  const FS = {
+    supported() {
+      const d = document.documentElement;
+      return !!(d.requestFullscreen || d.webkitRequestFullscreen) && (document.fullscreenEnabled !== false || document.webkitFullscreenEnabled);
+    },
+    active() { return !!(document.fullscreenElement || document.webkitFullscreenElement); },
+    async toggle() {
+      try {
+        if (FS.active()) {
+          await (document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen());
+        } else {
+          const d = document.documentElement;
+          if (!FS.supported()) throw new Error('unsupported');
+          await (d.requestFullscreen ? d.requestFullscreen({ navigationUI: 'hide' }) : d.webkitRequestFullscreen());
+        }
+      } catch (e) {
+        const ios = /iP(hone|od|ad)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        toast('Full screen isn’t available here', ios
+          ? 'On iPhone or iPad, tap Share, then “Add to Home Screen”. Open the game from the new icon and it fills the whole screen.'
+          : 'This browser or page blocked full screen. Try opening the game in its own browser tab, or use your browser’s full-screen key (F11 on most computers).');
+      }
+    },
+    sync() {
+      const on = FS.active();
+      $$('.fs-btn').forEach(b => b.setAttribute('aria-pressed', on));
+      $('#btn-fs-title').textContent = on ? '⛶ Exit full screen' : '⛶ Full screen';
+      $('#btn-fs').setAttribute('aria-label', on ? 'Exit full screen' : 'Full screen');
+      requestAnimationFrame(() => { window.GameMap.resize(); if (!$('#s-title').hidden) rain.size(); });
+    }
+  };
+
+  function toast(title, msg) {
+    const t = $('#toast');
+    t.innerHTML = `<b>${esc(title)}</b>${esc(msg)}`;
+    t.hidden = false;
+    clearTimeout(toast.t);
+    toast.t = setTimeout(() => { t.hidden = true; }, 7000);
   }
 
   let typeTimer = null;
@@ -3211,6 +3410,10 @@ window.SCENARIOS.italy = [
     });
     $('#btn-sound-title').addEventListener('click', toggleSound);
     $('#btn-sound').addEventListener('click', toggleSound);
+    $$('.fs-btn').forEach(b => b.addEventListener('click', () => FS.toggle()));
+    document.addEventListener('fullscreenchange', FS.sync);
+    document.addEventListener('webkitfullscreenchange', FS.sync);
+    $('#toast').addEventListener('click', () => { $('#toast').hidden = true; });
     $('#btn-about').addEventListener('click', () => { $('#about').hidden = false; $('#about-close').focus(); });
     $('#about-close').addEventListener('click', () => { $('#about').hidden = true; });
     $('#about').addEventListener('click', e => { if (e.target.id === 'about') $('#about').hidden = true; });
@@ -3260,6 +3463,7 @@ window.SCENARIOS.italy = [
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') { $('#about').hidden = true; $('#menu-sheet').hidden = true; }
+      if ((e.key === 'f' || e.key === 'F') && !e.ctrlKey && !e.metaKey && !e.altKey) { FS.toggle(); return; }
       if ($('#s-game').hidden || !st || st.phase !== 'decide' || !$('#menu-sheet').hidden) return;
       const k = e.key.toUpperCase();
       const idx = 'ABCD'.indexOf(k);

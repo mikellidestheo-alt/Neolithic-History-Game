@@ -1,0 +1,11 @@
+{
+  "name": "Shadows over Geneva",
+  "short_name": "Geneva 1919–39",
+  "description": "Interwar decision game for Cambridge IGCSE and A-Level History.",
+  "start_url": "./index.html",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#0c0b0a",
+  "theme_color": "#0c0b0a",
+  "icons": [{ "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

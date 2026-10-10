@@ -106,7 +106,7 @@
 
   function hydratePortraits(root = document) {
     root.querySelectorAll('[data-portrait]').forEach(el => {
-      if (!el.firstChild) el.innerHTML = window.Portraits.render(el.dataset.portrait, { decorative: true });
+      if (!el.firstChild) el.innerHTML = el.dataset.portrait.split(',').map(k => window.Portraits.render(k, { decorative: true })).join('');
     });
   }
 
@@ -237,6 +237,7 @@
       <div class="panel">
         <div class="face">${window.Portraits.render(s.speaker)}</div>
         <div class="bubble-wrap">
+          <div class="caption">${esc(captionFor(s))}</div>
           <div class="bubble" id="bubble" aria-label="${esc(sp.name)} says: ${esc(s.said)}"></div>
           <div class="who">${esc(sp.name)}<small>${esc(sp.role)}</small>${s.saidReal ? `<span class="genuine">${s.saidReal === 'attr' ? 'Attributed quotation' : 'Genuine quotation'}</span>` : ''}</div>
         </div>
@@ -258,6 +259,52 @@
     renderHud();
     $('#dossier').scrollTop = 0;
     if (st.phase === 'decide') window.Sound.play('telegraph');
+  }
+
+  function captionFor(s) {
+    const m = s.fx && s.fx.mark && s.fx.mark[0];
+    const place = (m && window.GameMap.placeName(m.id)) || ROLES[st.role].city;
+    return `${place}, ${s.date}…`;
+  }
+
+  // ---------- full screen ----------
+  const FS = {
+    supported() {
+      const d = document.documentElement;
+      return !!(d.requestFullscreen || d.webkitRequestFullscreen) && (document.fullscreenEnabled !== false || document.webkitFullscreenEnabled);
+    },
+    active() { return !!(document.fullscreenElement || document.webkitFullscreenElement); },
+    async toggle() {
+      try {
+        if (FS.active()) {
+          await (document.exitFullscreen ? document.exitFullscreen() : document.webkitExitFullscreen());
+        } else {
+          const d = document.documentElement;
+          if (!FS.supported()) throw new Error('unsupported');
+          await (d.requestFullscreen ? d.requestFullscreen({ navigationUI: 'hide' }) : d.webkitRequestFullscreen());
+        }
+      } catch (e) {
+        const ios = /iP(hone|od|ad)/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+        toast('Full screen isn’t available here', ios
+          ? 'On iPhone or iPad, tap Share, then “Add to Home Screen”. Open the game from the new icon and it fills the whole screen.'
+          : 'This browser or page blocked full screen. Try opening the game in its own browser tab, or use your browser’s full-screen key (F11 on most computers).');
+      }
+    },
+    sync() {
+      const on = FS.active();
+      $$('.fs-btn').forEach(b => b.setAttribute('aria-pressed', on));
+      $('#btn-fs-title').textContent = on ? '⛶ Exit full screen' : '⛶ Full screen';
+      $('#btn-fs').setAttribute('aria-label', on ? 'Exit full screen' : 'Full screen');
+      requestAnimationFrame(() => { window.GameMap.resize(); if (!$('#s-title').hidden) rain.size(); });
+    }
+  };
+
+  function toast(title, msg) {
+    const t = $('#toast');
+    t.innerHTML = `<b>${esc(title)}</b>${esc(msg)}`;
+    t.hidden = false;
+    clearTimeout(toast.t);
+    toast.t = setTimeout(() => { t.hidden = true; }, 7000);
   }
 
   let typeTimer = null;
@@ -451,6 +498,10 @@
     });
     $('#btn-sound-title').addEventListener('click', toggleSound);
     $('#btn-sound').addEventListener('click', toggleSound);
+    $$('.fs-btn').forEach(b => b.addEventListener('click', () => FS.toggle()));
+    document.addEventListener('fullscreenchange', FS.sync);
+    document.addEventListener('webkitfullscreenchange', FS.sync);
+    $('#toast').addEventListener('click', () => { $('#toast').hidden = true; });
     $('#btn-about').addEventListener('click', () => { $('#about').hidden = false; $('#about-close').focus(); });
     $('#about-close').addEventListener('click', () => { $('#about').hidden = true; });
     $('#about').addEventListener('click', e => { if (e.target.id === 'about') $('#about').hidden = true; });
@@ -500,6 +551,7 @@
 
     document.addEventListener('keydown', e => {
       if (e.key === 'Escape') { $('#about').hidden = true; $('#menu-sheet').hidden = true; }
+      if ((e.key === 'f' || e.key === 'F') && !e.ctrlKey && !e.metaKey && !e.altKey) { FS.toggle(); return; }
       if ($('#s-game').hidden || !st || st.phase !== 'decide' || !$('#menu-sheet').hidden) return;
       const k = e.key.toUpperCase();
       const idx = 'ABCD'.indexOf(k);

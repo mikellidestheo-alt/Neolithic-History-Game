@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#0c0b0a"/>
+  <rect x="24" y="24" width="464" height="464" fill="none" stroke="#d9a441" stroke-width="10"/>
+  <path d="M256,92 L292,202 L408,202 L314,270 L350,380 L256,312 L162,380 L198,270 L104,202 L220,202 Z" fill="#d9a441"/>
+  <text x="256" y="452" text-anchor="middle" font-family="Georgia, serif" font-size="56" letter-spacing="8" fill="#ebe3cd">1919–39</text>
+</svg>
