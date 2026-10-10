@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0c0b0a">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Shadows over Geneva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Limelight&family=Special+Elite&display=swap">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+
+  <!-- ============ TITLE ============ -->
+  <section id="s-title" class="screen title-screen">
+    <canvas id="rain" aria-hidden="true"></canvas>
+    <div class="blinds" aria-hidden="true"></div>
+    <div class="title-wrap">
+      <p class="eyebrow">Geneva · Berlin · Rome &nbsp;—&nbsp; 1919–1939</p>
+      <h1 class="logo"><span>Shadows</span><small>over</small><span>Geneva</span></h1>
+      <p class="tagline">Twenty years. Three desks. One question: will you make the call history made?</p>
+      <div class="title-cast" aria-hidden="true">
+        <div class="cast c1" data-portrait="mussolini"></div>
+        <div class="cast c2" data-portrait="you"></div>
+        <div class="cast c3" data-portrait="stresemann"></div>
+      </div>
+      <div class="title-actions">
+        <button class="btn btn-primary" id="btn-new">Open the file</button>
+        <button class="btn" id="btn-resume" hidden>Resume saved file</button>
+        <div class="title-row">
+          <button class="btn btn-ghost" id="btn-sound-title" aria-pressed="true">♪ Music on</button>
+          <button class="btn btn-ghost" id="btn-about">About &amp; teachers</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LEVEL ============ -->
+  <section id="s-level" class="screen pick-screen" hidden>
+    <header class="pick-head">
+      <p class="eyebrow">File 1 of 2 · Clearance level</p>
+      <h2>Choose your course</h2>
+    </header>
+    <div class="pick-grid two">
+      <button class="pick-card" data-level="igcse">
+        <span class="stamp-chip">Cambridge IGCSE</span>
+        <h3>IGCSE</h3>
+        <p>International relations 1919–39: the peace treaties, the League of Nations and the collapse of peace.</p>
+        <ul>
+          <li>Core events from the syllabus</li>
+          <li>Three choices per crisis</li>
+          <li>Three adviser hints per game</li>
+          <li>An exam tip after every decision</li>
+        </ul>
+      </button>
+      <button class="pick-card" data-level="alevel">
+        <span class="stamp-chip">Cambridge AS &amp; A Level</span>
+        <h3>A-Level</h3>
+        <p>International relations in the 1920s and 1930s, in more depth and with the historians’ debates.</p>
+        <ul>
+          <li>Extra crises: Geneva Protocol, Mosul, Leticia, Rapallo, Lausanne and more</li>
+          <li>Four choices, with harder distractors</li>
+          <li>No hints</li>
+          <li>Historiography notes from the Historian’s Desk</li>
+        </ul>
+      </button>
+    </div>
+    <button class="btn btn-ghost back" data-go="s-title">← Back</button>
+  </section>
+
+  <!-- ============ ROLE ============ -->
+  <section id="s-role" class="screen pick-screen" hidden>
+    <header class="pick-head">
+      <p class="eyebrow">File 2 of 2 · Assignment</p>
+      <h2>Whose desk will you sit at?</h2>
+    </header>
+    <div class="pick-grid three" id="role-grid">
+      <button class="pick-card role" data-role="league">
+        <div class="role-art" data-portrait="drummond"></div>
+        <h3>The League Council</h3>
+        <p class="role-sub">Geneva · 1920–1936</p>
+        <p>Take a seat on the League of Nations Council, the League’s “security council”. Settle disputes, judge aggressors, and decide whether to impose sanctions.</p>
+        <p class="role-count" data-count="league"></p>
+      </button>
+      <button class="pick-card role" data-role="germany">
+        <div class="role-art" data-portrait="stresemann"></div>
+        <h3>Germany</h3>
+        <p class="role-sub">Berlin · 1919–1939</p>
+        <p>Shape German foreign policy for each new leader: Bauer, Cuno, Stresemann, Brüning, Papen and Hitler.</p>
+        <p class="role-count" data-count="germany"></p>
+      </button>
+      <button class="pick-card role" data-role="italy">
+        <div class="role-art" data-portrait="mussolini"></div>
+        <h3>Italy</h3>
+        <p class="role-sub">Rome · 1919–1939</p>
+        <p>Steer Italy from the “mutilated victory” of 1919, through Orlando and Giolitti, to Mussolini’s empire and the Axis.</p>
+        <p class="role-count" data-count="italy"></p>
+      </button>
+    </div>
+    <button class="btn btn-ghost back" data-go="s-level">← Back</button>
+  </section>
+
+  <!-- ============ BRIEFING ============ -->
+  <section id="s-brief" class="screen brief-screen" hidden>
+    <article class="brief-paper">
+      <div class="brief-stamp" aria-hidden="true">Top secret</div>
+      <p class="eyebrow ink" id="brief-eyebrow"></p>
+      <h2 id="brief-title"></h2>
+      <div class="brief-body" id="brief-body"></div>
+      <div class="rules">
+        <div class="rule"><b>Make the historical call.</b> Each crisis offers several options. Only one is what really happened.</div>
+        <div class="rule"><b>Three mistakes allowed.</b> <span id="brief-fail"></span></div>
+        <div class="rule"><b>Watch the map.</b> Every decision changes the strategic map, League authority and world tension, just as history did.</div>
+        <div class="rule" id="brief-hints"></div>
+      </div>
+      <div class="brief-actions">
+        <button class="btn btn-primary" id="btn-begin">Take your seat</button>
+        <button class="btn btn-ghost back" data-go="s-role">← Change desk</button>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ GAME ============ -->
+  <section id="s-game" class="screen game-screen" hidden>
+    <header class="hud">
+      <div class="hud-year"><span id="hud-year">1920</span><small id="hud-role">League Council</small></div>
+      <div class="hud-meters">
+        <div class="meter" id="m-auth" title="League authority"><span class="m-lbl">League authority</span><span class="m-bar"><i></i></span></div>
+        <div class="meter danger" id="m-tens" title="World tension"><span class="m-lbl">World tension</span><span class="m-bar"><i></i></span></div>
+      </div>
+      <div class="hud-strikes" id="hud-strikes" aria-label="Mistakes"></div>
+      <div class="hud-btns">
+        <button class="icon-btn" id="btn-sound" aria-label="Toggle music" aria-pressed="true">♪</button>
+        <button class="icon-btn" id="btn-menu" aria-label="Menu">≡</button>
+      </div>
+    </header>
+    <div class="stage" id="stage">
+      <div class="map-panel" id="map-panel">
+        <div class="map-wrap" id="map"></div>
+        <div class="map-ctrls">
+          <button class="icon-btn sm" id="map-in" aria-label="Zoom in">+</button>
+          <button class="icon-btn sm" id="map-out" aria-label="Zoom out">−</button>
+          <button class="icon-btn sm" id="map-focus" aria-label="Return to the crisis">◎</button>
+          <button class="icon-btn sm" id="map-world" aria-label="World view">◍</button>
+          <button class="icon-btn sm" id="map-full" aria-label="Expand map" aria-pressed="false">⤢</button>
+        </div>
+        <button class="map-legend-btn" id="legend-btn" aria-expanded="false">Key</button>
+        <div class="map-legend" id="legend" hidden>
+          <div><i class="sw de"></i>Germany</div>
+          <div><i class="sw it"></i>Italy</div>
+          <div><i class="sw jp"></i>Japan</div>
+          <div><i class="sw dem"></i>Britain &amp; France</div>
+          <div><i class="sw su"></i>USSR</div>
+          <div><i class="sw dmz"></i>Demilitarised zone</div>
+          <div><i class="sw lg"></i>League-run territory</div>
+          <div><i class="dot win"></i>League success</div>
+          <div><i class="dot fail"></i>Failure</div>
+          <div><i class="dot war"></i>Aggression</div>
+          <div><i class="dot deal"></i>Treaty / deal</div>
+          <div><i class="dot crisis"></i>Crisis</div>
+        </div>
+        <div class="progress" id="progress" aria-hidden="true"><i></i></div>
+      </div>
+      <div class="dossier" id="dossier" tabindex="-1">
+        <div id="dossier-inner"></div>
+      </div>
+    </div>
+    <div class="menu-sheet" id="menu-sheet" hidden>
+      <div class="menu-card">
+        <h3>Paused</h3>
+        <button class="btn" id="m-resume">Back to the crisis</button>
+        <button class="btn" id="m-log">Decision log</button>
+        <button class="btn btn-ghost" id="m-quit">Save &amp; return to title</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ END ============ -->
+  <section id="s-end" class="screen end-screen" hidden>
+    <article class="newspaper" id="newspaper"></article>
+    <div class="debrief" id="debrief"></div>
+    <div class="end-actions">
+      <button class="btn btn-primary" id="btn-again">Play again</button>
+      <button class="btn" id="btn-other">Try another desk</button>
+      <button class="btn btn-ghost" id="btn-home">Title screen</button>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <div class="modal" id="about" hidden role="dialog" aria-modal="true" aria-labelledby="about-h">
+    <div class="modal-card">
+      <h3 id="about-h">About this game</h3>
+      <p><b>Shadows over Geneva</b> is a decision game for Cambridge IGCSE History (Core Content Option B: international relations 1919–39) and Cambridge International AS &amp; A Level History (the League of Nations and international relations in the 1920s and 1930s).</p>
+      <p>Players are scored on whether they choose <b>what actually happened</b>, not what they think should have happened. After every decision the game explains why the other options were not chosen, which makes it a good starting point for discussion.</p>
+      <h4>In the classroom</h4>
+      <ul>
+        <li>Pairs on one tablet: one student argues for an option, the other against, before sealing the decision.</li>
+        <li>Use the end-of-game debrief as an exam-practice list: pick one failure and one success of the League and explain why.</li>
+        <li>A-Level: use the Historian’s Desk notes as essay starters on debates over Hitler’s intentions, appeasement and the League.</li>
+        <li>Progress is saved on the device, so a game can continue next lesson.</li>
+      </ul>
+      <h4>A note on names</h4>
+      <p>The League’s inner body was called the <b>Council</b>. The term “Security Council” belongs to the United Nations (1945). In this game the Council is described as the League’s “security council” to make the link.</p>
+      <h4>Credits</h4>
+      <p>Map borders c.1930 adapted from <i>historical-basemaps</i> by A. Ourednik (GPL-3.0). The music is generated live in your browser. Portraits are original caricatures. Speech-bubble lines are written in character, except those marked as genuine quotations.</p>
+      <button class="btn btn-primary" id="about-close">Close</button>
+    </div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+</div>
+<script src="js/mapdata.js"></script>
+<script src="js/portraits.js"></script>
+<script src="js/data-league.js"></script>
+<script src="js/data-germany.js"></script>
+<script src="js/data-italy.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/map.js"></script>
+<script src="js/game.js"></script>
+</body>
+</html>
