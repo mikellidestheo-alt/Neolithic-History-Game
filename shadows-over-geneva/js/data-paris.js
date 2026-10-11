@@ -28,7 +28,7 @@ window.SCENARIOS.paris = [
   id: 'colonies', lv: 'both', where: 'Paris', date: 'January 1919', title: 'Germany’s Colonies',
   ldr: 'wilson', speaker: 'lloydgeorge',
   said: 'Australia and South Africa took those colonies with their own blood, Mr President. They will not hand them back.',
-  brief: 'Germany has lost all its colonies in Africa and the Pacific during the war, and the Ottoman Empire’s Arab lands are under British and French control. Britain’s Dominions want to annex the German colonies they captured. Wilson’s Fourteen Points promised a fair settlement of colonial claims, taking account of the people who live there.',
+  brief: 'Allied forces captured all of Germany’s colonies in Africa and the Pacific during the war. Britain’s Dominions, South Africa, Australia and New Zealand, want to annex the German colonies they captured. Wilson’s Fourteen Points promised a fair settlement of colonial claims, taking account of the people who live there.',
   ask: 'What happens to the colonies?',
   opts: [
     { t: 'Return them to Germany.', x: 'No Allied government would hand back colonies that might be used as German naval bases.' },
@@ -37,7 +37,7 @@ window.SCENARIOS.paris = [
     { t: 'Hold referendums in every colony.', a: true, x: 'No one proposed votes for the colonial peoples. The mandate system assumed outside rule would continue.' }
   ],
   ans: 2,
-  out: 'Germany’s colonies and the Ottoman Arab lands became League mandates. Britain took Tanganyika, Iraq and Palestine. France took most of Togo and Cameroon, and Syria and Lebanon. South Africa, Australia, New Zealand and Japan took other German territories. The League’s Mandates Commission was supposed to check that they were ruled in the interests of their peoples.',
+  out: 'Under the Treaty of Versailles Germany gave up all its colonies, which became League mandates. Britain took Tanganyika and parts of Togo and Cameroon; France took most of Togo and Cameroon. South Africa took South West Africa, Australia took German New Guinea, New Zealand took Samoa and Japan took Germany’s Pacific islands north of the equator. The League’s Mandates Commission was supposed to check that they were ruled in the interests of their peoples.',
   head: 'GERMAN COLONIES BECOME LEAGUE MANDATES',
   fx: { tens: 2, mark: [{ id: 'paris', kind: 'deal', label: 'Mandates 1919' }] },
   focus: [20, 15, 2],
@@ -130,7 +130,7 @@ window.SCENARIOS.paris = [
   motive: 'Clemenceau got money for rebuilding France, and Lloyd George kept his election promise and a larger share for Britain. Wilson’s wish for a fixed, moderate sum lost out.'
 },
 {
-  id: 'austriaP', lv: 'both', where: 'Paris', date: 'May 1919', title: 'The End of Austria-Hungary',
+  id: 'austriaP', lv: 'a', where: 'Paris', date: 'May 1919', title: 'The End of Austria-Hungary',
   ldr: 'clemenceau', speaker: 'orlando',
   said: 'Italy was promised the Tyrol and Istria. We expect the promise to be kept.',
   brief: 'The Austro-Hungarian Empire has collapsed into new states: Czechoslovakia, Yugoslavia and an enlarged Poland and Romania. What is left of Austria, a small German-speaking state, wants to unite with Germany. France is horrified: a union would make Germany bigger than before the war. Wilson’s Fourteen Points promised self-determination for the peoples of the empire.',
@@ -236,13 +236,13 @@ window.SCENARIOS.paris = [
 }
 ];
 
-// "Was it fair?" verdict shown at the end of the Paris chapter.
+// "Was it fair?" verdict shown at the end of the Paris chapter. lv: 'a' entries are A-Level only.
 window.PARIS_VERDICT = [
   { who: 'Germany', view: 'A Diktat: dictated, not negotiated. Germany lost about 13% of its land in Europe, all its colonies and most of its army, and was blamed for the war. Almost every German wanted it overturned.' },
   { who: 'France', view: 'Too soft. Germany was left united, with more people and industry than France, and the British and American guarantees collapsed. Marshal Foch is said to have called it “not a peace, but an armistice for twenty years”.' },
   { who: 'Britain', view: 'Satisfied at first: the German fleet and colonies were gone. Within a few years, many Britons, influenced by Keynes, thought it too harsh on Germany.' },
   { who: 'USA', view: 'Wilson got his League, but the Senate rejected the treaty. America turned away from Europe.' },
   { who: 'Italy', view: 'A “mutilated victory”: no Fiume, no Dalmatia, no colonies, despite great sacrifices.' },
-  { who: 'Austria, Hungary, Bulgaria and Turkey', view: 'Austria and Hungary were shrunk to small states; millions of Germans and Hungarians lived as minorities abroad. Bulgaria lost its coast. Turkey overturned its treaty by force.' },
+  { lv: 'a', who: 'Austria, Hungary, Bulgaria and Turkey', view: 'Austria and Hungary were shrunk to small states; millions of Germans and Hungarians lived as minorities abroad. Bulgaria lost its coast. Turkey overturned its treaty by force.' },
   { who: 'Historians', view: 'Keynes called it a “Carthaginian peace” that would ruin Europe. Margaret MacMillan argues the peacemakers did a reasonable job in impossible conditions and are wrongly blamed for 1939. Remember Brest-Litovsk (1918): Germany’s own terms for Russia were harsher.' }
 ];

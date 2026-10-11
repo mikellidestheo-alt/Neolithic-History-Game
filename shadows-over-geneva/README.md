@@ -11,7 +11,7 @@ Council or ousted from power.
 
 | Desk | Role | IGCSE | A-Level |
 | --- | --- | --- | --- |
-| Paris 1919 | Work with Wilson, Clemenceau and Lloyd George on each term of the peace, ending with a “Was it fair?” verdict | 9 decisions | 11 decisions |
+| Paris 1919 | Work with Wilson, Clemenceau and Lloyd George on each term of the peace, ending with a “Was it fair?” verdict (IGCSE: Treaty of Versailles only; A-Level adds the other treaties) | 8 decisions | 11 decisions |
 | League Council | Settle disputes as a member of the League's Council (its "security council") | 12 crises | 17 crises |
 | Germany | Advise Bauer, (Wirth), Cuno, Stresemann, (Brüning, Papen) and Hitler | 17 crises | 23 crises |
 | Italy | Advise Orlando, (Giolitti) and Mussolini | 16 crises | 19 crises |

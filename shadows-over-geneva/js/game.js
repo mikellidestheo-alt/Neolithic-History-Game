@@ -520,7 +520,7 @@
       const v = document.createElement('section');
       v.className = 'verdict-panel';
       v.innerHTML = `<h3>Was it fair?</h3><p class="v-intro">How each side saw the peace settlement. Use it as an essay plan.</p>` +
-        window[R.verdict].map(x => `<div class="v-item"><h4>${esc(x.who)}</h4><p>${esc(x.view)}</p></div>`).join('');
+        window[R.verdict].filter(x => x.lv !== 'a' || st.level === 'alevel').map(x => `<div class="v-item"><h4>${esc(x.who)}</h4><p>${esc(x.view)}</p></div>`).join('');
       $('#debrief').prepend(v);
     }
     store.del(SAVE_KEY);
