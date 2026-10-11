@@ -451,3 +451,9 @@ img.portrait.art { object-fit: cover; object-position: 50% 30%; background: var(
 .np-cols.no-face { grid-template-columns: 1fr; }
 .note.motive { border-color: var(--red); background: rgba(184, 50, 42, .08); padding-right: 10px; }
 .note.motive h4 { color: #ef8a80; }
+.verdict-panel { background: var(--paper); color: var(--type); border: 2px solid #000; box-shadow: 6px 6px 0 rgba(0, 0, 0, .55); padding: 16px 18px; display: grid; gap: 10px; }
+.verdict-panel h3 { color: var(--red-deep); }
+.verdict-panel .v-intro { margin: 0; font-family: var(--f-type); font-size: .85rem; color: #5a5245; }
+.v-item { border-left: 4px solid var(--red); padding-left: 10px; }
+.v-item h4 { margin: 0; font-family: var(--f-comic); font-weight: 700; text-transform: uppercase; letter-spacing: .03em; font-size: 1rem; }
+.v-item p { margin: 2px 0 0; font-size: .92rem; color: var(--type); }

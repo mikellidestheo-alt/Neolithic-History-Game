@@ -7,6 +7,7 @@ window.ART = {
     "bruning": "art/portraits/bruning.webp",
     "chamberlainA": "art/portraits/chamberlainA.webp",
     "ciano": "art/portraits/ciano.webp",
+    "clemenceau": "art/portraits/clemenceau.webp",
     "cuno": "art/portraits/cuno.webp",
     "dannunzio": "art/portraits/dannunzio.webp",
     "drummond": "art/portraits/drummond.webp",
@@ -18,6 +19,7 @@ window.ART = {
     "hughes": "art/portraits/hughes.webp",
     "kellogg": "art/portraits/kellogg.webp",
     "laval": "art/portraits/laval.webp",
+    "lloydgeorge": "art/portraits/lloydgeorge.webp",
     "macdonald": "art/portraits/macdonald.webp",
     "matsuoka": "art/portraits/matsuoka.webp",
     "mussolini": "art/portraits/mussolini.webp",
@@ -42,6 +44,7 @@ window.ART = {
     "italy": "art/scenes/italy.webp",
     "league": "art/scenes/league.webp",
     "ousted": "art/scenes/ousted.webp",
+    "paris": "art/scenes/paris.webp",
     "title-mobile": "art/scenes/title-mobile.webp",
     "title": "art/scenes/title.webp",
     "war": "art/scenes/war.webp"

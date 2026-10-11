@@ -55,6 +55,22 @@
       endWin: 'You followed Italy from the disappointment of 1919, through Corfu and Locarno, to Abyssinia, the Axis and the Pact of Steel. In June 1940, as France fell, Mussolini entered the war. It ended with Italy defeated and Mussolini dead.',
       ranks: [[.9, 'Machiavelli reborn'], [.75, 'Trusted counsellor'], [.55, 'Embassy attaché'], [0, 'Clerk in the colonial archives']]
     },
+    paris: {
+      name: 'Paris 1919', desk: 'The Paris Peace Conference', paper: 'The Evening Dispatch', city: 'Paris',
+      briefTitle: 'Secretary to the Big Three', motiveHead: 'Who got what they wanted?',
+      endDate: '1919–1923', endHead: 'THE PEACE IS MADE — BUT IS IT FAIR?', endScene: 'paris', verdict: 'PARIS_VERDICT',
+      fail: 'A fourth wrong call and you will be sent home from the conference.',
+      outHead: 'CONFERENCE SECRETARY SENT HOME',
+      outBody: 'The Big Three have dispensed with their secretary after a series of drafts that, in Clemenceau’s words, “belong to a different war”.',
+      advising: s => `The Council of Four · <b>${P(s.ldr).name}</b> leads on this question`,
+      intro: [
+        'You are secretary to the Council of Four in Paris: President Wilson of the USA, Clemenceau of France, Lloyd George of Britain and Orlando of Italy. Germany and the other defeated powers are not invited to negotiate.',
+        'Each leader wants something different. Wilson wants a fair peace built on his Fourteen Points and a League of Nations. Clemenceau wants security against Germany and payment for France’s ruined north. Lloyd George wants Germany punished, but not so badly that it seeks revenge.',
+        'Your task: on each question, choose the compromise that was actually agreed. Afterwards, see who got what they wanted, and at the end, judge whether the peace was fair.'
+      ],
+      endWin: 'You followed the peacemakers from the first debates over the League to the treaties that redrew the map of Europe. Every treaty was a compromise between the victors, imposed on the defeated. Whether that made it unfair is still argued today.',
+      ranks: [[.9, 'Master of the conference table'], [.75, 'Trusted secretary to the Big Three'], [.55, 'Junior drafting clerk'], [0, 'Messenger boy, Hôtel Crillon']]
+    },
     britain: {
       name: 'Britain', desk: 'The Foreign Office, London', paper: 'The Evening Dispatch', city: 'London',
       briefTitle: 'Adviser to the British Government', motiveHead: 'Why Britain chose this',
@@ -294,7 +310,7 @@
   function captionFor(s) {
     const m = s.fx && s.fx.mark && s.fx.mark[0];
     const place = (m && window.GameMap.placeName(m.id)) || ROLES[st.role].city;
-    return `${place}, ${s.date}…`;
+    return `${s.where || place}, ${s.date}…`;
   }
 
   // ---------- full screen ----------
@@ -484,21 +500,29 @@
     const pct = total ? right / total : 0;
     const rank = R.ranks.find(([t]) => pct >= t)[1];
     const lastS = cur() || window.SCENARIOS[st.role].find(s => s.id === st.ids[st.ids.length - 1]);
-    const date = completed ? (st.role === 'italy' ? '10 June 1940' : '3 September 1939') : lastS.date;
-    const face = completed ? ({ league: 'avenol', germany: 'hitler', italy: 'mussolini', britain: 'nchamberlain', france: 'briand' }[st.role]) : 'you';
+    const date = completed ? (R.endDate || (st.role === 'italy' ? '10 June 1940' : '3 September 1939')) : lastS.date;
+    const face = completed ? ({ league: 'avenol', germany: 'hitler', italy: 'mussolini', britain: 'nchamberlain', france: 'briand', paris: 'clemenceau' }[st.role]) : 'you';
     const head = completed
-      ? (st.role === 'italy' ? 'ITALY ENTERS THE WAR' : 'EUROPE AT WAR')
+      ? (R.endHead || (st.role === 'italy' ? 'ITALY ENTERS THE WAR' : 'EUROPE AT WAR'))
       : R.outHead;
     const body = completed
       ? `<p>${R.endWin}</p><p>You made ${right} of ${total} calls as history did, and leave the service with the rank of <b>${rank}</b>.</p>`
       : `<p>${R.outBody}</p><p>You were removed in ${esc(lastS.date)}, after ${total} decisions, with ${right} made as history did. ${(n => n === 1 ? 'One crisis was' : n + ' crises were')(st.ids.length - st.i - 1)} still to come.</p>`;
+    const endScene = completed ? (R.endScene || 'war') : 'ousted';
     $('#newspaper').innerHTML = `
       <div class="np-mast"><div class="np-name">${R.paper}</div><div class="np-line"><span>${R.city}</span><span>${esc(date)}</span><span>Late edition</span></div></div>
       <h2 class="np-head ${completed ? 'red' : ''}">${head}</h2>
-      ${sceneImg(completed ? 'war' : 'ousted')}
-      <div class="np-cols${sceneArt(completed ? 'war' : 'ousted') ? ' no-face' : ''}">${sceneArt(completed ? 'war' : 'ousted') ? '' : `<div class="face">${window.Portraits.render(face, { decorative: true })}</div>`}<div>${body}</div></div>
+      ${sceneImg(endScene)}
+      <div class="np-cols${sceneArt(endScene) ? ' no-face' : ''}">${sceneArt(endScene) ? '' : `<div class="face">${window.Portraits.render(face, { decorative: true })}</div>`}<div>${body}</div></div>
       <div class="np-score"><span>Correct <b>${right}</b> / ${total}</span><span>Mistakes <b>${st.strikes}</b></span><span>Rank <b>${rank}</b></span></div>`;
     renderDebrief($('#debrief'));
+    if (R.verdict && window[R.verdict]) {
+      const v = document.createElement('section');
+      v.className = 'verdict-panel';
+      v.innerHTML = `<h3>Was it fair?</h3><p class="v-intro">How each side saw the peace settlement. Use it as an essay plan.</p>` +
+        window[R.verdict].map(x => `<div class="v-item"><h4>${esc(x.who)}</h4><p>${esc(x.view)}</p></div>`).join('');
+      $('#debrief').prepend(v);
+    }
     store.del(SAVE_KEY);
     show('s-end');
     window.Sound.play(completed ? 'fanfare' : 'doom');
