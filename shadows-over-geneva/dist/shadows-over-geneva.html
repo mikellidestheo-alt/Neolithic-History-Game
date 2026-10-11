@@ -463,6 +463,8 @@ img.portrait.art { object-fit: cover; object-position: 50% 30%; background: var(
 .brief-paper .scene-art { margin: 4px 0 16px; }
 .newspaper .scene-art { margin: 4px 0 12px; filter: sepia(.2) contrast(1.05); }
 .np-cols.no-face { grid-template-columns: 1fr; }
+.note.motive { border-color: var(--red); background: rgba(184, 50, 42, .08); padding-right: 10px; }
+.note.motive h4 { color: #ef8a80; }
 
 </style>
 </head>
@@ -476,7 +478,7 @@ img.portrait.art { object-fit: cover; object-position: 50% 30%; background: var(
     <div class="title-wrap">
       <p class="eyebrow">Geneva · Berlin · Rome &nbsp;—&nbsp; 1919–1939</p>
       <h1 class="logo"><span>Shadows</span><small>over</small><span>Geneva</span></h1>
-      <p class="tagline">Twenty years. Three desks. One question: will you make the call history made?</p>
+      <p class="tagline">Twenty years. Five desks. One question: will you make the call history made?</p>
       <div class="title-cast" aria-hidden="true">
         <div class="cast c1" data-portrait="mussolini"></div>
         <div class="cast c2" data-portrait="you"></div>
@@ -554,6 +556,20 @@ img.portrait.art { object-fit: cover; object-position: 50% 30%; background: var(
         <p class="role-sub">Rome · 1919–1939</p>
         <p>Steer Italy from the “mutilated victory” of 1919, through Orlando and Giolitti, to Mussolini’s empire and the Axis.</p>
         <p class="role-count" data-count="italy"></p>
+      </button>
+      <button class="pick-card role" data-role="britain">
+        <div class="role-art" data-portrait="macdonald,nchamberlain"></div>
+        <h3>Britain</h3>
+        <p class="role-sub">London · 1919–1939</p>
+        <p>Advise Lloyd George, Baldwin, MacDonald and Neville Chamberlain. Balance the League, the empire and a public that dreads another war.</p>
+        <p class="role-count" data-count="britain"></p>
+      </button>
+      <button class="pick-card role" data-role="france">
+        <div class="role-art" data-portrait="briand,laval"></div>
+        <h3>France</h3>
+        <p class="role-sub">Paris · 1919–1939</p>
+        <p>Advise Clemenceau, Poincaré, Briand, Laval and Daladier. Find security against a Germany that is bigger, richer and determined to recover.</p>
+        <p class="role-count" data-count="france"></p>
       </button>
     </div>
     <button class="btn btn-ghost back" data-go="s-level">← Back</button>
@@ -787,6 +803,17 @@ window.MAPDATA = {"w":2000,"h":1000,"k":429.1504183819801,"tx":971.4285714285716
     zog:        { name: 'Ahmed Zogu (King Zog)', role: 'Ruler of Albania', hair: 'slick', hc: 'brown', stache: 'pencil', mc: 'brown', clothes: 'uniform', brows: 'calm', mouth: 'set', hw: 37, chin: 172, iris: 'brown', scene: 'ministry' },
     macdonald:  { name: 'Ramsay MacDonald', role: 'British Prime Minister', hair: 'wavy', hc: 'grey', stache: 'walrus', mc: 'grey', clothes: 'wing', brows: 'worried', mouth: 'set', age: 2, scene: 'palais' },
     ciano:      { name: 'Count Galeazzo Ciano', role: 'Italian Foreign Minister, 1936–43', hair: 'slick', hc: 'black', clothes: 'black', brows: 'raised', mouth: 'smirk', hw: 42, iris: 'brown', scene: 'ministry' },
+    lloydgeorge:{ name: 'David Lloyd George', role: 'British Prime Minister, 1916–22', hair: 'wavy', hc: 'white', stache: 'walrus', mc: 'white', clothes: 'wing', brows: 'raised', mouth: 'set', age: 2, scene: 'palais' },
+    bonarlaw:   { name: 'Andrew Bonar Law', role: 'British Prime Minister, 1922–23', hair: 'receding', hc: 'grey', stache: 'clipped', mc: 'grey', clothes: 'wing', brows: 'worried', mouth: 'set', age: 2, scene: 'ministry' },
+    baldwin:    { name: 'Stanley Baldwin', role: 'British Prime Minister, 1923–24, 1924–29 and 1935–37', hair: 'slick', hc: 'grey', clothes: 'suit', brows: 'calm', mouth: 'set', age: 2, scene: 'ministry' },
+    hughes:     { name: 'Charles Evans Hughes', role: 'US Secretary of State, 1921–25', hair: 'receding', hc: 'white', beard: 'full', mc: 'white', clothes: 'wing', brows: 'stern', mouth: 'set', age: 2, scene: 'palais' },
+    clemenceau: { name: 'Georges Clemenceau', role: 'Prime Minister of France, 1917–20', hair: 'bald', hc: 'white', stache: 'walrus', mc: 'white', clothes: 'wing', brows: 'heavy', mouth: 'frown', age: 2, scene: 'palais' },
+    herriot:    { name: 'Édouard Herriot', role: 'Prime Minister of France, 1924–25', hair: 'crop', hc: 'dark', stache: 'clipped', mc: 'dark', clothes: 'suit', brows: 'calm', mouth: 'set', hw: 44, age: 1, scene: 'ministry' },
+    maginot:    { name: 'André Maginot', role: 'French Minister of War, 1929–30', hair: 'slick', hc: 'dark', stache: 'clipped', mc: 'dark', clothes: 'suit', brows: 'stern', mouth: 'set', age: 1, scene: 'ministry' },
+    tardieu:    { name: 'André Tardieu', role: 'French delegate at Geneva and Prime Minister, 1932', hair: 'receding', hc: 'dark', clothes: 'suit', brows: 'raised', mouth: 'set', age: 1, scene: 'palais' },
+    sarraut:    { name: 'Albert Sarraut', role: 'Prime Minister of France, 1936', hair: 'receding', hc: 'grey', stache: 'clipped', mc: 'grey', clothes: 'suit', brows: 'worried', mouth: 'set', age: 2, scene: 'ministry' },
+    blum:       { name: 'Léon Blum', role: 'Prime Minister of France, 1936–37', hair: 'wavy', hc: 'grey', stache: 'walrus', mc: 'grey', glasses: 'pince', clothes: 'suit', brows: 'worried', mouth: 'set', age: 2, scene: 'ministry' },
+    daladier:   { name: 'Édouard Daladier', role: 'Prime Minister of France, 1938–40', hair: 'slick', hc: 'dark', clothes: 'suit', brows: 'stern', mouth: 'frown', hw: 42, age: 1, scene: 'ministry' },
     you:        { name: 'You', role: 'The decision-maker', silhouette: true, scene: 'noir' }
   };
 
@@ -2367,6 +2394,783 @@ window.SCENARIOS.italy = [
 
 </script>
 <script>
+// BRITAIN campaign — the player advises successive British governments.
+// motive = "Why Britain chose this": the reasoning behind the historical decision.
+window.SCENARIOS = window.SCENARIOS || {};
+window.SCENARIOS.britain = [
+{
+  id: 'parisB', lv: 'both', date: 'March 1919', title: 'Make Germany Pay?',
+  ldr: 'lloydgeorge', speaker: 'wilson',
+  said: 'A peace of justice, Mr Lloyd George, not a peace of revenge.',
+  brief: 'Lloyd George won the December 1918 election with crowds chanting “make Germany pay”. In Paris, Clemenceau wants Germany crushed for good, and President Wilson wants a fair peace built on his Fourteen Points. Lloyd George fears that a treaty which humiliates Germany will only breed another war, or push Germany towards Bolshevism. Britain has already got much of what it wanted: the German fleet is in British hands and Germany’s colonies are up for grabs.',
+  ask: 'What line does Lloyd George take?',
+  opts: [
+    { t: 'Back Clemenceau all the way, including a separate Rhineland state.', x: 'Lloyd George opposed carving up Germany in the west. A permanently divided Germany would be a source of endless trouble, and it would make France too strong on the continent.' },
+    { t: 'Push for moderate terms in Europe, while securing Germany’s navy, colonies and reparations for Britain.' },
+    { t: 'Side fully with Wilson and drop reparations altogether.', x: 'British voters had been promised that Germany would pay. Lloyd George could not abandon reparations without wrecking his government.' },
+    { t: 'Walk out and leave France and America to make the treaty.', a: true, x: 'Britain had too much at stake, from the colonies to the balance of power in Europe, to leave the table.' }
+  ],
+  ans: 1,
+  out: 'In his Fontainebleau Memorandum (March 1919) Lloyd George warned against a peace that would leave Germany bitter. He helped block a separate Rhineland state, made Danzig a Free City rather than Polish, and later won a plebiscite for Upper Silesia. But Britain also took German colonies as mandates, saw the German fleet destroyed, and insisted on reparations, including war pensions, which raised the bill.',
+  head: 'LLOYD GEORGE: “STERN BUT NOT VINDICTIVE”',
+  fx: { tens: 4, mark: [{ id: 'versailles', kind: 'deal', label: 'Versailles 1919' }] },
+  focus: [2, 49, 6],
+  exam: 'For “Were the treaties fair?”, compare the aims of the Big Three. Lloyd George was caught between public opinion and his own fear of a vengeful peace.',
+  hist: 'Margaret MacMillan argues that Lloyd George was the most flexible of the Big Three: he wanted a lasting balance in Europe, not French dominance.',
+  motive: 'Britain’s interests were global, not continental. Once the German navy and colonies were gone, Britain needed Germany as a trading partner and a counterweight to France, not as a ruin. But an election promise to “make Germany pay” limited how generous Lloyd George could be.'
+},
+{
+  id: 'washington', lv: 'a', date: 'February 1922', title: 'The Washington Naval Treaty',
+  ldr: 'lloydgeorge', speaker: 'hughes',
+  said: 'Let us stop building battleships, gentlemen. All of us. Today.',
+  brief: 'The United States has called a naval conference in Washington. It proposes a ten-year halt on building battleships and fixed ratios between the navies of the great powers. For centuries Britain has insisted its navy must be the largest in the world. But Britain is deeply in debt to America and cannot afford a naval race. The USA and Canada also want Britain to end its alliance with Japan.',
+  ask: 'What does Britain agree to?',
+  opts: [
+    { t: 'Refuse limits and keep building, to stay the world’s greatest navy.', x: 'Britain could not afford it. War debts and high taxes made a race with the far richer USA unwinnable.' },
+    { t: 'Accept equality in battleships with the USA, and replace the Japanese alliance with a looser four-power pact.' },
+    { t: 'Renew the Anglo-Japanese alliance and accept second place to America.', x: 'The USA and Canada saw the Japanese alliance as aimed at America. Keeping it would have soured relations with Washington.' },
+    { t: 'Ask the League of Nations to decide naval limits.', x: 'The conference was an American initiative outside the League. The USA was not a member.' }
+  ],
+  ans: 1,
+  out: 'Under the Five-Power Treaty (February 1922) Britain and the USA accepted equal battleship fleets, with Japan at three-fifths and France and Italy smaller still. The Anglo-Japanese alliance was replaced by a vague Four-Power Treaty. Britain kept good relations with America, but Japan felt slighted.',
+  head: 'BRITANNIA SHARES THE WAVES',
+  fx: { tens: -6, auth: 2, mark: [{ id: 'washington', kind: 'deal', label: 'Washington 1922' }] },
+  focus: [-40, 40, 2],
+  exam: 'A successful disarmament agreement, but made outside the League, which shows the League was not the only route to peace.',
+  hist: 'Some historians see the end of the Japanese alliance as a long-term mistake that left Britain’s Far Eastern empire exposed in the 1930s.',
+  motive: 'Money. After 1918 Britain could not afford to out-build the United States, and friendship with America mattered more than a Japanese alliance or the old principle of naval supremacy.'
+},
+{
+  id: 'ruhrB', lv: 'both', date: 'January 1923', title: 'France Marches into the Ruhr',
+  ldr: 'bonarlaw', speaker: 'poincare',
+  said: 'Germany will not pay? Then France will collect, ton by ton, in coal.',
+  brief: 'France and Belgium send troops into the Ruhr to seize coal after Germany falls behind on reparations. Britain voted against declaring Germany in default. British officials think the occupation is economically foolish: a ruined Germany cannot buy British goods. But France is Britain’s wartime ally, and Bonar Law’s government does not want an open split.',
+  ask: 'How does Britain respond?',
+  opts: [
+    { t: 'Join the occupation to keep the alliance with France.', x: 'Britain thought the occupation would only make Germany poorer and less able to pay. It refused to take part.' },
+    { t: 'Disapprove and stay out, without taking any action against France.' },
+    { t: 'Threaten France with sanctions unless it withdraws.', x: 'Britain would not break with its main ally over Germany, however much it disliked the policy.' },
+    { t: 'Take the occupation to the League Council.', a: true, x: 'Britain avoided turning a quarrel with France into a League case. The crisis was eventually solved by the Dawes Plan, outside the League.' }
+  ],
+  ans: 1,
+  out: 'Britain stood aside, in what was called “benevolent neutrality” towards Germany. In August 1923 the Foreign Secretary, Lord Curzon, said the occupation was not authorised by the Treaty of Versailles, but Britain did nothing to stop it. The split weakened the Anglo-French partnership on which the League depended.',
+  head: 'BRITAIN STANDS ASIDE AS FRENCH TAKE THE RUHR',
+  fx: { tens: 8, auth: -4, own: { ruhr: 'fr' }, mark: [{ id: 'ruhr', kind: 'war', label: 'Ruhr 1923' }] },
+  focus: [5, 51, 6],
+  exam: 'Shows that Britain and France already disagreed about how to treat Germany in the 1920s.',
+  hist: 'Sally Marks argues that British sympathy for Germany over reparations encouraged German resistance to paying.',
+  motive: 'Britain wanted German trade revived, not German industry occupied. It also feared France was trying to dominate Europe. But Britain was not willing to break with France openly.'
+},
+{
+  id: 'protocolB', lv: 'a', date: 'March 1925', title: 'The Geneva Protocol',
+  ldr: 'chamberlainA', speaker: 'macdonald',
+  said: 'Arbitration, security, disarmament. The Protocol gives the League its teeth.',
+  brief: 'Ramsay MacDonald’s Labour government backed the Geneva Protocol in 1924. All disputes would go to arbitration, and every member would have to act against an aggressor. Now the Conservatives are in power. Austen Chamberlain, the new Foreign Secretary, must decide whether Britain ratifies. The Dominions, especially Canada, strongly oppose new commitments, and the Royal Navy would carry most of the burden of any sanctions.',
+  ask: 'What does Britain do?',
+  opts: [
+    { t: 'Ratify the Protocol.', x: 'The Conservatives feared open-ended commitments that could drag Britain into wars anywhere in the world.' },
+    { t: 'Reject it, and look for a narrower deal covering only western Europe.' },
+    { t: 'Ratify it, but only for disputes in Europe.', x: 'Chamberlain wanted no part of the Protocol. The narrower deal he wanted came outside it, at Locarno.' },
+    { t: 'Propose a standing League army instead.', x: 'Britain was the least willing of all to put troops under League command.' }
+  ],
+  ans: 1,
+  out: 'In March 1925 Chamberlain told the League Council that Britain would not ratify. The Protocol died. Instead he worked for the Locarno Treaties, which committed Britain only to Germany’s western borders.',
+  head: 'CHAMBERLAIN SAYS NO TO GENEVA PROTOCOL',
+  fx: { auth: -6, tens: 2, mark: [{ id: 'geneva', kind: 'fail', label: 'Protocol rejected 1925' }] },
+  focus: [4, 49, 5],
+  exam: 'A key reason collective security stayed weak: its most important member would not accept automatic obligations.',
+  hist: 'E. H. Carr called interwar faith in collective security “utopian”. Others defend Chamberlain’s choice of limited commitments he could actually honour.',
+  motive: 'Britain had an empire to defend and Dominions that did not want to fight European wars. Its leaders wanted commitments that were limited and clear, never automatic.'
+},
+{
+  id: 'locarnoB', lv: 'both', date: 'October 1925', title: 'Locarno',
+  ldr: 'chamberlainA', speaker: 'briand',
+  said: 'France needs more than words, Sir Austen. Will Britain stand by us on the Rhine?',
+  brief: 'Germany has offered to guarantee its western border with France and Belgium. France wants Britain to guarantee it too, and also wants protection for its allies in the east, Poland and Czechoslovakia. Chamberlain has said privately that for the Polish Corridor no British government will ever risk “the bones of a British grenadier”. Germany will not accept its eastern borders as permanent.',
+  ask: 'What does Britain guarantee?',
+  opts: [
+    { t: 'Germany’s western borders with France and Belgium, but not its eastern borders.' },
+    { t: 'All of Germany’s borders, east and west.', x: 'Britain would not fight for Poland or Czechoslovakia in 1925. The eastern borders were left to arbitration.' },
+    { t: 'Nothing. Leave France and Germany to sort it out.', x: 'Chamberlain saw a western guarantee as the best way to calm France and bring Germany back into Europe.' },
+    { t: 'A full military alliance with France.', a: true, x: 'Britain avoided a one-sided alliance. Locarno guaranteed both sides, so Britain would act against whichever country broke it.' }
+  ],
+  ans: 0,
+  out: 'At Locarno Britain and Italy guaranteed the Franco-German and Belgian-German borders and the demilitarised Rhineland. In the east there were only arbitration treaties. Chamberlain won the Nobel Peace Prize, and Germany joined the League the next year.',
+  head: 'LOCARNO! BRITAIN GUARANTEES THE RHINE',
+  fx: { tens: -10, auth: 6, own: { ruhr: null }, mark: [{ id: 'locarno', kind: 'deal', label: 'Locarno 1925' }] },
+  focus: [8, 48, 5],
+  exam: 'Locarno improved relations, but left Germany’s eastern borders open to change. Britain had shown it cared about the west, not the east.',
+  hist: 'Sally Marks calls the Locarno years an “illusion of peace”. Others see them as the best chance of reconciliation in the interwar period.',
+  motive: 'Britain wanted to calm France and bring Germany back into Europe without taking on commitments it could not keep. The Rhine mattered to Britain’s own security; Poland did not.'
+},
+{
+  id: 'manchuriaB', lv: 'both', date: 'Autumn 1931', title: 'Trouble in Manchuria',
+  ldr: 'macdonald', speaker: 'matsuoka',
+  said: 'Japan acts only to restore order. Britain, of all nations, understands empire.',
+  brief: 'The Japanese army has seized Manchuria, and China appeals to the League. Britain is the League’s leading member, but it has just been forced off the gold standard, unemployment is near three million, and the new National Government is cutting spending. The Royal Navy’s great base at Singapore is unfinished. Britain trades heavily with Japan.',
+  ask: 'What line does Britain take at Geneva?',
+  opts: [
+    { t: 'Demand economic sanctions against Japan.', x: 'Without the USA, sanctions would hurt British trade far more than Japan, and Britain could not defend its Far Eastern empire if Japan hit back.' },
+    { t: 'Send the Royal Navy to the Far East.', x: 'Britain had neither the ships nor the bases to fight Japan in 1931.' },
+    { t: 'Back a League commission of inquiry, and avoid any sanctions.' },
+    { t: 'Recognise Manchukuo and side with Japan openly.', a: true, x: 'Britain would not openly break the Covenant. It backed the Lytton Report, which refused to recognise Manchukuo.' }
+  ],
+  ans: 2,
+  out: 'Britain backed the Lytton Commission and accepted its report, but proposed no sanctions. The Foreign Secretary, Sir John Simon, was accused of being too friendly to Japan. A short-lived British arms embargo in 1933 covered both China and Japan. Japan kept Manchuria and left the League.',
+  head: 'LONDON SAYS: “LET LORD LYTTON INVESTIGATE”',
+  fx: { tens: 10, auth: -14, own: { manchuria: 'jp' }, mark: [{ id: 'mukden', kind: 'war', label: 'Manchuria 1931' }] },
+  focus: [118, 40, 3],
+  exam: 'Use Britain’s position to explain the League’s failure: its leading member was distracted by the Depression and too weak in the Far East.',
+  hist: 'Christopher Thorne argues that Britain’s options were genuinely limited: the failure was one of power, not just of will.',
+  motive: 'The Depression made sanctions unthinkable, and Britain could not defend its Asian empire against Japan. Manchuria was far away, and Britain’s leaders preferred caution to a war they could not win.'
+},
+{
+  id: 'macdonaldplan', lv: 'a', date: 'March 1933', title: 'The MacDonald Plan',
+  ldr: 'macdonald', speaker: 'hitler',
+  said: 'Equality, Prime Minister. Either the others disarm, or Germany rearms.',
+  brief: 'The World Disarmament Conference is stuck. Germany demands equality with France; France refuses to disarm without new guarantees of its security. Hitler has just become Chancellor. Many in Britain think Germany’s complaint is fair: Versailles disarmed Germany and promised that others would follow.',
+  ask: 'What does Britain propose?',
+  opts: [
+    { t: 'A plan to cut the armies of France and Germany to equal size, about 200,000 men each at home.' },
+    { t: 'A British guarantee to defend France if Germany attacks.', x: 'This was what France wanted, and exactly what Britain would not give.' },
+    { t: 'Sanctions against Germany for its secret rearmament.', x: 'Britain had some sympathy for Germany’s demand for equality and no wish to punish it.' },
+    { t: 'Leave the conference to the French and Germans.', x: 'Britain hoped to save the conference, and MacDonald personally put forward a plan.' }
+  ],
+  ans: 0,
+  out: 'The MacDonald Plan (March 1933) proposed equal armies for France and Germany, with France keeping extra forces overseas. France resisted, and Germany wanted more. In October 1933 Hitler left the conference and the League, and the plan died.',
+  head: 'MACDONALD’S PLAN: EQUAL ARMIES FOR FRANCE AND GERMANY',
+  fx: { tens: 8, auth: -8, mark: [{ id: 'geneva', kind: 'fail', label: 'Disarmament fails 1933' }] },
+  focus: [5, 49, 5],
+  exam: 'Shows Britain’s belief that Germany had real grievances, the attitude that later became appeasement.',
+  hist: 'Historians debate whether the plan was realistic: it asked France to give up the military advantage that was its main guarantee of safety.',
+  motive: 'Many in Britain believed Versailles had been too harsh and that a satisfied Germany would be a peaceful one. Disarmament was also popular, and cheaper than rearming.'
+},
+{
+  id: 'stresaB', lv: 'both', date: 'April 1935', title: 'Stresa',
+  ldr: 'macdonald', speaker: 'mussolini',
+  said: 'We three stand together against Hitler. And Africa… need not trouble us here.',
+  brief: 'Hitler has announced conscription and an air force, in defiance of Versailles, and the Saar has just voted to rejoin Germany. Britain, France and Italy meet at Stresa. Italian troops are being shipped to Africa for a war on Abyssinia. Britain badly wants Mussolini on its side against Hitler.',
+  ask: 'What does Britain do at Stresa?',
+  opts: [
+    { t: 'Join the Stresa Front against German rearmament, and say nothing about Abyssinia.' },
+    { t: 'Warn Mussolini that an attack on Abyssinia would end the Stresa Front.', x: 'Neither Britain nor France raised Abyssinia with Mussolini at the conference. They feared losing him.' },
+    { t: 'Refuse to join any front against Germany.', x: 'Britain joined the protest, though two months later it signed a naval agreement with Germany.' },
+    { t: 'Propose a military alliance with France and Italy.', a: true, x: 'The Stresa Front was a statement, not an alliance. Britain did not want new military commitments.' }
+  ],
+  ans: 0,
+  out: 'The Stresa Front condemned German rearmament and promised to uphold Locarno and Austrian independence. The final statement spoke of peace “in Europe”. Britain said nothing about Abyssinia, and Mussolini took this as consent.',
+  head: 'STRESA: BRITAIN, FRANCE AND ITALY STAND TOGETHER',
+  fx: { tens: -2, own: { saar: 'de' }, mark: [{ id: 'stresa', kind: 'deal', label: 'Stresa 1935' }, { id: 'saar', kind: 'deal', label: 'Saar returns 1935' }] },
+  focus: [9, 46, 6],
+  exam: 'Explains why Britain later hesitated over sanctions against Italy: it wanted Mussolini as an ally against Hitler.',
+  hist: 'The silence over Abyssinia at Stresa is often seen as a fatal mistake that encouraged Mussolini.',
+  motive: 'Germany was the bigger danger. Keeping Italy friendly mattered more to British leaders than the fate of a distant African state.'
+},
+{
+  id: 'navalB', lv: 'both', date: 'June 1935', title: 'The Naval Agreement',
+  ldr: 'baldwin', speaker: 'ribbentrop',
+  said: 'Thirty-five per cent of your navy, and not a ship more. Take it or leave it.',
+  brief: 'Stanley Baldwin has just become Prime Minister. Hitler offers to limit the German navy to 35% of the Royal Navy’s surface fleet. Germany is going to rearm anyway, and Britain fears a repeat of the pre-1914 naval race, while also facing Japan in the Pacific. Signing would mean accepting a breach of Versailles, two months after condemning one at Stresa.',
+  ask: 'What does Britain do?',
+  opts: [
+    { t: 'Refuse, because it breaks Versailles.', x: 'Britain judged that a limit on German shipbuilding was better than no limit at all.' },
+    { t: 'Sign the Anglo-German Naval Agreement, without consulting France or Italy.' },
+    { t: 'Sign only after France and Italy agree.', x: 'Britain did not consult its Stresa partners. That was part of the damage the agreement did.' },
+    { t: 'Demand German naval equality with France instead.', a: true, x: 'The 35% ratio was Hitler’s own offer, and Britain accepted it as it stood.' }
+  ],
+  ans: 1,
+  out: 'The Anglo-German Naval Agreement was signed on 18 June 1935. France and Italy were furious that Britain had made a separate deal with Hitler. The Stresa Front was badly damaged, and Britain had in effect approved German rearmament.',
+  head: 'BRITAIN SIGNS NAVAL PACT WITH HITLER',
+  fx: { tens: 6, auth: -4, mark: [{ id: 'london', kind: 'deal', label: 'Naval Agreement 1935' }] },
+  focus: [2, 52, 5],
+  exam: 'An early example of appeasement, and of Britain and France acting separately.',
+  hist: 'R. A. C. Parker sees the agreement as a serious blunder that legitimised German rearmament and divided Hitler’s opponents.',
+  motive: 'Britain’s navy was stretched across a world empire. A guaranteed limit on the German fleet seemed a practical gain, and British leaders thought Germany would rearm whatever they said.'
+},
+{
+  id: 'sanctionsB', lv: 'both', date: 'November 1935', title: 'Sanctions on Italy',
+  ldr: 'baldwin', speaker: 'selassie',
+  said: 'Britain has promised “collective resistance”. My people are waiting to see it.',
+  brief: 'Italy has invaded Abyssinia. A general election is due on 14 November, and the Peace Ballot has shown that over ten million Britons support economic sanctions against an aggressor. Hoare, the Foreign Secretary, has promised at Geneva that Britain will stand for “collective resistance”. But the Chiefs of Staff warn that war with Italy in the Mediterranean would leave Britain dangerously weak against Germany and Japan.',
+  ask: 'What sanctions does Britain support?',
+  opts: [
+    { t: 'Oil sanctions and closing the Suez Canal.', x: 'This risked war with Italy, which Britain’s military chiefs and the French government both wanted to avoid.' },
+    { t: 'Limited sanctions on arms, loans and Italian imports, but not oil, and keep the Suez Canal open.' },
+    { t: 'No sanctions at all, to keep Mussolini friendly.', x: 'With an election and the Peace Ballot, the government could not be seen to abandon the League.' },
+    { t: 'A naval blockade of Italy by the Royal Navy alone.', a: true, x: 'Britain would only act together with the League, and never without France.' }
+  ],
+  ans: 1,
+  out: 'Baldwin won the election on a pro-League platform. From 18 November limited sanctions applied, but oil was not included and the Suez Canal stayed open. The sanctions angered Mussolini without stopping his war.',
+  head: 'SANCTIONS — BUT OIL STILL FLOWS TO ITALY',
+  fx: { tens: 10, auth: -8, mark: [{ id: 'addis', kind: 'war', label: 'Abyssinia 1935' }] },
+  focus: [25, 25, 3],
+  exam: 'Explain the gap between British public support for the League and the government’s fear of war.',
+  hist: 'Many historians see Abyssinia as the real death of the League, because this time the League had the means to act and Britain and France chose not to use them.',
+  motive: 'The government had to look loyal to the League to win the election, but its military advisers said Britain could not afford a war with Italy. Limited sanctions satisfied voters without risking war.'
+},
+{
+  id: 'hoarelavalB', lv: 'both', date: 'December 1935', title: 'A Deal in Paris',
+  ldr: 'baldwin', speaker: 'laval',
+  said: 'Give the Duce a little of Abyssinia, Sir Samuel, and we keep him from Hitler.',
+  brief: 'The war in Abyssinia drags on, and talk of oil sanctions is growing. On his way to a holiday in Switzerland, Sir Samuel Hoare stops in Paris to see Pierre Laval. Both men want the war ended quickly and quietly. France is even less willing than Britain to push Mussolini towards Hitler.',
+  ask: 'What do Hoare and Laval agree?',
+  opts: [
+    { t: 'To impose oil sanctions together.', x: 'Laval would not agree, and Hoare feared that oil sanctions meant war.' },
+    { t: 'A secret plan to give Italy about two-thirds of Abyssinia.' },
+    { t: 'To refer the whole matter back to the League.', x: 'They were trying to end the war outside the League’s slow procedures.' },
+    { t: 'To send Anglo-French troops to protect Addis Ababa.', a: true, x: 'Neither country was prepared to fight Italy.' }
+  ],
+  ans: 1,
+  out: 'The Hoare–Laval Plan leaked to the French press within days. The British public was outraged that the government had tried to reward the aggressor a month after winning an election on support for the League. Hoare resigned, and Anthony Eden replaced him. The plan was dropped, but so was any idea of oil sanctions.',
+  head: 'HOARE RESIGNS OVER SECRET ABYSSINIA DEAL',
+  fx: { tens: 8, auth: -16, mark: [{ id: 'paris', kind: 'fail', label: 'Hoare–Laval 1935' }] },
+  focus: [8, 30, 3],
+  exam: 'The plan destroyed trust in Britain and France as defenders of the League.',
+  hist: 'The outrage over Hoare–Laval shows how strong support for the League still was among British voters, even as their government gave up on it.',
+  motive: 'Hoare believed the League could not save Abyssinia, and that a deal was better than a long war that drove Italy into Hitler’s arms. He misjudged how the public would react.'
+},
+{
+  id: 'rhinelandB', lv: 'both', date: 'March 1936', title: 'Their Own Back Garden',
+  ldr: 'baldwin', speaker: 'hitler',
+  said: 'Germany offers peace — twenty-five years of it! Only, our soldiers stay on the Rhine.',
+  brief: 'German troops have marched into the demilitarised Rhineland. Under Locarno, Britain is a guarantor. Many Britons say the Germans are only “going into their own back garden”. France asks what Britain will do, but makes clear it will not act alone. Britain has barely begun to rearm, and Hitler is offering new peace pacts.',
+  ask: 'How does Britain respond?',
+  opts: [
+    { t: 'Back French military action to expel the Germans.', x: 'There was no support in Britain for war over the Rhineland, and Britain had few forces ready.' },
+    { t: 'Condemn the move, restrain France, and offer talks.' },
+    { t: 'Impose sanctions on Germany through the League.', x: 'Sanctions on Italy were already failing, and Britain had no appetite for more.' },
+    { t: 'Sign Hitler’s offer of a 25-year non-aggression pact.', a: true, x: 'Britain explored Hitler’s offer, but nothing was signed.' }
+  ],
+  ans: 1,
+  out: 'Britain condemned the breach of Versailles and Locarno, but urged France not to act, and offered staff talks instead. The Rhineland stayed German. Hitler had gambled and won.',
+  head: 'BRITAIN: “NO CASE FOR WAR OVER RHINELAND”',
+  fx: { tens: 12, auth: -8, own: { rhineland: 'de' }, mark: [{ id: 'rhineland', kind: 'war', label: 'Rhineland 1936' }] },
+  focus: [5, 50, 6],
+  exam: 'A key example of appeasement. Explain why British opinion saw Hitler’s move as reasonable.',
+  hist: 'Historians argue over whether stopping Hitler in 1936 was possible. Most agree British opinion would not have supported war.',
+  motive: 'Many Britons thought Germany was entitled to station troops on its own soil. Britain was unprepared, distracted by Abyssinia, and wanted a settlement with Germany, not a war.'
+},
+{
+  id: 'spainB', lv: 'both', date: 'August 1936', title: 'Civil War in Spain',
+  ldr: 'baldwin', speaker: 'franco',
+  said: 'Stay out of Spain, gentlemen, and Spain will settle its own affairs.',
+  brief: 'Civil war has broken out in Spain between the left-wing Republican government and General Franco’s Nationalists. Germany and Italy are already helping Franco, and Mussolini has just completed his conquest of Abyssinia. France’s new Popular Front government wants to help the Republic but fears a civil war at home. Many British Conservatives distrust the Spanish Republic, and Britain has large investments in Spain.',
+  ask: 'What does Britain do?',
+  opts: [
+    { t: 'Send arms to the Spanish Republic.', x: 'The government distrusted the Republic and feared a wider European war.' },
+    { t: 'Back Franco openly.', x: 'Britain would not be seen to support a military rebellion against an elected government.' },
+    { t: 'Back a Non-Intervention Agreement, and chair the committee that oversees it in London.' },
+    { t: 'Ask the League to send peacekeepers.', a: true, x: 'Spain was handled through the Non-Intervention Committee, outside the League.' }
+  ],
+  ans: 2,
+  out: 'Britain and France organised a Non-Intervention Agreement, signed by 27 countries, and the committee met in London. Germany, Italy and the USSR signed and then ignored it. Franco received far more help than the Republic.',
+  head: 'NON-INTERVENTION: BRITAIN KEEPS OUT OF SPAIN',
+  fx: { tens: 8, own: { abyssinia: 'it' }, mark: [{ id: 'guernica', kind: 'war', label: 'Spanish Civil War' }, { id: 'addis', kind: 'fail', label: 'Abyssinia conquered 1936' }] },
+  focus: [-3, 42, 5],
+  exam: 'Non-intervention shows how the democracies avoided confrontation while the dictators acted.',
+  hist: 'Critics call non-intervention a farce that helped Franco win. Defenders argue it stopped Spain becoming a European war in 1936.',
+  motive: 'Britain’s priority was to keep the war from spreading, and many in government preferred Franco to a left-wing Republic. Non-intervention also kept Britain in step with France.'
+},
+{
+  id: 'eden', lv: 'a', date: 'February 1938', title: 'Chamberlain and Eden',
+  ldr: 'nchamberlain', speaker: 'ciano',
+  said: 'Rome is ready to talk, Mr Chamberlain. Recognise our empire and we can be friends.',
+  brief: 'Neville Chamberlain, Prime Minister since May 1937, believes he can split Mussolini from Hitler through direct talks. The price would be recognising Italy’s conquest of Abyssinia. His Foreign Secretary, Anthony Eden, thinks Mussolini cannot be trusted while Italian troops fight in Spain, and that the League must not be betrayed again.',
+  ask: 'What does Chamberlain do?',
+  opts: [
+    { t: 'Drop the talks to keep Eden.', x: 'Chamberlain was determined to run foreign policy himself.' },
+    { t: 'Open talks with Italy; Eden resigns, and an Anglo-Italian Agreement follows.' },
+    { t: 'Break off relations with Italy over Spain.', x: 'This was the opposite of Chamberlain’s strategy of reducing the number of Britain’s enemies.' },
+    { t: 'Ask the League to approve the talks first.', x: 'By 1938 Chamberlain had little faith in the League as a way of keeping peace.' }
+  ],
+  ans: 1,
+  out: 'Eden resigned on 20 February 1938, and Lord Halifax replaced him. The Anglo-Italian Agreement of April 1938 promised British recognition of Italy’s empire in exchange for Italian withdrawal from Spain after the war. Mussolini drew no closer to Britain.',
+  head: 'EDEN QUITS AS CHAMBERLAIN COURTS MUSSOLINI',
+  fx: { tens: 4, auth: -6, mark: [{ id: 'rome', kind: 'deal', label: 'Anglo-Italian talks 1938' }] },
+  focus: [8, 46, 5],
+  exam: 'Shows Chamberlain taking personal control of policy and the turn from the League to direct deals with the dictators.',
+  hist: 'R. A. C. Parker argues Chamberlain pursued appeasement actively and stubbornly, overruling doubters such as Eden.',
+  motive: 'Chamberlain believed Britain could not fight Germany, Italy and Japan at once, so the answer was to reduce the number of enemies by settling their grievances.'
+},
+{
+  id: 'anschlussB', lv: 'both', date: 'March 1938', title: 'Austria Vanishes',
+  ldr: 'nchamberlain', speaker: 'schuschnigg',
+  said: 'We yield to force. God protect Austria.',
+  saidReal: true,
+  brief: 'German troops have marched into Austria, and Hitler has announced the Anschluss, which the Treaty of Versailles forbids. Mussolini, who defended Austria in 1934, has accepted it. Britain has no treaty obligation to Austria, and many Britons see the Austrians as Germans who wish to join Germany.',
+  ask: 'What does Britain do?',
+  opts: [
+    { t: 'Protest strongly, but take no action.' },
+    { t: 'Threaten war unless German troops leave.', x: 'Britain had no way of helping Austria and no wish to fight over it.' },
+    { t: 'Impose economic sanctions on Germany.', x: 'There was no support for sanctions, and the League had been bypassed.' },
+    { t: 'Guarantee Czechoslovakia immediately.', a: true, x: 'Chamberlain refused to give Czechoslovakia a guarantee in March 1938. That came only after Munich, and never took effect.' }
+  ],
+  ans: 0,
+  out: 'Britain protested, and Chamberlain told the Commons that nothing short of force could have stopped it. Britain speeded up its rearmament. Western Czechoslovakia was now surrounded by Germany on three sides.',
+  head: 'BRITAIN PROTESTS AS HITLER TAKES AUSTRIA',
+  fx: { tens: 12, auth: -6, own: { austria: 'de' }, mark: [{ id: 'vienna', kind: 'war', label: 'Anschluss 1938' }] },
+  focus: [14, 48, 6],
+  exam: 'Anschluss broke Versailles and went unpunished, another step in appeasement.',
+  hist: 'For many Britons the union of German speakers seemed natural, which is why there was little demand to resist it.',
+  motive: 'Austria was not a British ally, many Austrians welcomed the union, and Britain was not ready for war. Protest cost nothing; action risked everything.'
+},
+{
+  id: 'munichB', lv: 'both', date: 'September 1938', title: 'Peace for Our Time',
+  ldr: 'nchamberlain', speaker: 'mussolini',
+  said: 'A conference, Signor Chamberlain. Four powers, one table, at Munich.',
+  brief: 'Hitler demands the Sudetenland from Czechoslovakia, and war seems days away. Chamberlain has already flown twice to see Hitler. Britain’s Chiefs of Staff warn the RAF is not ready, the Dominions say they will not fight for Czechoslovakia, and Londoners are digging trenches in the parks against air raids. Then Mussolini proposes a four-power conference at Munich.',
+  ask: 'What does Chamberlain do?',
+  opts: [
+    { t: 'Refuse to negotiate and stand by Czechoslovakia.', x: 'Chamberlain believed Britain could not fight in 1938 and that the Sudeten Germans had a genuine case.' },
+    { t: 'Go to Munich and agree to hand the Sudetenland to Germany.' },
+    { t: 'Leave France to deal with it alone.', x: 'France would not act without Britain. Chamberlain took the lead himself.' },
+    { t: 'Insist on a plebiscite in the Sudetenland first.', a: true, x: 'Plebiscites were discussed, but the Munich Agreement simply handed over the territory.' }
+  ],
+  ans: 1,
+  out: 'At Munich on 29–30 September, Britain, France, Germany and Italy agreed that Germany would take the Sudetenland. Czechoslovakia was not consulted. Chamberlain returned waving a paper signed by Hitler and promised “peace for our time”. Crowds cheered him, but Churchill called it “a total and unmitigated defeat”.',
+  head: '“PEACE FOR OUR TIME”',
+  fx: { tens: 10, auth: -6, own: { sudetenland: 'de' }, mark: [{ id: 'munich', kind: 'deal', label: 'Munich 1938' }] },
+  focus: [10, 50, 5],
+  exam: 'The key appeasement question: did Munich buy Britain time to rearm, or did it encourage Hitler? Be ready to argue both sides.',
+  hist: 'The “guilty men” view (1940) condemned appeasement. Revisionists stressed Britain’s weakness and lack of allies. Counter-revisionists such as R. A. C. Parker argue Chamberlain had alternatives, such as an alliance with France and the USSR.',
+  motive: 'Britain was not ready for war, feared massive bombing of its cities, and lacked support from the Dominions or the USA. Chamberlain also believed the Sudeten Germans had a fair grievance and that Hitler’s aims were limited.'
+},
+{
+  id: 'guaranteeB', lv: 'both', date: 'March 1939', title: 'The Guarantee to Poland',
+  ldr: 'nchamberlain', speaker: 'hacha',
+  said: 'At one in the morning they told me Prague would be bombed at dawn unless I signed…',
+  brief: 'On 15 March 1939 German troops occupied Prague. For the first time Hitler has seized land that is not German. Rumours spread that Poland is next. British opinion has turned sharply: Hitler has broken his word at Munich, and Chamberlain feels personally betrayed.',
+  ask: 'What does Britain do?',
+  opts: [
+    { t: 'Keep appeasing, and ask Hitler for new talks.', x: 'After Prague, Chamberlain and the public no longer trusted Hitler’s promises.' },
+    { t: 'Guarantee Poland’s independence, alongside France.' },
+    { t: 'Declare war on Germany at once.', x: 'Britain was not ready, and it wanted to deter Hitler, not to start a war.' },
+    { t: 'Sign an alliance with the USSR before anything else.', a: true, x: 'Chamberlain distrusted Stalin, and the Poles refused any deal letting Soviet troops onto their soil.' }
+  ],
+  ans: 1,
+  out: 'On 31 March 1939 Chamberlain told the Commons that Britain and France would defend Poland. Britain also introduced conscription in April, the first time in peacetime, and gave guarantees to Romania and Greece after Italy seized Albania.',
+  head: 'BRITAIN WILL FIGHT FOR POLAND',
+  fx: { tens: 12, own: { bohemia: 'de', memel: 'de' }, mark: [{ id: 'prague', kind: 'war', label: 'Prague 1939' }, { id: 'warsaw', kind: 'deal', label: 'Guarantee 1939' }] },
+  focus: [14, 51, 5],
+  exam: 'The end of appeasement. Explain why Prague changed British policy when the Sudetenland had not.',
+  hist: 'Some historians argue the guarantee was a bluff Britain could not back up in Poland itself. It could only fight Germany in the west.',
+  motive: 'Prague proved Hitler wanted more than German-speaking lands. The guarantee was meant to deter him by making it clear that the next attack meant war with Britain and France.'
+},
+{
+  id: 'moscowB', lv: 'both', date: 'August 1939', title: 'The Slow Boat to Moscow',
+  ldr: 'nchamberlain', speaker: 'stalin',
+  said: 'Britain sends an admiral by cargo ship, with no power to sign. Berlin sends its Foreign Minister by plane.',
+  brief: 'An alliance with the USSR could make Britain’s guarantee to Poland real, because only the Red Army can reach Poland quickly. Chamberlain deeply distrusts Stalin, and many in government fear communism almost as much as Nazism. The Poles refuse to let Soviet troops onto their soil. Stalin was left out of Munich.',
+  ask: 'How does Britain handle the talks?',
+  opts: [
+    { t: 'Send the Foreign Secretary to Moscow to sign an alliance quickly.', x: 'Chamberlain never treated the talks as urgent. No senior minister went.' },
+    { t: 'Send a low-level military mission by sea, without full powers to sign.' },
+    { t: 'Refuse to talk to Stalin at all.', x: 'Under pressure from Parliament and France, Britain did open talks.' },
+    { t: 'Force Poland to accept Soviet troops.', a: true, x: 'Britain could not force Poland, the very country it had promised to protect.' }
+  ],
+  ans: 1,
+  out: 'The Anglo-French military mission sailed to Russia on a slow merchant ship and arrived on 11 August. Its leader, Admiral Drax, had no written authority to sign anything. The talks stalled over Poland. On 23 August Stalin signed the Nazi–Soviet Pact with Hitler instead.',
+  head: 'STALIN SIGNS WITH HITLER — LONDON STUNNED',
+  fx: { tens: 14, mark: [{ id: 'moscow', kind: 'fail', label: 'Nazi–Soviet Pact 1939' }] },
+  focus: [25, 54, 4],
+  exam: 'Western half-heartedness is one reason Stalin chose Hitler. Use it when explaining the Nazi–Soviet Pact.',
+  hist: 'Historians disagree on whether an Anglo-Soviet alliance was ever possible, given mutual suspicion and Poland’s refusal.',
+  motive: 'Chamberlain distrusted Stalin, doubted the Red Army’s strength after Stalin’s purges, and could not override Poland’s refusal. Anti-communism ran deep in his government.'
+},
+{
+  id: 'warB', lv: 'both', date: 'September 1939', title: 'The Ultimatum',
+  ldr: 'nchamberlain', speaker: 'hitler',
+  said: 'Our enemies are small worms. I saw them at Munich.',
+  saidReal: true,
+  brief: 'At dawn on 1 September 1939, German forces invade Poland. Britain has guaranteed Poland. Mussolini proposes another conference. The House of Commons is in uproar at any sign of delay, and some ministers threaten to resign unless Britain acts.',
+  ask: 'What does Britain do?',
+  opts: [
+    { t: 'Accept Mussolini’s offer of another conference.', x: 'After Prague there would be no second Munich. Parliament would not have allowed it.' },
+    { t: 'Send Germany an ultimatum to withdraw, then declare war when it expires.' },
+    { t: 'Send the army to Poland.', x: 'Britain had no way of getting an army to Poland. It could only fight Germany in the west.' },
+    { t: 'Declare war, but only if France does first.', a: true, x: 'Britain’s ultimatum expired first, at 11 a.m. France followed at 5 p.m.' }
+  ],
+  ans: 1,
+  out: 'Britain’s ultimatum expired at 11 a.m. on 3 September. At 11.15 Chamberlain told the nation on the radio that “this country is at war with Germany”. France followed that afternoon. Britain could do little to help Poland itself.',
+  head: 'BRITAIN AT WAR',
+  fx: { tens: 30, auth: -10, mark: [{ id: 'warsaw', kind: 'war', label: 'Invasion of Poland 1939' }, { id: 'london', kind: 'war', label: 'War declared 1939' }] },
+  focus: [10, 51, 4],
+  exam: 'Tie your answer on why peace collapsed together: Hitler’s aims, appeasement, the League’s failure and the Nazi–Soviet Pact.',
+  hist: 'A. J. P. Taylor saw the war as the result of miscalculation on all sides. Most historians since stress Hitler’s determination to expand.',
+  motive: 'Britain had given its word, and after Prague appeasement was dead in public opinion. To back down again would have destroyed Britain’s credibility and Chamberlain’s government.'
+}
+];
+
+</script>
+<script>
+// FRANCE campaign — the player advises successive French governments.
+// motive = "Why France chose this": the reasoning behind the historical decision.
+window.SCENARIOS = window.SCENARIOS || {};
+window.SCENARIOS.france = [
+{
+  id: 'parisF', lv: 'both', date: 'April 1919', title: 'Security on the Rhine',
+  ldr: 'clemenceau', speaker: 'wilson',
+  said: 'You cannot cut a nation in pieces, Monsieur Clemenceau. Germany must be able to live.',
+  brief: 'Clemenceau and Marshal Foch want the Rhineland, the German land west of the Rhine, turned into a separate state so that Germany can never again invade France. Northern France lies in ruins, and 1.4 million French soldiers are dead. Wilson and Lloyd George refuse to break up Germany. To win French agreement, they offer something else: treaties in which Britain and America promise to defend France if Germany attacks.',
+  ask: 'What does Clemenceau accept?',
+  opts: [
+    { t: 'Insist on a separate Rhineland state, or walk out.', x: 'Clemenceau knew France could not afford to break with Britain and America. Their support was France’s best guarantee.' },
+    { t: 'A demilitarised Rhineland occupied for 15 years, the Saar coal mines, and Anglo-American guarantees.' },
+    { t: 'Accept Wilson’s idea of a mild peace with no reparations.', x: 'No French government could have survived that. France wanted Germany to pay for the devastation.' },
+    { t: 'Annex the Saar outright.', a: true, x: 'France got the Saar mines for 15 years, with a vote at the end, not annexation.' }
+  ],
+  ans: 1,
+  out: 'The Treaty of Versailles demilitarised the Rhineland and put it under Allied occupation for 15 years. France took Alsace-Lorraine back and got the Saar coal mines, with the Saar itself run by the League. Britain and the USA signed guarantees, but the US Senate never ratified the treaty, and the British guarantee depended on the American one. France was left without the protection it had been promised.',
+  head: 'CLEMENCEAU WINS THE RHINE — ON PAPER',
+  fx: { tens: 4, mark: [{ id: 'versailles', kind: 'deal', label: 'Versailles 1919' }] },
+  focus: [4, 49, 6],
+  exam: 'France thought the treaty too soft; Germany thought it too harsh. That is a good way into “Was the treaty fair?”.',
+  hist: 'Many French people felt cheated: they believed they had won the war but lost the peace. The collapse of the guarantee shaped French policy for twenty years.',
+  motive: 'France had been invaded twice in fifty years and had a smaller, slower-growing population than Germany. Security against a German revival was its overwhelming aim.'
+},
+{
+  id: 'alliances', lv: 'a', date: 'February 1921', title: 'Allies in the East',
+  ldr: 'briand', speaker: 'pilsudski',
+  said: 'Poland will stand with France against Germany. And against the Bolsheviks.',
+  brief: 'The Anglo-American guarantee has collapsed, and Russia, France’s pre-war ally, is now Bolshevik. France needs friends who can threaten Germany from the east. The new states created in 1919, Poland and Czechoslovakia, fear Germany as much as France does. Poland is in a border dispute with Lithuania over Vilna.',
+  ask: 'What does France do?',
+  opts: [
+    { t: 'Rely entirely on the League to protect France.', x: 'France doubted the League could protect anyone without the USA and without an army.' },
+    { t: 'Sign an alliance with Poland, and later with Czechoslovakia.' },
+    { t: 'Seek an alliance with Bolshevik Russia.', x: 'In 1921 the Bolsheviks were France’s enemy. They had cancelled the Tsar’s debts, much of them owed to French savers.' },
+    { t: 'Make a deal with Germany to share Europe.', x: 'France’s whole policy was to contain Germany, not partner with it.' }
+  ],
+  ans: 1,
+  out: 'France signed an alliance with Poland in February 1921 and a treaty with Czechoslovakia in 1924, with links to Romania and Yugoslavia. These eastern alliances explain why France backed Poland over Vilna, and why Czechoslovakia mattered so much in 1938.',
+  head: 'PARIS AND WARSAW SEAL ALLIANCE',
+  fx: { tens: 2, mark: [{ id: 'warsaw', kind: 'deal', label: 'Franco-Polish alliance 1921' }, { id: 'vilna', kind: 'fail', label: 'Vilna 1920' }] },
+  focus: [12, 50, 4],
+  exam: 'Explains French motives in League crises such as Vilna: France would not punish its ally Poland.',
+  hist: 'Historians note these alliances were only useful if France was willing to attack Germany to help its allies, which by the 1930s it was not.',
+  motive: 'Without Russia, Britain or America, France needed allies who could threaten Germany from the east. Self-interest in these alliances sometimes came before loyalty to the League.'
+},
+{
+  id: 'ruhrF', lv: 'both', date: 'January 1923', title: 'Collecting in Coal',
+  ldr: 'poincare', speaker: 'cuno',
+  said: 'Germany cannot pay. France will only make it poorer.',
+  brief: 'Germany has fallen behind on deliveries of timber and coal owed as reparations. France has to repay its own war debts to Britain and America, and its devastated north still needs rebuilding. Poincaré believes Germany is dodging payment on purpose. Britain disagrees and will not help.',
+  ask: 'What does Poincaré do?',
+  opts: [
+    { t: 'Accept the delay and wait.', x: 'Poincaré believed that giving way would encourage Germany to tear up the rest of Versailles.' },
+    { t: 'Occupy the Ruhr with Belgium, and take coal and goods by force.' },
+    { t: 'Ask the League to enforce payment.', x: 'Reparations were handled by the Reparations Commission, not the League, and France wanted direct action.' },
+    { t: 'Cancel reparations in exchange for a German border guarantee.', a: true, x: 'That kind of bargain came later, at Locarno. In 1923 France wanted payment.' }
+  ],
+  ans: 1,
+  out: 'French and Belgian troops occupied the Ruhr on 11 January 1923. Germany answered with passive resistance and printed money, and hyperinflation followed. France got some coal, but at high cost, and the franc itself fell in value. Britain and America saw France as the aggressor.',
+  head: 'FRENCH TROOPS IN ESSEN',
+  fx: { tens: 10, auth: -4, own: { ruhr: 'fr' }, mark: [{ id: 'ruhr', kind: 'war', label: 'Ruhr 1923' }] },
+  focus: [5, 50, 6],
+  exam: 'The Ruhr shows French determination to enforce Versailles, and the damage it did to relations with Britain.',
+  hist: 'Sally Marks argues that France was right that Germany could pay. Others see the occupation as a costly failure that left France isolated.',
+  motive: 'France needed reparations to pay its own debts and rebuild, and feared that letting Germany off would unravel the whole treaty. Its leaders also distrusted Germany’s claims of poverty.'
+},
+{
+  id: 'dawesF', lv: 'a', date: 'August 1924', title: 'Leaving the Ruhr',
+  ldr: 'herriot', speaker: 'stresemann',
+  said: 'Leave the Ruhr, Monsieur Herriot, and Germany will pay what it can.',
+  brief: 'The Ruhr occupation has cost France dearly. The franc has fallen sharply, and Poincaré lost the May 1924 election. The new Prime Minister, Édouard Herriot, faces the Dawes Plan: reparations rescheduled, American loans for Germany, and an end to the occupation. Britain and America both support it.',
+  ask: 'What does Herriot do?',
+  opts: [
+    { t: 'Reject the plan and stay in the Ruhr.', x: 'France could not afford to stay isolated, and it needed American and British financial support.' },
+    { t: 'Accept the Dawes Plan and agree to leave the Ruhr within a year.' },
+    { t: 'Accept only if Britain signs an alliance with France.', x: 'Herriot wanted British guarantees, but did not make them a condition of Dawes.' },
+    { t: 'Annex the Ruhr.', x: 'This was never considered. Britain and America would never have accepted it.' }
+  ],
+  ans: 1,
+  out: 'At the London Conference in August 1924 France accepted the Dawes Plan. French and Belgian troops left the Ruhr by August 1925. Herriot also backed the Geneva Protocol, hoping for collective security instead.',
+  head: 'FRANCE TO QUIT THE RUHR',
+  fx: { tens: -8, auth: 4, own: { ruhr: null }, mark: [{ id: 'ruhr', kind: 'deal', label: 'Ruhr evacuated 1925' }] },
+  focus: [5, 50, 6],
+  exam: 'Shows France moving from enforcing Versailles by force to co-operation: the start of the “Locarno spirit”.',
+  hist: 'Some historians see 1924 as the moment France lost the power to enforce Versailles on its own.',
+  motive: 'France could not go on alone. Its money and its relations with Britain and America mattered more than holding the Ruhr.'
+},
+{
+  id: 'locarnoF', lv: 'both', date: 'October 1925', title: 'The Spirit of Locarno',
+  ldr: 'briand', speaker: 'chamberlainA',
+  said: 'For the Polish Corridor no British government ever will or ever can risk the bones of a British grenadier.',
+  saidReal: true,
+  brief: 'Germany offers to accept its border with France permanently. Britain and Italy will guarantee it. But Britain will not guarantee Germany’s eastern borders, so France’s allies Poland and Czechoslovakia get only arbitration treaties. Aristide Briand, the Foreign Minister, believes reconciliation with Germany is France’s best hope.',
+  ask: 'What does Briand do?',
+  opts: [
+    { t: 'Sign Locarno, and sign new treaties promising to defend Poland and Czechoslovakia.' },
+    { t: 'Refuse to sign unless Britain guarantees the eastern borders too.', x: 'Britain would never agree, and France would have lost the British guarantee of the Rhine.' },
+    { t: 'Sign Locarno and drop France’s eastern alliances.', x: 'France kept its eastern alliances and strengthened them at Locarno.' },
+    { t: 'Demand a German apology for the war before signing.', x: 'Briand wanted reconciliation. Reopening war guilt would have wrecked the talks.' }
+  ],
+  ans: 0,
+  out: 'At Locarno Germany accepted its western borders, guaranteed by Britain and Italy. France signed new mutual-assistance treaties with Poland and Czechoslovakia. Briand and Stresemann shared the 1926 Nobel Peace Prize, and Germany joined the League.',
+  head: 'LOCARNO! FRANCE AND GERMANY SHAKE HANDS',
+  fx: { tens: -10, auth: 6, mark: [{ id: 'locarno', kind: 'deal', label: 'Locarno 1925' }] },
+  focus: [8, 48, 5],
+  exam: 'Locarno made the west secure but left the east open. France’s eastern allies depended on France alone.',
+  hist: 'Briand’s policy of reconciliation is admired, but critics argue it rested on trusting German goodwill that later vanished.',
+  motive: 'Briand saw that France could not hold Germany down forever. A British guarantee of the Rhine and German acceptance of its western border were real gains, while the eastern alliances stayed in place.'
+},
+{
+  id: 'kelloggF', lv: 'both', date: 'August 1928', title: 'Outlawing War',
+  ldr: 'briand', speaker: 'kellogg',
+  said: 'Why only France and America, Monsieur Briand? Let every nation renounce war.',
+  brief: 'In 1927 Briand proposed a pact between France and the United States renouncing war between them, hoping to tie America into France’s security. The US Secretary of State, Frank Kellogg, has turned it into an offer for all nations. The new pact would have no means of enforcement.',
+  ask: 'What does France do?',
+  opts: [
+    { t: 'Withdraw, since the pact no longer helps France specifically.', x: 'Briand accepted the wider pact, which still brought America into European peace-making.' },
+    { t: 'Sign the multilateral Kellogg–Briand Pact in Paris.' },
+    { t: 'Demand that the pact include sanctions against aggressors.', x: 'The USA would never accept sanctions. The pact stayed a statement of principle.' },
+    { t: 'Sign only if Germany is excluded.', x: 'Germany was among the first signatories. Excluding it would have contradicted the Locarno spirit.' }
+  ],
+  ans: 1,
+  out: 'The Kellogg–Briand Pact was signed in Paris on 27 August 1928 by 15 nations, including Germany and the USA; over 60 joined in the end. It had no means of enforcement, but it marked the high point of 1920s optimism.',
+  head: 'NATIONS OUTLAW WAR IN PARIS',
+  fx: { tens: -6, auth: 3, mark: [{ id: 'paris', kind: 'deal', label: 'Kellogg–Briand 1928' }] },
+  focus: [2, 49, 5],
+  exam: 'Useful evidence of improving relations in the late 1920s, and of the weakness of agreements without enforcement.',
+  hist: 'Often mocked in hindsight, the pact later underpinned the charge of “crimes against peace” at Nuremberg.',
+  motive: 'France wanted any link that drew America into European security. A pact without teeth was better than none.'
+},
+{
+  id: 'maginot', lv: 'both', date: 'January 1930', title: 'A Wall of Concrete',
+  ldr: 'maginot', speaker: 'poincare',
+  said: 'Never again Verdun. Never again French youth thrown against German guns.',
+  brief: 'Allied troops will leave the Rhineland in 1930, five years early. France’s population is smaller than Germany’s, and in the mid-1930s the generation born during the war, when few babies were born, will reach military age. The army’s leaders believe defence beats attack, as it did in 1914–18. The War Minister, André Maginot, asks Parliament for money.',
+  ask: 'What does France build?',
+  opts: [
+    { t: 'A large tank force for attacking Germany.', x: 'France’s leaders believed in defence. Ideas for mobile armoured forces came later and were largely ignored.' },
+    { t: 'A line of fortifications along the German border: the Maginot Line.' },
+    { t: 'Nothing. Rely on the League and the Locarno guarantee.', x: 'France did not trust guarantees alone. The memory of 1914 was too strong.' },
+    { t: 'Fortifications along the Belgian border as well as the German one.', a: true, x: 'Belgium was an ally until 1936, and extending the line was expensive. The Belgian frontier was only lightly fortified.' }
+  ],
+  ans: 1,
+  out: 'Parliament voted the money in January 1930, and the Maginot Line was built along the German border during the 1930s. It made France feel safe, but it encouraged a defensive mindset. A defensive army could not easily help Poland or Czechoslovakia, the allies France had promised to defend.',
+  head: 'FRANCE BUILDS ITS WALL',
+  fx: { tens: 2, mark: [{ id: 'maginot', kind: 'deal', label: 'Maginot Line 1930' }] },
+  focus: [6, 49, 6],
+  exam: 'Explains why France stayed passive in the 1930s: its army was designed to defend, not to attack.',
+  hist: 'Historians note the contradiction: France had alliances in the east that it could only honour by attacking, but built an army that could only defend.',
+  motive: 'Memories of Verdun and the huge losses of 1914–18, and a shortage of young men in the 1930s, made defence seem the only sensible strategy.'
+},
+{
+  id: 'disarmF', lv: 'both', date: 'February 1932', title: 'Security First',
+  ldr: 'tardieu', speaker: 'bruning',
+  said: 'Germany asks only for equal treatment. Disarm, or let us rearm.',
+  brief: 'France refuses to disarm without security, and says so as the World Disarmament Conference opens in Geneva. Germany, still under the Versailles limits, demands equality. Britain and America press France to cut its army, but offer no new guarantees. André Tardieu, France’s chief delegate and soon its Prime Minister, has a proposal.',
+  ask: 'What does France propose?',
+  opts: [
+    { t: 'Cut the French army to Germany’s level straight away.', x: 'France would not disarm while Germany had the larger population and industry.' },
+    { t: 'An international police force under the League, and no French disarmament without guarantees.' },
+    { t: 'Allow Germany to rearm to France’s level.', x: 'That was what France feared most.' },
+    { t: 'Leave the conference.', x: 'France stayed and argued its case. It was Germany that walked out in 1933.' }
+  ],
+  ans: 1,
+  out: 'The Tardieu Plan proposed giving the League its own armed force, with heavy weapons placed under League control. Britain and others rejected it. France would not disarm without security, Germany would not accept inequality, and in October 1933 Hitler left the conference.',
+  head: 'TARDIEU: “A LEAGUE ARMY FIRST”',
+  fx: { tens: 8, auth: -8, mark: [{ id: 'geneva', kind: 'fail', label: 'Disarmament fails 1933' }] },
+  focus: [5, 48, 5],
+  exam: 'The French demand for “security first” is a key reason disarmament failed.',
+  hist: 'Historians argue the conference failed because France and Germany wanted contradictory things: security and equality.',
+  motive: 'France’s army was its only real guarantee against a bigger Germany. Without British or American promises, disarming looked like suicide.'
+},
+{
+  id: 'rome35', lv: 'a', date: 'January 1935', title: 'Laval in Rome',
+  ldr: 'laval', speaker: 'mussolini',
+  said: 'Italy wants only a free hand in Africa, Monsieur Laval. In Europe we are your friends.',
+  brief: 'Pierre Laval, the Foreign Minister, wants Italy as an ally against Germany. Mussolini blocked Hitler over Austria in 1934 and could become France’s partner. In Rome, Mussolini wants concessions in Africa, especially over Abyssinia, a fellow League member.',
+  ask: 'What does Laval agree?',
+  opts: [
+    { t: 'Refuse any concessions over Africa.', x: 'Laval valued Italian friendship against Germany far more than Abyssinia.' },
+    { t: 'Settle colonial disputes, and hint that France will not stand in Italy’s way in Abyssinia.' },
+    { t: 'Sign a full military alliance with Italy.', x: 'The Rome Agreements were limited. Military talks followed later in 1935, briefly.' },
+    { t: 'Promise to defend Abyssinia against Italy.', x: 'Laval had no intention of doing this.' }
+  ],
+  ans: 1,
+  out: 'The Rome Agreements (January 1935) settled colonial disputes, and France gave Italy small pieces of African territory. In private Laval appeared to give Mussolini a free hand in Abyssinia. He later claimed he meant only economic influence, but Mussolini understood it as consent.',
+  head: 'LAVAL AND MUSSOLINI EMBRACE IN ROME',
+  fx: { tens: 4, mark: [{ id: 'rome', kind: 'deal', label: 'Rome Agreements 1935' }] },
+  focus: [12, 42, 5],
+  exam: 'Helps explain why France was so reluctant to punish Italy over Abyssinia later in 1935.',
+  hist: 'What Laval actually promised is still debated, but most historians agree Mussolini left Rome believing France would not oppose him.',
+  motive: 'France feared Germany above everything. An Italian ally would protect Austria and France’s south-eastern border, and to Laval that was worth more than Abyssinia.'
+},
+{
+  id: 'sovietpact', lv: 'a', date: 'May 1935', title: 'A Pact with Moscow',
+  ldr: 'laval', speaker: 'stalin',
+  said: 'The Soviet Union will stand with France, if France stands with us.',
+  brief: 'Hitler is rearming openly. France’s eastern allies look weak, and Poland has signed a non-aggression pact with Germany. The USSR joined the League in 1934 and now fears Hitler too. Louis Barthou, the Foreign Minister killed in Marseille in October 1934, had begun talks with Moscow. Many French conservatives fear communism.',
+  ask: 'What does France do?',
+  opts: [
+    { t: 'Refuse any deal with communists.', x: 'Fear of Germany outweighed fear of communism. France signed, though without enthusiasm.' },
+    { t: 'Sign a mutual-assistance pact with the USSR.' },
+    { t: 'Sign a full military alliance with joint war plans.', x: 'The pact was signed, but France avoided detailed military talks with the Red Army.' },
+    { t: 'Ask Britain to join a three-way alliance.', x: 'Britain would not commit itself. The pact was Franco-Soviet only.' }
+  ],
+  ans: 1,
+  out: 'The Franco-Soviet Pact was signed in May 1935, promising mutual help if either was attacked. France delayed ratification until February 1936, and never followed it with serious military planning. Hitler used the ratification as an excuse to march into the Rhineland in March 1936.',
+  head: 'FRANCE AND RUSSIA SIGN PACT',
+  fx: { tens: 4, mark: [{ id: 'moscow', kind: 'deal', label: 'Franco-Soviet Pact 1935' }] },
+  focus: [20, 52, 3],
+  exam: 'The pact gave Hitler his excuse for the Rhineland. A good example of how decisions linked together.',
+  hist: 'Historians argue France half-committed to the USSR, which gained little in security but alarmed Hitler, Poland and the French right.',
+  motive: 'With Germany rearming and its eastern allies wavering, France looked for any counterweight. But distrust of communism meant it never made the pact effective.'
+},
+{
+  id: 'sanctionsF', lv: 'both', date: 'October 1935', title: 'Sanctions?',
+  ldr: 'laval', speaker: 'selassie',
+  said: 'France signed the Covenant too, Monsieur Laval.',
+  brief: 'Italy has invaded Abyssinia, and the League is about to vote on sanctions. Laval, now Prime Minister, only months ago won Mussolini’s friendship in Rome. France’s generals want Italy as an ally, so French troops can be moved from the Alps to the German border. Britain is pressing for sanctions.',
+  ask: 'What does France do?',
+  opts: [
+    { t: 'Block sanctions completely.', x: 'France could not openly defy the League or split from Britain, its most important partner.' },
+    { t: 'Agree to limited sanctions, but resist any oil embargo.' },
+    { t: 'Back full oil sanctions alongside Britain.', x: 'Laval feared oil sanctions would mean war with Italy and push Mussolini to Hitler.' },
+    { t: 'Close French ports in Africa to Italian ships.', a: true, x: 'France did not go beyond the League’s limited sanctions.' }
+  ],
+  ans: 1,
+  out: 'France voted for limited sanctions, but Laval worked to delay and weaken them, and no oil embargo was ever imposed. The sanctions irritated Mussolini without stopping him.',
+  head: 'PARIS DRAGS ITS FEET ON SANCTIONS',
+  fx: { tens: 10, auth: -8, mark: [{ id: 'addis', kind: 'war', label: 'Abyssinia 1935' }] },
+  focus: [20, 30, 3],
+  exam: 'Contrast French and British motives over Abyssinia: France cared more about Italy as an ally against Germany.',
+  hist: 'Historians see the Anglo-French split over Abyssinia as fatal: neither would act fully, so sanctions failed.',
+  motive: 'For France, Germany was the danger next door and Italy a vital ally against it. Abyssinia was far away. Laval wanted to keep both Britain and Italy on France’s side.'
+},
+{
+  id: 'hoarelavalF', lv: 'both', date: 'December 1935', title: 'The Paris Plan',
+  ldr: 'laval', speaker: 'mussolini',
+  said: 'Two-thirds of Abyssinia, offered on a plate? I might be persuaded.',
+  brief: 'Laval wants the war ended before oil sanctions are imposed and Mussolini turns to Hitler. Britain’s Foreign Secretary, Sir Samuel Hoare, is passing through Paris. Laval believes a deal can be done quietly.',
+  ask: 'What do Laval and Hoare agree?',
+  opts: [
+    { t: 'To impose oil sanctions together.', x: 'This was the opposite of what Laval wanted.' },
+    { t: 'A secret plan to give Italy about two-thirds of Abyssinia.' },
+    { t: 'To let the League decide.', x: 'They acted precisely to bypass the League’s slow process.' },
+    { t: 'To recognise Italy’s conquest outright.', a: true, x: 'The plan left Abyssinia a small independent state, with a corridor to the sea.' }
+  ],
+  ans: 1,
+  out: 'The Hoare–Laval Plan leaked to the French press. There was outrage in Britain, and Hoare resigned. Laval’s government fell in January 1936. Italy completed its conquest in May 1936.',
+  head: 'SECRET DEAL LEAKED — LAVAL’S GOVERNMENT FALLS',
+  fx: { tens: 8, auth: -16, mark: [{ id: 'paris', kind: 'fail', label: 'Hoare–Laval 1935' }] },
+  focus: [8, 30, 3],
+  exam: 'Shows Britain and France putting their own interests before the Covenant.',
+  hist: 'Laval was later executed for collaboration with Germany after 1945, and his reputation colours how this episode is remembered.',
+  motive: 'Laval believed keeping Mussolini away from Hitler was worth sacrificing part of Abyssinia. In his view France’s security came first.'
+},
+{
+  id: 'rhinelandF', lv: 'both', date: 'March 1936', title: 'Germans on the Rhine',
+  ldr: 'sarraut', speaker: 'hitler',
+  said: 'If the French march, we retreat with our tails between our legs.',
+  brief: 'German troops have entered the demilitarised Rhineland, citing the new Franco-Soviet Pact as their excuse. France has a caretaker government with an election weeks away and a weak franc. The army chief, General Gamelin, says any action would need full mobilisation and overestimates German strength. Britain makes clear it will not fight.',
+  ask: 'What does France do?',
+  opts: [
+    { t: 'Send the army in to expel the Germans.', x: 'The generals said only full mobilisation would do, and the government would not mobilise without Britain, weeks before an election.' },
+    { t: 'Protest to the League and the Locarno powers, but take no military action.' },
+    { t: 'Accept the move quietly.', x: 'France protested loudly. Sarraut declared that France would not leave Strasbourg under the fire of German guns.' },
+    { t: 'Mobilise alone and occupy the Saar.', a: true, x: 'France never considered acting without Britain.' }
+  ],
+  ans: 1,
+  out: 'France appealed to the League and the Locarno guarantors. The League condemned Germany, and Britain offered talks, but nobody acted. German troops stayed. France’s eastern allies concluded that France could no longer help them.',
+  head: 'FRANCE PROTESTS — BUT DOES NOT MARCH',
+  fx: { tens: 12, auth: -8, own: { rhineland: 'de' }, mark: [{ id: 'rhineland', kind: 'war', label: 'Rhineland 1936' }] },
+  focus: [6, 49, 7],
+  exam: 'The Rhineland shows France would not act without Britain: a key reason Hitler’s gamble worked.',
+  hist: 'Many historians see this as the last chance to stop Hitler cheaply. Others stress that French leaders were trapped by their own defensive army and by the British refusal.',
+  motive: 'France’s army was built for defence, its generals exaggerated German strength, and its leaders would not risk war without Britain, which had refused.'
+},
+{
+  id: 'spainF', lv: 'both', date: 'August 1936', title: 'Blum and Spain',
+  ldr: 'blum', speaker: 'franco',
+  said: 'Help the Reds, Monsieur Blum, and you will have Spain’s civil war in France.',
+  brief: 'Léon Blum’s Popular Front, a left-wing government, has just come to power. Across the border, Spain’s left-wing Republic is fighting General Franco, who is helped by Germany and Italy. Blum’s instinct is to send the Republic aircraft. Britain disapproves, and the French right furiously opposes any help. Mussolini now has his Abyssinian empire.',
+  ask: 'What does Blum do?',
+  opts: [
+    { t: 'Openly send aircraft and arms to the Spanish Republic.', x: 'Blum tried at first, but drew back in the face of opposition at home and from Britain.' },
+    { t: 'Propose a Non-Intervention Agreement, while letting a few weapons slip across the border.' },
+    { t: 'Back Franco to keep Mussolini friendly.', x: 'A left-wing French government would never support Franco.' },
+    { t: 'Send French troops into Spain.', a: true, x: 'Blum never considered military intervention.' }
+  ],
+  ans: 1,
+  out: 'On 1 August 1936 France proposed non-intervention, and the agreement followed weeks later. Some arms reached the Republic through France, but Germany and Italy gave Franco far more. Blum later said not helping Spain was the greatest regret of his life.',
+  head: 'BLUM: “NON-INTERVENTION”',
+  fx: { tens: 8, own: { abyssinia: 'it' }, mark: [{ id: 'guernica', kind: 'war', label: 'Spanish Civil War' }, { id: 'addis', kind: 'fail', label: 'Abyssinia conquered 1936' }] },
+  focus: [-1, 43, 5],
+  exam: 'Shows how fear of internal division and dependence on Britain shaped French policy.',
+  hist: 'Historians see France as deeply divided between left and right in the 1930s, which made a firm foreign policy almost impossible.',
+  motive: 'Blum feared that intervening would split France itself, and he could not risk losing Britain, France’s only great-power friend.'
+},
+{
+  id: 'munichF', lv: 'both', date: 'September 1938', title: 'Munich',
+  ldr: 'daladier', speaker: 'nchamberlain',
+  said: 'How horrible, fantastic, incredible it is that we should be digging trenches and trying on gas-masks here because of a quarrel in a far-away country between people of whom we know nothing.',
+  saidReal: true,
+  brief: 'France has a treaty with Czechoslovakia, signed in 1924 and reinforced at Locarno, to defend it if attacked. Hitler demands the Sudetenland. France’s air force chief has returned from Germany warning that the Luftwaffe could destroy French air power within days. Chamberlain says Britain will not fight for Czechoslovakia alone.',
+  ask: 'What does Daladier do?',
+  opts: [
+    { t: 'Honour the treaty and fight for Czechoslovakia.', x: 'Daladier would not go to war without Britain, and the French army was designed for defence.' },
+    { t: 'Go to Munich with Chamberlain and accept the transfer of the Sudetenland.' },
+    { t: 'Let Chamberlain decide and stay at home.', x: 'Daladier went to Munich and signed alongside Chamberlain.' },
+    { t: 'Ask the League to send observers to the Sudetenland.', a: true, x: 'By 1938 the League was not involved. Munich was settled by four great powers.' }
+  ],
+  ans: 1,
+  out: 'Daladier signed the Munich Agreement. Czechoslovakia, France’s ally, was not even present. Arriving back in Paris to cheering crowds, Daladier is said to have muttered: “The fools, they don’t know what they are cheering.” France’s eastern alliance system was finished.',
+  head: 'DALADIER SIGNS AT MUNICH',
+  fx: { tens: 10, auth: -6, own: { sudetenland: 'de' }, mark: [{ id: 'munich', kind: 'deal', label: 'Munich 1938' }] },
+  focus: [8, 49, 5],
+  exam: 'France broke its treaty with Czechoslovakia: a key point when explaining why Hitler did not believe France would fight in 1939.',
+  hist: 'French historians often stress the national exhaustion and division that lay behind Munich.',
+  motive: 'France feared German air power, depended on Britain, and had an army built for defence. Daladier knew Munich was a defeat, but saw no alternative.'
+},
+{
+  id: 'guaranteeF', lv: 'both', date: 'March 1939', title: 'After Prague',
+  ldr: 'daladier', speaker: 'hacha',
+  said: 'At one in the morning they told me Prague would be bombed at dawn unless I signed…',
+  brief: 'Hitler has seized Prague and destroyed what remained of Czechoslovakia. France already has an alliance with Poland. Britain, which refused any commitment in eastern Europe for twenty years, now offers to guarantee Poland.',
+  ask: 'What does France do?',
+  opts: [
+    { t: 'Join Britain in guaranteeing Poland’s independence.' },
+    { t: 'Drop the Polish alliance to avoid war.', x: 'After Prague, French opinion hardened. Abandoning another ally would have finished France as a great power.' },
+    { t: 'Attack Germany immediately.', x: 'France had no plan for an attack and would not act without Britain.' },
+    { t: 'Offer Hitler Danzig in exchange for peace.', a: true, x: 'Some in Paris were tempted, but France stood with Britain and the guarantee.' }
+  ],
+  ans: 0,
+  out: 'On 31 March 1939 Britain and France jointly guaranteed Poland, and in April they also guaranteed Romania and Greece. For the first time Britain was fully committed alongside France in eastern Europe.',
+  head: 'PARIS AND LONDON: HANDS OFF POLAND',
+  fx: { tens: 12, own: { bohemia: 'de', memel: 'de' }, mark: [{ id: 'prague', kind: 'war', label: 'Prague 1939' }, { id: 'warsaw', kind: 'deal', label: 'Guarantee 1939' }] },
+  focus: [14, 51, 5],
+  exam: 'Shows the end of appeasement and the Anglo-French commitment that led to war.',
+  hist: 'At last France had the British commitment it had wanted since 1919, but by then Germany was far stronger.',
+  motive: 'With Britain finally committed, France could stand by Poland without standing alone. Prague showed that appeasement had failed.'
+},
+{
+  id: 'warF', lv: 'both', date: 'September 1939', title: 'The Phoney War',
+  ldr: 'daladier', speaker: 'nchamberlain',
+  said: 'Consequently this country is at war with Germany.',
+  saidReal: true,
+  brief: 'Germany has invaded Poland. Britain declared war at 11 a.m. on 3 September. France’s Foreign Minister has looked for a last-minute conference. The French army is ready to defend the Maginot Line, but has no plan for a major attack on Germany. Poland is fighting alone in the east.',
+  ask: 'What does France do?',
+  opts: [
+    { t: 'Stay neutral and wait.', x: 'France had guaranteed Poland and could not abandon another ally.' },
+    { t: 'Declare war, make a small advance into the Saar, then return to the Maginot Line.' },
+    { t: 'Launch a full-scale invasion of Germany to save Poland.', x: 'France’s army was built for defence. Its leaders would not risk heavy losses attacking the German frontier.' },
+    { t: 'Send troops to Poland by sea.', a: true, x: 'There was no practical route. France could only help Poland by attacking in the west.' }
+  ],
+  ans: 1,
+  out: 'France declared war at 5 p.m. on 3 September 1939. French troops advanced a few miles into the Saar, then pulled back. Poland was defeated within weeks, and the long “Phoney War” followed until Germany attacked in the west in May 1940.',
+  head: 'FRANCE AT WAR',
+  fx: { tens: 30, auth: -10, mark: [{ id: 'warsaw', kind: 'war', label: 'Invasion of Poland 1939' }, { id: 'saar', kind: 'war', label: 'Saar offensive 1939' }] },
+  focus: [10, 50, 4],
+  exam: 'Tie your answer together: French security fears, dependence on Britain, the Maginot mindset and broken alliances all shaped 1939.',
+  hist: 'Historians debate whether a real French attack in September 1939, while most of the German army was in Poland, could have changed the war.',
+  motive: 'France had to honour its guarantee, but its army and its leaders were built for defence. They believed time was on their side and waited behind the Maginot Line.'
+}
+];
+
+</script>
+<script>
 // Procedural noir score + sound effects with the Web Audio API (no audio files needed).
 // D minor: slow string pads, a pizzicato "heartbeat" bass, a ticking clock and a lonely piano.
 // Intensity (0–1) follows world tension: more timpani, faster ostinato, louder clock.
@@ -2680,7 +3484,7 @@ window.SCENARIOS.italy = [
     guernica: [-2.68, 43.31, 'Guernica'], rome: [12.5, 41.9, 'Rome'], munich: [11.58, 48.14, 'Munich'],
     prague: [14.42, 50.08, 'Prague'], memel: [21.13, 55.71, 'Memel'], moscow: [37.6, 55.75, 'Moscow'],
     danzig: [18.65, 54.35, 'Danzig'], fiume: [14.44, 45.33, 'Fiume'], paris: [2.35, 48.86, 'Paris'],
-    tirana: [19.82, 41.33, 'Tirana']
+    tirana: [19.82, 41.33, 'Tirana'], washington: [-77.04, 38.9, 'Washington'], maginot: [7.4, 49.15, 'Maginot Line']
   };
 
   const LABELS = [
@@ -2773,7 +3577,7 @@ window.SCENARIOS.italy = [
 
   function setPlayer(role) {
     for (const k in countryEls) countryEls[k].forEach(p => p.classList.remove('player'));
-    const keys = role === 'germany' ? ['germany', 'east-prussia'] : role === 'italy' ? ['italy'] : [];
+    const keys = { germany: ['germany', 'east-prussia'], italy: ['italy'], britain: ['united-kingdom'], france: ['france'] }[role] || [];
     keys.forEach(k => (countryEls[k] || []).forEach(p => p.classList.add('player')));
     svg.classList.toggle('role-league', role === 'league');
   }
@@ -3028,6 +3832,36 @@ window.SCENARIOS.italy = [
       ],
       endWin: 'You followed Italy from the disappointment of 1919, through Corfu and Locarno, to Abyssinia, the Axis and the Pact of Steel. In June 1940, as France fell, Mussolini entered the war. It ended with Italy defeated and Mussolini dead.',
       ranks: [[.9, 'Machiavelli reborn'], [.75, 'Trusted counsellor'], [.55, 'Embassy attaché'], [0, 'Clerk in the colonial archives']]
+    },
+    britain: {
+      name: 'Britain', desk: 'The Foreign Office, London', paper: 'The Evening Dispatch', city: 'London',
+      briefTitle: 'Adviser to the British Government', motiveHead: 'Why Britain chose this',
+      fail: 'A fourth wrong call and the Prime Minister will have you moved out of the Foreign Office.',
+      outHead: 'FOREIGN OFFICE ADVISER SHOWN THE DOOR',
+      outBody: 'Downing Street confirmed last night that the adviser has been “moved to other duties” after recommendations that one minister called “advice for some other country in some other century”.',
+      advising: s => `You advise <b>${P(s.ldr).name}</b> · ${P(s.ldr).role}`,
+      intro: [
+        'You are an adviser at the Foreign Office in London, serving Lloyd George, Bonar Law, Baldwin, MacDonald and Neville Chamberlain.',
+        'Britain has won the war but is deep in debt, with an empire to defend across the world and voters who never want to see another Western Front. Its leaders support the League, but want commitments that are limited and clear. Many come to believe that Germany was treated too harshly in 1919.',
+        'Your task: recommend the decisions Britain’s governments really took. After each one, read why Britain chose it.'
+      ],
+      endWin: 'You followed British policy from the peace conference to the declaration of war: limited commitments in the 1920s, caution in the Depression, then appeasement until Prague. On 3 September 1939 Britain went to war to defend Poland.',
+      ranks: [[.9, 'Permanent Under-Secretary'], [.75, 'Trusted private secretary'], [.55, 'Junior clerk, Foreign Office'], [0, 'Tea trolley, Whitehall']]
+    },
+    france: {
+      name: 'France', desk: 'The Quai d’Orsay, Paris', paper: 'The Evening Dispatch', city: 'Paris',
+      briefTitle: 'Adviser at the Quai d’Orsay', motiveHead: 'Why France chose this',
+      fail: 'A fourth wrong call and the government will have you dismissed from the Quai d’Orsay.',
+      outHead: 'QUAI D’ORSAY DISMISSES ADVISER',
+      outBody: 'The Foreign Ministry announced last night that the adviser has left “for personal reasons”. A senior diplomat said the advice “bore no resemblance to anything France has ever done”.',
+      advising: s => `You advise <b>${P(s.ldr).name}</b> · ${P(s.ldr).role}`,
+      intro: [
+        'You are an adviser at the Quai d’Orsay, the French Foreign Ministry in Paris, serving Clemenceau, Poincaré, Briand, Laval, Blum, Daladier and others.',
+        'France won the war but lost 1.4 million soldiers, and its north lies in ruins. Germany has a larger population and stronger industry, and France has been invaded twice in fifty years. Every French government wants one thing above all: security against Germany.',
+        'Your task: recommend the decisions France’s governments really took. After each one, read why France chose it.'
+      ],
+      endWin: 'You followed French policy from the hope of security in 1919 to the Phoney War: enforcing Versailles, reconciliation at Locarno, the Maginot Line, and dependence on Britain. In May 1940 Germany attacked in the west, and within six weeks France had fallen.',
+      ranks: [[.9, 'Secretary-General of the Quai d’Orsay'], [.75, 'Trusted chef de cabinet'], [.55, 'Embassy secretary'], [0, 'Archivist, basement of the Quai']]
     }
   };
 
@@ -3140,7 +3974,7 @@ window.SCENARIOS.italy = [
   function goBrief() {
     const R = ROLES[pick.role];
     $('#brief-eyebrow').textContent = `${pick.level === 'alevel' ? 'A-Level' : 'IGCSE'} file · ${R.desk}`;
-    $('#brief-title').textContent = pick.role === 'league' ? 'Your seat at the Council' : `Adviser to ${R.name}`;
+    $('#brief-title').textContent = R.briefTitle || (pick.role === 'league' ? 'Your seat at the Council' : `Adviser to ${R.name}`);
     $('#brief-body').innerHTML = sceneImg(pick.role) + R.intro.map(p => `<p>${p}</p>`).join('');
     $('#brief-fail').textContent = R.fail;
     $('#brief-hints').innerHTML = pick.level === 'igcse'
@@ -3398,6 +4232,7 @@ window.SCENARIOS.italy = [
         ${!ok && chosen ? `<div class="why"><b>Why that didn’t happen</b>${esc(chosen.x || '')}</div>` : ''}
         <div class="headline"><div class="paper-name"><span>${R.paper}</span><span>${esc(s.date)}</span></div><h3>${esc(s.head)}</h3></div>
         <div class="record"><h4>What really happened</h4><p>${esc(s.out)}</p><div class="fx-chips">${chips.join('')}</div></div>
+        ${s.motive ? `<div class="note motive"><h4>${R.motiveHead || 'Why they chose this'}</h4><p>${esc(s.motive)}</p></div>` : ''}
         ${s.exam ? `<div class="note"><h4>${st.level === 'alevel' ? 'Exam angle' : 'Exam tip'}</h4><p>${esc(s.exam)}</p></div>` : ''}
         ${hist}
         <div class="actions"><button class="btn btn-primary" id="next">${out ? 'Face the consequences' : (st.i + 1 >= st.ids.length ? 'Close the file' : 'Next dispatch →')}</button></div>
@@ -3428,7 +4263,7 @@ window.SCENARIOS.italy = [
     const rank = R.ranks.find(([t]) => pct >= t)[1];
     const lastS = cur() || window.SCENARIOS[st.role].find(s => s.id === st.ids[st.ids.length - 1]);
     const date = completed ? (st.role === 'italy' ? '10 June 1940' : '3 September 1939') : lastS.date;
-    const face = completed ? (st.role === 'league' ? 'avenol' : st.role === 'germany' ? 'hitler' : 'mussolini') : 'you';
+    const face = completed ? ({ league: 'avenol', germany: 'hitler', italy: 'mussolini', britain: 'nchamberlain', france: 'briand' }[st.role]) : 'you';
     const head = completed
       ? (st.role === 'italy' ? 'ITALY ENTERS THE WAR' : 'EUROPE AT WAR')
       : R.outHead;

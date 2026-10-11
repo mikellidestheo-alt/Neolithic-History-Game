@@ -54,6 +54,17 @@
     zog:        { name: 'Ahmed Zogu (King Zog)', role: 'Ruler of Albania', hair: 'slick', hc: 'brown', stache: 'pencil', mc: 'brown', clothes: 'uniform', brows: 'calm', mouth: 'set', hw: 37, chin: 172, iris: 'brown', scene: 'ministry' },
     macdonald:  { name: 'Ramsay MacDonald', role: 'British Prime Minister', hair: 'wavy', hc: 'grey', stache: 'walrus', mc: 'grey', clothes: 'wing', brows: 'worried', mouth: 'set', age: 2, scene: 'palais' },
     ciano:      { name: 'Count Galeazzo Ciano', role: 'Italian Foreign Minister, 1936–43', hair: 'slick', hc: 'black', clothes: 'black', brows: 'raised', mouth: 'smirk', hw: 42, iris: 'brown', scene: 'ministry' },
+    lloydgeorge:{ name: 'David Lloyd George', role: 'British Prime Minister, 1916–22', hair: 'wavy', hc: 'white', stache: 'walrus', mc: 'white', clothes: 'wing', brows: 'raised', mouth: 'set', age: 2, scene: 'palais' },
+    bonarlaw:   { name: 'Andrew Bonar Law', role: 'British Prime Minister, 1922–23', hair: 'receding', hc: 'grey', stache: 'clipped', mc: 'grey', clothes: 'wing', brows: 'worried', mouth: 'set', age: 2, scene: 'ministry' },
+    baldwin:    { name: 'Stanley Baldwin', role: 'British Prime Minister, 1923–24, 1924–29 and 1935–37', hair: 'slick', hc: 'grey', clothes: 'suit', brows: 'calm', mouth: 'set', age: 2, scene: 'ministry' },
+    hughes:     { name: 'Charles Evans Hughes', role: 'US Secretary of State, 1921–25', hair: 'receding', hc: 'white', beard: 'full', mc: 'white', clothes: 'wing', brows: 'stern', mouth: 'set', age: 2, scene: 'palais' },
+    clemenceau: { name: 'Georges Clemenceau', role: 'Prime Minister of France, 1917–20', hair: 'bald', hc: 'white', stache: 'walrus', mc: 'white', clothes: 'wing', brows: 'heavy', mouth: 'frown', age: 2, scene: 'palais' },
+    herriot:    { name: 'Édouard Herriot', role: 'Prime Minister of France, 1924–25', hair: 'crop', hc: 'dark', stache: 'clipped', mc: 'dark', clothes: 'suit', brows: 'calm', mouth: 'set', hw: 44, age: 1, scene: 'ministry' },
+    maginot:    { name: 'André Maginot', role: 'French Minister of War, 1929–30', hair: 'slick', hc: 'dark', stache: 'clipped', mc: 'dark', clothes: 'suit', brows: 'stern', mouth: 'set', age: 1, scene: 'ministry' },
+    tardieu:    { name: 'André Tardieu', role: 'French delegate at Geneva and Prime Minister, 1932', hair: 'receding', hc: 'dark', clothes: 'suit', brows: 'raised', mouth: 'set', age: 1, scene: 'palais' },
+    sarraut:    { name: 'Albert Sarraut', role: 'Prime Minister of France, 1936', hair: 'receding', hc: 'grey', stache: 'clipped', mc: 'grey', clothes: 'suit', brows: 'worried', mouth: 'set', age: 2, scene: 'ministry' },
+    blum:       { name: 'Léon Blum', role: 'Prime Minister of France, 1936–37', hair: 'wavy', hc: 'grey', stache: 'walrus', mc: 'grey', glasses: 'pince', clothes: 'suit', brows: 'worried', mouth: 'set', age: 2, scene: 'ministry' },
+    daladier:   { name: 'Édouard Daladier', role: 'Prime Minister of France, 1938–40', hair: 'slick', hc: 'dark', clothes: 'suit', brows: 'stern', mouth: 'frown', hw: 42, age: 1, scene: 'ministry' },
     you:        { name: 'You', role: 'The decision-maker', silhouette: true, scene: 'noir' }
   };
 

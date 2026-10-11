@@ -54,6 +54,36 @@
       ],
       endWin: 'You followed Italy from the disappointment of 1919, through Corfu and Locarno, to Abyssinia, the Axis and the Pact of Steel. In June 1940, as France fell, Mussolini entered the war. It ended with Italy defeated and Mussolini dead.',
       ranks: [[.9, 'Machiavelli reborn'], [.75, 'Trusted counsellor'], [.55, 'Embassy attaché'], [0, 'Clerk in the colonial archives']]
+    },
+    britain: {
+      name: 'Britain', desk: 'The Foreign Office, London', paper: 'The Evening Dispatch', city: 'London',
+      briefTitle: 'Adviser to the British Government', motiveHead: 'Why Britain chose this',
+      fail: 'A fourth wrong call and the Prime Minister will have you moved out of the Foreign Office.',
+      outHead: 'FOREIGN OFFICE ADVISER SHOWN THE DOOR',
+      outBody: 'Downing Street confirmed last night that the adviser has been “moved to other duties” after recommendations that one minister called “advice for some other country in some other century”.',
+      advising: s => `You advise <b>${P(s.ldr).name}</b> · ${P(s.ldr).role}`,
+      intro: [
+        'You are an adviser at the Foreign Office in London, serving Lloyd George, Bonar Law, Baldwin, MacDonald and Neville Chamberlain.',
+        'Britain has won the war but is deep in debt, with an empire to defend across the world and voters who never want to see another Western Front. Its leaders support the League, but want commitments that are limited and clear. Many come to believe that Germany was treated too harshly in 1919.',
+        'Your task: recommend the decisions Britain’s governments really took. After each one, read why Britain chose it.'
+      ],
+      endWin: 'You followed British policy from the peace conference to the declaration of war: limited commitments in the 1920s, caution in the Depression, then appeasement until Prague. On 3 September 1939 Britain went to war to defend Poland.',
+      ranks: [[.9, 'Permanent Under-Secretary'], [.75, 'Trusted private secretary'], [.55, 'Junior clerk, Foreign Office'], [0, 'Tea trolley, Whitehall']]
+    },
+    france: {
+      name: 'France', desk: 'The Quai d’Orsay, Paris', paper: 'The Evening Dispatch', city: 'Paris',
+      briefTitle: 'Adviser at the Quai d’Orsay', motiveHead: 'Why France chose this',
+      fail: 'A fourth wrong call and the government will have you dismissed from the Quai d’Orsay.',
+      outHead: 'QUAI D’ORSAY DISMISSES ADVISER',
+      outBody: 'The Foreign Ministry announced last night that the adviser has left “for personal reasons”. A senior diplomat said the advice “bore no resemblance to anything France has ever done”.',
+      advising: s => `You advise <b>${P(s.ldr).name}</b> · ${P(s.ldr).role}`,
+      intro: [
+        'You are an adviser at the Quai d’Orsay, the French Foreign Ministry in Paris, serving Clemenceau, Poincaré, Briand, Laval, Blum, Daladier and others.',
+        'France won the war but lost 1.4 million soldiers, and its north lies in ruins. Germany has a larger population and stronger industry, and France has been invaded twice in fifty years. Every French government wants one thing above all: security against Germany.',
+        'Your task: recommend the decisions France’s governments really took. After each one, read why France chose it.'
+      ],
+      endWin: 'You followed French policy from the hope of security in 1919 to the Phoney War: enforcing Versailles, reconciliation at Locarno, the Maginot Line, and dependence on Britain. In May 1940 Germany attacked in the west, and within six weeks France had fallen.',
+      ranks: [[.9, 'Secretary-General of the Quai d’Orsay'], [.75, 'Trusted chef de cabinet'], [.55, 'Embassy secretary'], [0, 'Archivist, basement of the Quai']]
     }
   };
 
@@ -166,7 +196,7 @@
   function goBrief() {
     const R = ROLES[pick.role];
     $('#brief-eyebrow').textContent = `${pick.level === 'alevel' ? 'A-Level' : 'IGCSE'} file · ${R.desk}`;
-    $('#brief-title').textContent = pick.role === 'league' ? 'Your seat at the Council' : `Adviser to ${R.name}`;
+    $('#brief-title').textContent = R.briefTitle || (pick.role === 'league' ? 'Your seat at the Council' : `Adviser to ${R.name}`);
     $('#brief-body').innerHTML = sceneImg(pick.role) + R.intro.map(p => `<p>${p}</p>`).join('');
     $('#brief-fail').textContent = R.fail;
     $('#brief-hints').innerHTML = pick.level === 'igcse'
@@ -424,6 +454,7 @@
         ${!ok && chosen ? `<div class="why"><b>Why that didn’t happen</b>${esc(chosen.x || '')}</div>` : ''}
         <div class="headline"><div class="paper-name"><span>${R.paper}</span><span>${esc(s.date)}</span></div><h3>${esc(s.head)}</h3></div>
         <div class="record"><h4>What really happened</h4><p>${esc(s.out)}</p><div class="fx-chips">${chips.join('')}</div></div>
+        ${s.motive ? `<div class="note motive"><h4>${R.motiveHead || 'Why they chose this'}</h4><p>${esc(s.motive)}</p></div>` : ''}
         ${s.exam ? `<div class="note"><h4>${st.level === 'alevel' ? 'Exam angle' : 'Exam tip'}</h4><p>${esc(s.exam)}</p></div>` : ''}
         ${hist}
         <div class="actions"><button class="btn btn-primary" id="next">${out ? 'Face the consequences' : (st.i + 1 >= st.ids.length ? 'Close the file' : 'Next dispatch →')}</button></div>
@@ -454,7 +485,7 @@
     const rank = R.ranks.find(([t]) => pct >= t)[1];
     const lastS = cur() || window.SCENARIOS[st.role].find(s => s.id === st.ids[st.ids.length - 1]);
     const date = completed ? (st.role === 'italy' ? '10 June 1940' : '3 September 1939') : lastS.date;
-    const face = completed ? (st.role === 'league' ? 'avenol' : st.role === 'germany' ? 'hitler' : 'mussolini') : 'you';
+    const face = completed ? ({ league: 'avenol', germany: 'hitler', italy: 'mussolini', britain: 'nchamberlain', france: 'briand' }[st.role]) : 'you';
     const head = completed
       ? (st.role === 'italy' ? 'ITALY ENTERS THE WAR' : 'EUROPE AT WAR')
       : R.outHead;

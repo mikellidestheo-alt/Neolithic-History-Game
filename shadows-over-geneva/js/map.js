@@ -24,7 +24,7 @@
     guernica: [-2.68, 43.31, 'Guernica'], rome: [12.5, 41.9, 'Rome'], munich: [11.58, 48.14, 'Munich'],
     prague: [14.42, 50.08, 'Prague'], memel: [21.13, 55.71, 'Memel'], moscow: [37.6, 55.75, 'Moscow'],
     danzig: [18.65, 54.35, 'Danzig'], fiume: [14.44, 45.33, 'Fiume'], paris: [2.35, 48.86, 'Paris'],
-    tirana: [19.82, 41.33, 'Tirana']
+    tirana: [19.82, 41.33, 'Tirana'], washington: [-77.04, 38.9, 'Washington'], maginot: [7.4, 49.15, 'Maginot Line']
   };
 
   const LABELS = [
@@ -117,7 +117,7 @@
 
   function setPlayer(role) {
     for (const k in countryEls) countryEls[k].forEach(p => p.classList.remove('player'));
-    const keys = role === 'germany' ? ['germany', 'east-prussia'] : role === 'italy' ? ['italy'] : [];
+    const keys = { germany: ['germany', 'east-prussia'], italy: ['italy'], britain: ['united-kingdom'], france: ['france'] }[role] || [];
     keys.forEach(k => (countryEls[k] || []).forEach(p => p.classList.add('player')));
     svg.classList.toggle('role-league', role === 'league');
   }

@@ -14,6 +14,8 @@ Council or ousted from power.
 | League Council | Settle disputes as a member of the League's Council (its "security council") | 12 crises | 17 crises |
 | Germany | Advise Bauer, (Wirth), Cuno, Stresemann, (Brüning, Papen) and Hitler | 17 crises | 23 crises |
 | Italy | Advise Orlando, (Giolitti) and Mussolini | 16 crises | 19 crises |
+| Britain | Advise Lloyd George, Bonar Law, Baldwin, MacDonald and Neville Chamberlain | 15 crises | 19 crises |
+| France | Advise Clemenceau, Poincaré, Briand, Laval, Blum, Daladier and others | 13 crises | 17 crises |
 
 **IGCSE** shows three options, offers three adviser hints (each crosses out one wrong answer) and adds an
 exam tip after every decision. **A-Level** adds extra crises (the Geneva Protocol, Mosul, Leticia, the Saar,
@@ -41,12 +43,13 @@ as they did historically, and flashpoints are marked. The League authority and w
 
 ## Editing the content
 
-All the history lives in `js/data-league.js`, `js/data-germany.js` and `js/data-italy.js`. Each scenario has:
+All the history lives in `js/data-league.js`, `js/data-germany.js`, `js/data-italy.js`, `js/data-britain.js` and `js/data-france.js`. Each scenario has:
 
 - `lv` (`'both'` or `'a'` for A-Level only) and `date`, which sets the order of play
 - `ldr`, the leader being advised; `speaker`, the portrait shown; and `said`, the speech bubble (`saidReal: true` marks a genuine quotation)
 - `brief`, `ask`, and the options `opts` (`a: true` marks an A-Level-only distractor; `x` explains why it didn't happen)
 - `ans`, the index of the correct option, plus `out`, `head`, `exam` and `hist`
+- `motive` (Britain and France desks): the “Why Britain/France chose this” note shown after each decision
 - `fx`: changes to the meters (`auth`, `tens`), territory (`own`) and map markers (`mark`)
 - `focus`: `[lon, lat, zoom]` for the map camera
 

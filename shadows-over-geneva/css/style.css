@@ -449,3 +449,5 @@ img.portrait.art { object-fit: cover; object-position: 50% 30%; background: var(
 .brief-paper .scene-art { margin: 4px 0 16px; }
 .newspaper .scene-art { margin: 4px 0 12px; filter: sepia(.2) contrast(1.05); }
 .np-cols.no-face { grid-template-columns: 1fr; }
+.note.motive { border-color: var(--red); background: rgba(184, 50, 42, .08); padding-right: 10px; }
+.note.motive h4 { color: #ef8a80; }
