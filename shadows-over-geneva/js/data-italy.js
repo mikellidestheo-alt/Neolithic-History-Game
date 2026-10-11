@@ -25,7 +25,7 @@ window.SCENARIOS.italy = [
   id: 'fiume', lv: 'a', date: 'November 1920', title: 'The Poet and the Port',
   ldr: 'giolitti', speaker: 'dannunzio',
   said: 'Fiume or death! I hold this city for Italy, whether Rome wants it or not.',
-  brief: 'Since September 1919 the nationalist poet Gabriele D’Annunzio and about 2,000 legionaries have held Fiume, defying both the Allies and the Italian government. His black-shirted followers, balcony speeches and salutes inspire Mussolini. The elderly Liberal Prime Minister, Giovanni Giolitti, needs a settlement with Yugoslavia.',
+  brief: 'Prime Minister Giovanni Giolitti, an elderly Liberal, needs a settlement with Yugoslavia. Since September 1919 the nationalist poet Gabriele D’Annunzio and about 2,000 legionaries have held Fiume, defying both the Allies and the Italian government. His black-shirted followers, balcony speeches and salutes inspire Mussolini.',
   ask: 'What does Giolitti do?',
   opts: [
     { t: 'Annex Fiume and make D’Annunzio its governor.', x: 'That would have meant war with Yugoslavia and a break with the Allies.' },
@@ -45,7 +45,7 @@ window.SCENARIOS.italy = [
   id: 'corfuI', lv: 'both', date: 'August 1923', title: 'Corfu',
   ldr: 'mussolini', speaker: 'mussolini',
   said: 'An Italian general murdered! Greece will pay, in apologies and in lire.',
-  brief: 'Benito Mussolini has been Prime Minister since October 1922. General Enrico Tellini, an Italian officer marking the Greek–Albanian border, is murdered on Greek territory with his staff. Nobody knows who did it. Mussolini wants to show the world that Fascist Italy will not be pushed around.',
+  brief: 'General Enrico Tellini, an Italian officer marking the Greek–Albanian border, is murdered on Greek territory with his staff. Benito Mussolini, Prime Minister since October 1922, wants to show the world that Fascist Italy will not be pushed around. Nobody knows who carried out the killing.',
   ask: 'What does Mussolini do?',
   opts: [
     { t: 'Ask the League to investigate, and wait for its report.', x: 'Mussolini despised the League’s slow procedures. He wanted a dramatic show of strength.' },
@@ -65,7 +65,7 @@ window.SCENARIOS.italy = [
   id: 'pactrome', lv: 'both', date: 'January 1924', title: 'Fiume Becomes Italian',
   ldr: 'mussolini', speaker: 'mussolini',
   said: 'What the Liberals lost with treaties, Fascism wins with treaties, and a little pressure.',
-  brief: 'The Free State of Fiume is in chaos, and Fascist squads have taken it over. Yugoslavia wants stability and good relations with its powerful neighbour. Mussolini, still careful at this stage, wants Fiume without a war.',
+  brief: 'Mussolini, still careful at this stage, wants Fiume without a war. The Free State of Fiume is in chaos, and Fascist squads have taken it over. Yugoslavia wants stability and good relations with its powerful neighbour.',
   ask: 'What does Mussolini do?',
   opts: [
     { t: 'Seize Fiume by force.', x: 'Unnecessary. Yugoslavia was willing to deal, and Mussolini still cared about respectability.' },
@@ -105,7 +105,7 @@ window.SCENARIOS.italy = [
   id: 'tirana', lv: 'a', date: 'November 1926', title: 'The Albanian Protectorate',
   ldr: 'mussolini', speaker: 'zog',
   said: 'Albania needs friends with money. Rome has money.',
-  brief: 'Albania, across the Adriatic, is poor and unstable. Its ruler Ahmed Zogu (later King Zog) needs loans and protection. Yugoslavia is also interested. Mussolini sees a chance to control the entrance to the Adriatic.',
+  brief: 'Albania, across the Adriatic, is poor and unstable. Mussolini sees a chance to control the entrance to the Adriatic. Albania’s ruler, Ahmed Zogu (later King Zog), needs loans and protection, and Yugoslavia is also interested.',
   ask: 'What does Mussolini do?',
   opts: [
     { t: 'Invade Albania now.', x: 'Too risky in 1926. Mussolini preferred to dominate Albania through money and treaties, and invaded only in 1939.' },
@@ -165,7 +165,7 @@ window.SCENARIOS.italy = [
   id: 'stresa', lv: 'both', date: 'April 1935', title: 'The Stresa Front',
   ldr: 'mussolini', speaker: 'macdonald',
   said: 'We three stand together against any breach of treaties, in Europe.',
-  brief: 'Hitler has announced conscription. The leaders of Britain, France and Italy meet at Stresa on Lake Maggiore. Mussolini’s troops are already gathering in Eritrea for an attack on Abyssinia. He wants to know whether Britain and France will object.',
+  brief: 'Hitler has announced conscription. Mussolini’s troops are already gathering in Eritrea for an attack on Abyssinia, and he wants to know whether Britain and France will object. The leaders of Britain, France and Italy meet at Stresa on Lake Maggiore.',
   ask: 'What does Mussolini do?',
   opts: [
     { t: 'Form the Stresa Front with Britain and France, condemning German rearmament, and stay silent about Abyssinia.' },
@@ -185,7 +185,7 @@ window.SCENARIOS.italy = [
   id: 'invadeAbyssinia', lv: 'both', date: 'October 1935', title: 'A Place in the Sun',
   ldr: 'mussolini', speaker: 'selassie',
   said: 'Abyssinia is a member of the League. We will defend ourselves with spears if we must.',
-  brief: 'Mussolini wants revenge for Adowa, where Abyssinia defeated Italy in 1896. He also wants an empire, glory, and a distraction from the Depression. Abyssinia is a League member with a poorly equipped army. After Wal-Wal and Stresa, Mussolini believes Britain and France will not stop him.',
+  brief: 'After Wal-Wal and Stresa, Mussolini believes Britain and France will not stop him. He wants revenge for Adowa, where Abyssinia defeated Italy in 1896, as well as an empire, glory and a distraction from the Depression. Abyssinia is a League member with a poorly equipped army.',
   ask: 'What does Mussolini do?',
   opts: [
     { t: 'Accept League arbitration over Wal-Wal and wait.', x: 'Mussolini had spent months shipping an army to Africa. Arbitration was only a delay.' },
@@ -225,7 +225,7 @@ window.SCENARIOS.italy = [
   id: 'spainI', lv: 'both', date: 'July 1936', title: 'Volunteers for Franco',
   ldr: 'mussolini', speaker: 'franco',
   said: 'A Latin, Catholic, anti-Bolshevik Spain — your Mediterranean flank, Duce.',
-  brief: 'Civil war breaks out in Spain. General Franco asks Italy and Germany for help. Britain and France propose non-intervention. Mussolini sees a chance to stop a left-wing Spain, gain naval bases and win more prestige.',
+  brief: 'Civil war breaks out in Spain. Mussolini sees a chance to stop a left-wing Spain, gain naval bases and win more prestige. General Franco asks Italy and Germany for help, while Britain and France propose non-intervention.',
   ask: 'What does Mussolini do?',
   opts: [
     { t: 'Stay out, as Britain and France ask.', x: 'Italy signed the Non-Intervention Agreement but ignored it completely.' },
@@ -265,7 +265,7 @@ window.SCENARIOS.italy = [
   id: 'leaveleagueI', lv: 'both', date: 'December 1937', title: 'Farewell to Geneva',
   ldr: 'mussolini', speaker: 'mussolini',
   said: 'The League? A tottering temple. We leave it to its ruins.',
-  brief: 'Germany and Japan have left the League and signed the Anti-Comintern Pact against communism. Italy is still a member, though it has ignored the League over Spain. Mussolini wants to show his loyalty to the new partnership.',
+  brief: 'Mussolini wants to show his loyalty to his new partners. Germany and Japan have left the League and signed the Anti-Comintern Pact against communism. Italy is still a member, though it has ignored the League over Spain.',
   ask: 'What does Mussolini do?',
   opts: [
     { t: 'Stay in the League to keep a foot in both camps.', x: 'Mussolini had nothing to gain at Geneva after the sanctions.' },
@@ -306,7 +306,7 @@ window.SCENARIOS.italy = [
   id: 'munichI', lv: 'both', date: 'September 1938', title: 'The Peacemaker of Munich',
   ldr: 'mussolini', speaker: 'nchamberlain',
   said: 'Signor Mussolini, only you can persuade Herr Hitler to talk.',
-  brief: 'Europe is on the edge of war over the Sudetenland. Chamberlain appeals to Mussolini to persuade Hitler to accept a conference. Italy is not ready for a general war.',
+  brief: 'Italy is not ready for a general war. Europe is on the edge of one over the Sudetenland, and Chamberlain appeals to Mussolini to persuade Hitler to accept a conference.',
   ask: 'What does Mussolini do?',
   opts: [
     { t: 'Stand back and let Hitler decide.', x: 'Mussolini wanted the glory of saving the peace, and Italy needed to avoid war.' },
@@ -346,7 +346,7 @@ window.SCENARIOS.italy = [
   id: 'steel', lv: 'both', date: 'May 1939', title: 'The Pact of Steel',
   ldr: 'mussolini', speaker: 'ribbentrop',
   said: 'An alliance of steel, Count Ciano. We fight together, whatever comes.',
-  brief: 'Germany proposes a full military alliance. Italy’s generals warn that the armed forces will not be ready for a major war before 1942–43. Mussolini is told Hitler does not plan war for several years.',
+  brief: 'Germany proposes a full military alliance. Mussolini is told Hitler does not plan war for several years. Italy’s generals, though, warn that the armed forces will not be ready for a major war before 1942–43.',
   ask: 'What does Mussolini do?',
   opts: [
     { t: 'Refuse, and stay free to choose sides.', x: 'Mussolini had committed himself to the Axis and wanted to look like Hitler’s equal.' },

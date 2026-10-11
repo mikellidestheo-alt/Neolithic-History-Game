@@ -27,7 +27,7 @@ window.SCENARIOS.league = [
   id: 'vilna', lv: 'both', date: 'October 1920', title: 'The Seizure of Vilna',
   ldr: 'drummond', speaker: 'pilsudski',
   said: 'General Żeligowski acted on his own. Of course, Vilna is a Polish city…',
-  brief: 'Vilna is the capital of the new state of Lithuania, but most of its people are Polish or Jewish. In October 1920 a Polish army under General Żeligowski marches in and takes the city. Lithuania appeals to the League. Poland is a close ally of France, and Britain and France see Poland as a barrier against Germany and Soviet Russia.',
+  brief: 'Poland is a close ally of France, and Britain and France see the new Polish state as a barrier against Germany and Soviet Russia. Vilna is the capital of the new state of Lithuania, but most of its people are Polish or Jewish. In October 1920 a Polish army under General Żeligowski marches in and takes the city. Lithuania appeals to the League.',
   ask: 'What does the League do?',
   opts: [
     { t: 'Raise an international army and drive the Poles out.', x: 'The League had no army of its own. Britain and France were not willing to send troops against their ally Poland.' },
@@ -87,7 +87,7 @@ window.SCENARIOS.league = [
   id: 'corfu', lv: 'both', date: 'August 1923', title: 'The Corfu Incident',
   ldr: 'drummond', speaker: 'mussolini',
   said: 'Italy demands an apology and fifty million lire. Geneva may watch.',
-  brief: 'The Italian general Tellini, mapping the Greek–Albanian border for the Conference of Ambassadors, is murdered on Greek soil. Mussolini blames Greece and demands 50 million lire. When Greece cannot find the killers, Italy bombards and occupies the Greek island of Corfu. Greece appeals to the League. Italy is a permanent member of the Council.',
+  brief: 'The Italian general Tellini, mapping the Greek–Albanian border for the Conference of Ambassadors, is murdered on Greek soil. Italy is a permanent member of the Council, and Mussolini blames Greece and demands 50 million lire. When Greece cannot find the killers, Italy bombards and occupies the Greek island of Corfu. Greece appeals to the League.',
   ask: 'How is the crisis settled?',
   opts: [
     { t: 'Condemn Italy and impose economic sanctions.', x: 'Mussolini threatened to leave the League. Britain and France would not risk a confrontation with a great power over Corfu.' },
@@ -107,7 +107,7 @@ window.SCENARIOS.league = [
   id: 'mosul', lv: 'a', date: 'December 1925', title: 'The Mosul Question',
   ldr: 'drummond', speaker: 'drummond',
   said: 'Kurds, oil, a British mandate and an angry Turkish Republic. Choose carefully.',
-  brief: 'Turkey and Britain both claim the oil-rich province of Mosul. Turkey says it was wrongly taken in 1918; Britain wants it inside Iraq, which Britain rules as a League mandate. A League commission visits and reports that most people prefer to stay with Iraq, but only if British protection continues.',
+  brief: 'Turkey and Britain both claim the oil-rich province of Mosul. A League commission has visited and reports that most people would rather stay with Iraq, but only if British protection continues. Turkey says the province was wrongly taken in 1918; Britain wants it inside Iraq, which Britain rules as a League mandate.',
   ask: 'What does the Council decide?',
   opts: [
     { t: 'Return Mosul to Turkey.', x: 'The commission found little support for Turkish rule. Britain, a permanent Council member, would never have accepted it.' },
@@ -168,7 +168,7 @@ window.SCENARIOS.league = [
   id: 'manchuria', lv: 'both', date: 'September 1931', title: 'The Mukden Incident',
   ldr: 'drummond', speaker: 'matsuoka',
   said: 'Japan acts only to restore order. Manchuria is our lifeline.',
-  brief: 'An explosion damages the Japanese-owned South Manchurian Railway near Mukden. The Japanese army blames Chinese saboteurs and quickly occupies the whole of Manchuria, then sets up a puppet state, Manchukuo. China appeals to the League. Japan is a permanent member of the Council. The world is in the depths of the Great Depression.',
+  brief: 'The world is in the depths of the Great Depression, and Japan is a permanent member of the League Council. In September 1931 an explosion damages the Japanese-owned South Manchurian Railway near Mukden. The Japanese army blames Chinese saboteurs and quickly occupies the whole of Manchuria, then sets up a puppet state, Manchukuo. China appeals to the League.',
   ask: 'What does the League do?',
   opts: [
     { t: 'Impose immediate economic sanctions on Japan.', x: 'With trade collapsing in the Depression, nobody wanted to lose the Japanese market. The USA, Japan’s main trading partner, was not a member.' },
@@ -208,7 +208,7 @@ window.SCENARIOS.league = [
   id: 'disarm', lv: 'both', date: '1932–33', title: 'The World Disarmament Conference',
   ldr: 'avenol', speaker: 'hitler',
   said: 'Either you disarm to our level, or Germany will have equality its own way.',
-  brief: 'Sixty nations meet in Geneva in 1932. Germany demands “equality”: either everyone disarms to Germany’s level under the Treaty of Versailles, or Germany may rearm. France, terrified of Germany, refuses to cut its army. In January 1933 Hitler becomes Chancellor.',
+  brief: 'Sixty nations meet in Geneva in 1932. France, terrified of Germany, refuses to cut its army. Germany demands “equality”: either everyone disarms to Germany’s level under the Treaty of Versailles, or Germany may rearm. In January 1933 Hitler becomes Chancellor, and the talks drag on.',
   ask: 'What comes out of the Conference?',
   opts: [
     { t: 'Persuade France to cut its army to German levels.', x: 'France would not disarm while Germany had the bigger population and industry. Britain would not guarantee French security instead.' },
@@ -248,7 +248,7 @@ window.SCENARIOS.league = [
   id: 'walwal', lv: 'a', date: 'December 1934', title: 'The Wal-Wal Incident',
   ldr: 'avenol', speaker: 'selassie',
   said: 'Abyssinia is a member of this League. We ask only what the Covenant promises.',
-  brief: 'Italian and Abyssinian troops clash at the oasis of Wal-Wal, about 80 km inside Abyssinia. Mussolini demands compensation, and Emperor Haile Selassie appeals to the League. Meanwhile Britain and France want Mussolini on their side against Hitler. In April 1935 they form the Stresa Front with him.',
+  brief: 'Britain and France want Mussolini on their side against Hitler, and in April 1935 they will form the Stresa Front with him. In December 1934 Italian and Abyssinian troops clash at the oasis of Wal-Wal, about 80 km inside Abyssinia. Mussolini demands compensation, and Emperor Haile Selassie appeals to the League.',
   ask: 'How does the League handle Wal-Wal?',
   opts: [
     { t: 'Condemn Italy at once and warn Mussolini off.', x: 'Britain and France would not risk the Stresa Front over an African border clash.' },
@@ -268,7 +268,7 @@ window.SCENARIOS.league = [
   id: 'abyssinia', lv: 'both', date: 'October 1935', title: 'Italy Invades Abyssinia',
   ldr: 'avenol', speaker: 'selassie',
   said: 'Italy has invaded a fellow member of the League. What will the Covenant mean now?',
-  brief: 'On 3 October 1935 Italian armies invade Abyssinia. The League quickly declares Italy the aggressor and must decide on sanctions. Italy depends on imported oil. Britain controls the Suez Canal, Italy’s supply route. But Britain and France still hope to keep Mussolini as an ally against Hitler, and the USA is not a member.',
+  brief: 'On 3 October 1935 Italian armies invade Abyssinia. Britain and France still hope to keep Mussolini as an ally against Hitler, and the USA is not a member of the League. Even so, the League quickly declares Italy the aggressor and must now decide on sanctions. Italy depends on imported oil, and Britain controls the Suez Canal, Italy’s supply route to East Africa.',
   ask: 'What sanctions does the League impose?',
   opts: [
     { t: 'Full sanctions including oil, and close the Suez Canal to Italy.', x: 'Britain and France feared that oil sanctions or closing Suez would mean war with Italy. The USA would have kept supplying oil anyway.' },
@@ -288,7 +288,7 @@ window.SCENARIOS.league = [
   id: 'hoarelaval', lv: 'both', date: 'December 1935', title: 'The Hoare–Laval Plan',
   ldr: 'avenol', speaker: 'laval',
   said: 'A quiet word with the Duce, a few square miles of desert… and peace is saved.',
-  brief: 'The war continues. The British Foreign Secretary, Sir Samuel Hoare, and the French Prime Minister, Pierre Laval, meet in Paris. Both want the war over before Mussolini drifts towards Hitler.',
+  brief: 'Britain and France both want the war in Abyssinia over before Mussolini drifts towards Hitler. In December 1935 the British Foreign Secretary, Sir Samuel Hoare, and the French Prime Minister, Pierre Laval, meet in Paris. The fighting goes on, and so do the limited sanctions.',
   ask: 'What do Britain and France do?',
   opts: [
     { t: 'Add oil to the sanctions to force Italy to stop.', x: 'An oil embargo was debated but never imposed. Laval in particular would not risk it.' },

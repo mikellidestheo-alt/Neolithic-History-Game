@@ -5,7 +5,7 @@ window.SCENARIOS.germany = [
   id: 'versailles', lv: 'both', date: 'June 1919', title: 'The Diktat',
   ldr: 'bauer', speaker: 'bauer',
   said: 'Sign, and we are humiliated. Refuse, and they march on Berlin.',
-  brief: 'The Allies have presented their terms. Germany must accept the War Guilt clause (Article 231), pay reparations, lose all its colonies and about 13% of its land in Europe, and cut its army to 100,000 men. It may not unite with Austria, and the Rhineland must be demilitarised. Germany has not been allowed to negotiate. The government of Philipp Scheidemann has resigned rather than sign. The Allies give the new Chancellor, Gustav Bauer, a deadline: sign, or the war resumes.',
+  brief: 'The Allies give the new Chancellor, Gustav Bauer, a deadline: sign, or the war resumes. Their terms are harsh. Germany must accept the War Guilt clause (Article 231), pay reparations, lose all its colonies and about 13% of its land in Europe, and cut its army to 100,000 men. It may not unite with Austria, and the Rhineland must be demilitarised. Germany has not been allowed to negotiate, and the government of Philipp Scheidemann has resigned rather than sign.',
   ask: 'What does Germany do?',
   opts: [
     { t: 'Refuse to sign and resume the war.', x: 'The army chiefs warned that resistance was hopeless. The Allied naval blockade was still starving Germany.' },
@@ -125,7 +125,7 @@ window.SCENARIOS.germany = [
   id: 'joinleague', lv: 'both', date: 'September 1926', title: 'A Seat at Geneva',
   ldr: 'stresemann', speaker: 'stresemann',
   said: 'A great power sits at the high table, or not at all.',
-  brief: 'After Locarno, Germany is invited to join the League of Nations. Nationalists at home call the League a club of the victors that enforces Versailles. Stresemann sees a platform for revising the treaty, and wants a permanent seat on the Council.',
+  brief: 'Stresemann wants Germany treated as a great power, with a permanent seat on the League Council. After Locarno, Germany is invited to join the League of Nations. Nationalists at home call the League a club of the victors that enforces Versailles, but Stresemann sees a platform for revising the treaty.',
   ask: 'What does Germany do?',
   opts: [
     { t: 'Join the League, with a permanent seat on the Council.' },
@@ -225,7 +225,7 @@ window.SCENARIOS.germany = [
   id: 'leaveleague', lv: 'both', date: 'October 1933', title: 'Walking Out',
   ldr: 'hitler', speaker: 'hitler',
   said: 'Germany will not sit at a table as a second-class nation.',
-  brief: 'Adolf Hitler has been Chancellor since January 1933. At the World Disarmament Conference, France still refuses to disarm, and new proposals would keep Germany unequal for years. Hitler has promised to tear up Versailles but needs time to rebuild the army.',
+  brief: 'Adolf Hitler has been Chancellor since January 1933. He has promised to tear up Versailles but needs time to rebuild the army. At the World Disarmament Conference, France still refuses to disarm, and new proposals would keep Germany unequal for years.',
   ask: 'What does Hitler do?',
   opts: [
     { t: 'Stay at the Conference and negotiate patiently for equality.', x: 'Hitler did not want limits on German arms. Negotiation would only have tied his hands.' },
@@ -245,7 +245,7 @@ window.SCENARIOS.germany = [
   id: 'polishpact', lv: 'both', date: 'January 1934', title: 'The Polish Pact',
   ldr: 'hitler', speaker: 'pilsudski',
   said: 'A ten-year promise from Berlin? I will believe it when I see it kept.',
-  brief: 'Poland is France’s main ally in the east, and it fears German revenge over the Corridor and Danzig. Marshal Piłsudski has reportedly sounded out Paris about a preventive war against Hitler. Hitler needs time to rearm, and he wants to weaken France’s alliances.',
+  brief: 'Hitler needs time to rearm, and he wants to weaken France’s alliances in the east. Poland is France’s main ally there, and it fears German revenge over the Corridor and Danzig. Marshal Piłsudski has reportedly sounded out Paris about a preventive war against Hitler.',
   ask: 'What does Hitler do?',
   opts: [
     { t: 'Demand the return of Danzig and the Corridor at once.', x: 'Germany was too weak to back such demands in 1934. Hitler waited until 1938–39.' },
@@ -265,7 +265,7 @@ window.SCENARIOS.germany = [
   id: 'dollfuss', lv: 'both', date: 'July 1934', title: 'Murder in Vienna',
   ldr: 'hitler', speaker: 'mussolini',
   said: 'Four divisions are on the Brenner. Touch Austria and you deal with Italy!',
-  brief: 'On 25 July 1934 Austrian Nazis storm the Chancellery in Vienna and murder Chancellor Engelbert Dollfuss, but the coup collapses. Mussolini, Austria’s protector, rushes troops to the Brenner Pass on the Austrian border. Hitler’s army is still far too weak to fight Italy.',
+  brief: 'On 25 July 1934 Austrian Nazis storm the Chancellery in Vienna and murder Chancellor Engelbert Dollfuss. Hitler’s army is still far too weak to fight Italy. Mussolini, Austria’s protector, rushes troops to the Brenner Pass on the Austrian border, and in Vienna the coup collapses.',
   ask: 'What does Hitler do?',
   opts: [
     { t: 'Send the German army into Austria to support the putsch.', x: 'Italian divisions were waiting at the Brenner. Germany could not risk war in 1934.' },
@@ -305,7 +305,7 @@ window.SCENARIOS.germany = [
   id: 'naval', lv: 'a', date: 'June 1935', title: 'The Anglo-German Naval Agreement',
   ldr: 'hitler', speaker: 'ribbentrop',
   said: 'Thirty-five per cent, take it or leave it. London will take it.',
-  brief: 'Hitler sends Joachim von Ribbentrop to London. Britain fears a naval race like the one before 1914. Hitler’s offer is a German navy limited to a fixed ratio of the Royal Navy, in effect asking Britain to approve breaking Versailles.',
+  brief: 'Hitler wants Britain to approve, in effect, his breach of Versailles, and he has an offer ready: a German navy limited to a fixed ratio of the Royal Navy. Britain fears a naval race like the one before 1914. Hitler sends Joachim von Ribbentrop to London to make the offer.',
   ask: 'What does Germany propose?',
   opts: [
     { t: 'A German surface fleet capped at 35% of the Royal Navy, with submarines at 45%, rising to equality in some circumstances.' },
@@ -325,7 +325,7 @@ window.SCENARIOS.germany = [
   id: 'rhinelandG', lv: 'both', date: 'March 1936', title: 'Into the Rhineland',
   ldr: 'hitler', speaker: 'hitler',
   said: 'If the French march, we retreat with our tails between our legs.',
-  brief: 'The Rhineland is still demilitarised under Versailles and Locarno. The world is distracted by Abyssinia, and France is divided ahead of an election. Hitler’s generals warn that the army is not ready to fight France. Hitler believes France will not move.',
+  brief: 'Hitler believes France will not move. The Rhineland is still demilitarised under Versailles and Locarno, the world is distracted by Abyssinia, and France is divided ahead of an election. Hitler’s generals warn that the army is not ready to fight France.',
   ask: 'What does Hitler do?',
   opts: [
     { t: 'Wait until the army is stronger, perhaps 1938.', x: 'Hitler judged the moment ideal while the Abyssinian crisis absorbed Britain and France.' },
@@ -365,7 +365,7 @@ window.SCENARIOS.germany = [
   id: 'anschluss', lv: 'both', date: 'March 1938', title: 'Anschluss',
   ldr: 'hitler', speaker: 'schuschnigg',
   said: 'Let Austrians decide — yes or no, for a free Austria!',
-  brief: 'Austrian Nazis are stirring up unrest. In February 1938 Hitler bullies Chancellor Schuschnigg into giving Nazis government posts. Schuschnigg then announces a surprise referendum on Austrian independence, to be held on 13 March. Mussolini, now Hitler’s partner, will not defend Austria this time.',
+  brief: 'Austrian Nazis are stirring up unrest, and this time Mussolini, now Hitler’s partner, will not defend Austria. In February 1938 Hitler bullies Chancellor Schuschnigg into giving Nazis government posts. Schuschnigg hits back by announcing a surprise referendum on Austrian independence, to be held on 13 March.',
   ask: 'What does Hitler do?',
   opts: [
     { t: 'Let the referendum go ahead.', x: 'Hitler feared Austrians would vote for independence, so he moved before the vote.' },
@@ -426,7 +426,7 @@ window.SCENARIOS.germany = [
   id: 'nazisoviet', lv: 'both', date: 'August 1939', title: 'The Devil’s Pact',
   ldr: 'hitler', speaker: 'stalin',
   said: 'Britain and France send a slow boat and junior officers. Herr Ribbentrop flies.',
-  brief: 'Hitler is preparing to attack Poland. Britain and France are negotiating, half-heartedly, with the USSR. Stalin distrusts the Western powers after Munich, where he was not invited. Hitler fears a two-front war.',
+  brief: 'Hitler fears a two-front war. He is preparing to attack Poland, while Britain and France negotiate, half-heartedly, with the USSR. Stalin distrusts the Western powers after Munich, where he was not invited.',
   ask: 'What does Hitler do?',
   opts: [
     { t: 'Abandon the plans against Poland.', x: 'The attack, codenamed Case White, was already scheduled. Hitler was determined to strike in 1939.' },
@@ -447,7 +447,7 @@ window.SCENARIOS.germany = [
   ldr: 'hitler', speaker: 'hitler',
   said: 'Our enemies are small worms. I saw them at Munich.',
   saidReal: true,
-  brief: 'Britain and France have guaranteed Poland. Hitler demands Danzig and a route across the Polish Corridor. Poland refuses. Hitler believes, after Munich, that Britain and France will not really fight.',
+  brief: 'Britain and France have guaranteed Poland, but after Munich Hitler believes they will not really fight. He demands Danzig and a route across the Polish Corridor. Poland refuses.',
   ask: 'What does Hitler do?',
   opts: [
     { t: 'Invade Poland on 1 September.' },
