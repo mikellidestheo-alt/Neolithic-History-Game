@@ -15,6 +15,7 @@ window.ART = {
     "hacha": "art/portraits/hacha.webp",
     "hitler": "art/portraits/hitler.webp",
     "hugenberg": "art/portraits/hugenberg.webp",
+    "hughes": "art/portraits/hughes.webp",
     "kellogg": "art/portraits/kellogg.webp",
     "laval": "art/portraits/laval.webp",
     "macdonald": "art/portraits/macdonald.webp",
