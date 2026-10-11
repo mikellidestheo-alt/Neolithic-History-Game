@@ -1,0 +1,1691 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#1d140d">
+<title>Children of Choirokoitia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bree+Serif&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+/* Layout: full-screen 3D world; sun-baked clay panels float over it like fired mudbrick tablets. */
+:root{
+  --clay:#3b2a1e;        /* panel ground: dark fired clay */
+  --clay-2:#4d3726;      /* raised panel */
+  --plaster:#f1e2c4;     /* text: lime plaster */
+  --ochre:#d98b3a;       /* accent: red-ochre pigment */
+  --picrolite:#7fc3b0;   /* secondary accent: picrolite green-blue */
+  --ash:#b9a68a;         /* muted text */
+  --good:#8fcf7a; --bad:#e2735a;
+  --display:"Bree Serif", Georgia, "Times New Roman", serif;
+  --body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  color-scheme: dark;
+}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0;overflow:hidden;background:#1d140d;color:var(--plaster);font-family:var(--body);font-size:16px}
+canvas{display:block;touch-action:none}
+button{font-family:var(--body);font-size:1rem;cursor:pointer}
+button:focus-visible,input:focus-visible{outline:3px solid var(--picrolite);outline-offset:2px}
+.panel{background:color-mix(in srgb,var(--clay) 92%,transparent);border:2px solid #6b4a30;border-radius:6px;box-shadow:0 6px 18px rgba(0,0,0,.35)}
+.btn{background:var(--ochre);color:#2a1709;border:0;border-radius:4px;padding:.65rem 1.2rem;font-weight:700;letter-spacing:.02em}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--plaster);border:2px solid #7a5838}
+h1,h2,h3{font-family:var(--display);font-weight:400;text-wrap:balance;margin:0}
+
+/* HUD */
+#hud{position:fixed;inset:0;pointer-events:none;padding:calc(env(safe-area-inset-top,0px) + 12px) 12px 12px}
+#quest{position:absolute;left:calc(env(safe-area-inset-left,0px) + 12px);top:calc(env(safe-area-inset-top,0px) + 12px);max-width:min(360px,calc(100vw - 150px));padding:.7rem .9rem;pointer-events:auto}
+#quest .eyebrow{display:flex;justify-content:space-between;gap:.5rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ochre);font-weight:700}
+#quest h3{font-size:1.15rem;margin:.15rem 0 .3rem}
+#quest p{margin:0;font-size:.95rem;line-height:1.35;color:var(--plaster)}
+#steps{display:flex;gap:3px;margin-top:.55rem}
+#steps i{flex:1;height:5px;border-radius:2px;background:#5e4430}
+#steps i.done{background:var(--ochre)}
+#steps i.now{background:var(--picrolite)}
+#topright{position:absolute;right:calc(env(safe-area-inset-right,0px) + 12px);top:calc(env(safe-area-inset-top,0px) + 12px);display:flex;flex-direction:column;align-items:flex-end;gap:8px;pointer-events:auto}
+#topright .row{display:flex;gap:6px}
+.hbtn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:40px;min-width:40px;box-sizing:border-box;background:var(--clay);color:var(--plaster);border:2px solid #6b4a30;border-radius:4px;padding:.35rem .7rem;font-weight:700;touch-action:manipulation}
+.hbtn .ico{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.hbtn .q{font-size:1.1rem;line-height:1}
+.hbtn.off{color:var(--ash)}
+#factCount{font-variant-numeric:tabular-nums;color:var(--ochre)}
+#inv{position:absolute;right:calc(env(safe-area-inset-right,0px) + 12px);top:calc(env(safe-area-inset-top,0px) + 64px);padding:.45rem .6rem;font-size:.9rem;max-width:220px;display:flex;flex-wrap:wrap;gap:4px 8px;justify-content:flex-end}
+#inv:empty{display:none}
+#inv span{white-space:nowrap}
+#compass{position:absolute;left:50%;top:calc(env(safe-area-inset-top,0px) + 14px);transform:translateX(-50%);width:54px;height:54px;border-radius:50%;display:grid;place-items:center}
+#compass svg{width:30px;height:30px;transition:transform .08s linear}
+#compass small{position:absolute;bottom:-18px;font-size:.75rem;color:var(--plaster);text-shadow:0 1px 2px #000;font-variant-numeric:tabular-nums;white-space:nowrap}
+#prompt{position:absolute;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 28px);transform:translateX(-50%);padding:.5rem 1rem;font-weight:700;white-space:nowrap}
+#prompt.tap{pointer-events:auto;cursor:pointer}
+#prompt kbd{background:var(--ochre);color:#2a1709;border-radius:3px;padding:0 .4rem;margin-right:.4rem;font-family:var(--body)}
+#toast{position:absolute;left:50%;top:30%;transform:translateX(-50%);font-family:var(--display);font-size:1.6rem;color:var(--plaster);text-shadow:0 2px 6px #000;opacity:0;transition:opacity .3s;white-space:nowrap}
+
+/* Dialog */
+#dialog{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 16px);transform:translateX(-50%);width:min(680px,calc(100vw - 32px));padding:1rem 1.2rem 1.1rem;cursor:pointer}
+#dialog .who{font-family:var(--display);color:var(--ochre);font-size:1.15rem;margin-bottom:.25rem}
+#dialog .txt{font-size:1.08rem;line-height:1.45;max-width:65ch}
+#dialog .more{position:absolute;right:14px;bottom:8px;font-size:.78rem;color:var(--ash)}
+
+/* Modals */
+.modal{position:fixed;inset:0;display:grid;place-items:center;background:rgba(20,12,6,.55);padding:16px;z-index:5}
+.card{width:min(560px,100%);max-height:calc(100% - 32px);overflow:auto;padding:1.4rem 1.5rem}
+.card .eyebrow{font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;color:var(--picrolite);font-weight:700}
+.card h2{font-size:1.7rem;margin:.25rem 0 .6rem;color:var(--plaster)}
+.card p{line-height:1.5;margin:.5rem 0}
+.card .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:1rem}
+.fact-art{font-size:2.6rem;line-height:1}
+.fsnote{font-size:.85rem;color:var(--ash)}
+
+/* Title */
+#title{background:radial-gradient(ellipse at 50% 30%,rgba(60,38,20,.35),rgba(20,12,6,.88));}
+#title .card{width:min(620px,100%)}
+#title h1{font-size:clamp(2rem,6vw,3.1rem);line-height:1.05;color:var(--plaster)}
+#title .date{font-family:var(--display);color:var(--ochre);font-size:1.05rem;margin-top:.3rem}
+#title label{display:block;font-weight:700;margin:1rem 0 .3rem}
+#title input{width:100%;box-sizing:border-box;font:inherit;font-size:1.1rem;padding:.6rem .7rem;border-radius:4px;border:2px solid #7a5838;background:#2a1d13;color:var(--plaster)}
+.hero{border:0;padding:0;margin:1rem 0 0}
+.hero legend{font-weight:700;padding:0;margin-bottom:.4rem}
+.choice{display:flex;gap:10px}
+.choice input{position:absolute;opacity:0;pointer-events:none}
+#title .choice label{display:flex;align-items:center;gap:.6rem;margin:0;flex:1;max-width:200px;padding:.45rem .9rem .45rem .5rem;border:2px solid #7a5838;border-radius:6px;background:#2a1d13;cursor:pointer;font-family:var(--display);font-weight:400;font-size:1.15rem;min-height:56px;box-sizing:border-box}
+.choice svg{width:34px;height:48px;flex:none}
+.choice input:checked + label{border-color:var(--ochre);background:var(--clay-2);box-shadow:0 0 0 2px var(--ochre) inset}
+.choice input:focus-visible + label{outline:3px solid var(--picrolite);outline-offset:2px}
+.controls{display:grid;grid-template-columns:auto 1fr;gap:.25rem .8rem;font-size:.92rem;color:var(--ash);margin-top:1rem}
+.controls b{color:var(--plaster)}
+
+/* Minigame */
+#mg .bar{position:relative;height:34px;background:#2a1d13;border:2px solid #7a5838;border-radius:4px;margin:1rem 0;overflow:hidden}
+#mg .zone{position:absolute;top:0;bottom:0;background:color-mix(in srgb,var(--good) 55%,transparent)}
+#mg .mark{position:absolute;top:-2px;bottom:-2px;width:6px;margin-left:-3px;background:var(--plaster);box-shadow:0 0 6px #fff}
+#mg .bar.hit{border-color:var(--good)} #mg .bar.miss{border-color:var(--bad)}
+#mg .count{font-family:var(--display);font-size:1.2rem}
+
+.sliders{display:grid;grid-template-columns:auto 1fr;gap:.9rem 1rem;align-items:center;margin-top:1rem}
+.sliders label{font-weight:700}
+.sliders input{width:100%;accent-color:var(--ochre)}
+/* Journal & quiz */
+#journalList{display:flex;flex-direction:column;gap:.7rem;margin-top:.6rem}
+#journalList div{border-left:4px solid var(--ochre);padding:.2rem 0 .2rem .7rem}
+#journalList b{font-family:var(--display);font-weight:400;font-size:1.05rem}
+#journalList p{margin:.15rem 0 0;font-size:.93rem;color:var(--ash)}
+.qzTop{display:flex;justify-content:space-between;align-items:baseline;gap:1rem}
+.qzScore{font-family:var(--display);color:var(--ochre);font-variant-numeric:tabular-nums}
+.qzBar{height:6px;background:#5e4430;border-radius:3px;margin:.5rem 0 .8rem;overflow:hidden}
+.qzBar i{display:block;height:100%;width:0;background:var(--picrolite);transition:width .3s}
+.qzFact{font-size:.82rem;color:var(--ash)}
+.qzFact:empty{display:none}
+#qzFeedback:empty{display:none}
+#qzFeedback{border-left:4px solid var(--picrolite);padding:.3rem 0 .3rem .7rem}
+#qzFeedback.no{border-color:var(--bad)}
+#qzReview:empty{display:none}
+#qzReview h3{font-size:1.1rem;margin:.8rem 0 .4rem;color:var(--plaster)}
+#qzReview details{border-left:4px solid var(--ochre);padding:.25rem 0 .25rem .7rem;margin:.4rem 0}
+#qzReview summary{cursor:pointer;font-weight:700}
+#qzReview details p{font-size:.93rem;color:var(--ash);margin:.3rem 0}
+.opts{display:flex;flex-direction:column;gap:8px;margin-top:.8rem}
+.opts button{text-align:left;background:var(--clay-2);color:var(--plaster);border:2px solid #6b4a30;border-radius:4px;padding:.65rem .8rem}
+.opts button.right{border-color:var(--good);background:#3f5a33}
+.opts button.wrong{border-color:var(--bad);background:#5e2f24}
+
+/* Touch controls */
+#joy{position:fixed;left:24px;bottom:calc(env(safe-area-inset-bottom,0px) + 24px);width:120px;height:120px;border-radius:50%;background:rgba(59,42,30,.45);border:2px solid rgba(241,226,196,.35);touch-action:none}
+#knob{position:absolute;left:50%;top:50%;width:52px;height:52px;margin:-26px 0 0 -26px;border-radius:50%;background:rgba(241,226,196,.7)}
+#act{position:fixed;right:24px;bottom:calc(env(safe-area-inset-bottom,0px) + 40px);width:86px;height:86px;border-radius:50%;border:0;background:var(--ochre);color:#2a1709;font-weight:700;font-size:1.05rem;touch-action:none}
+#runBtn{position:fixed;right:124px;bottom:calc(env(safe-area-inset-bottom,0px) + 30px);width:60px;height:60px;border-radius:50%;border:2px solid rgba(241,226,196,.4);background:rgba(59,42,30,.6);color:var(--plaster);font-weight:700;touch-action:none}
+#runBtn.on{background:var(--picrolite);color:#14302a}
+#joy{left:calc(env(safe-area-inset-left,0px) + 24px)}
+#act{right:calc(env(safe-area-inset-right,0px) + 24px)}
+#runBtn{right:calc(env(safe-area-inset-right,0px) + 124px)}
+
+/* ---- Touch screens: phones and tablets ---- */
+@media (pointer:coarse){
+  .hbtn{min-height:46px;min-width:46px;padding:.3rem .55rem;gap:.25rem}
+  .hbtn .lbl{display:none}
+  .btn{min-height:50px;padding:.75rem 1.3rem;font-size:1.05rem}
+  .opts button{min-height:52px;font-size:1.05rem}
+  #quest{cursor:pointer}
+  #quest .chev::after{content:"\25B4";font-size:.9rem;color:var(--ash)}
+  #quest.collapsed .chev::after{content:"\25BE"}
+  #quest.collapsed p,#quest.collapsed #steps{display:none}
+  #quest.collapsed h3{margin-bottom:0}
+  #prompt{padding:.7rem 1.2rem;font-size:1.05rem;border-color:var(--ochre)}
+  #dialog{cursor:default}
+  .sliders input{height:32px}
+  #mg .bar{height:44px}
+}
+/* Tablets: bigger text, roomier panels, larger controls */
+@media (pointer:coarse) and (min-width:700px) and (min-height:520px){
+  html,body{font-size:18px}
+  #quest{max-width:min(440px,calc(100vw - 300px))}
+  #inv{top:calc(env(safe-area-inset-top,0px) + 74px);max-width:260px}
+  #dialog{width:min(780px,calc(100vw - 48px));padding:1.2rem 1.5rem 1.4rem}
+  #dialog .txt{font-size:1.2rem}
+  #dialog .who{font-size:1.3rem}
+  .card{width:min(640px,100%);padding:1.7rem 1.9rem}
+  .card h2{font-size:1.9rem}
+  #compass{width:62px;height:62px;top:auto;left:auto;transform:none;right:calc(env(safe-area-inset-right,0px) + 54px);bottom:calc(env(safe-area-inset-bottom,0px) + 196px)} #compass svg{width:34px;height:34px}
+  #joy{width:156px;height:156px;bottom:calc(env(safe-area-inset-bottom,0px) + 32px);left:calc(env(safe-area-inset-left,0px) + 32px)}
+  #knob{width:66px;height:66px;margin:-33px 0 0 -33px}
+  #act{width:108px;height:108px;font-size:1.2rem;right:calc(env(safe-area-inset-right,0px) + 32px);bottom:calc(env(safe-area-inset-bottom,0px) + 48px)}
+  #runBtn{width:74px;height:74px;right:calc(env(safe-area-inset-right,0px) + 158px);bottom:calc(env(safe-area-inset-bottom,0px) + 36px)}
+  #prompt{bottom:calc(env(safe-area-inset-bottom,0px) + 40px)}
+}
+/* Phones in portrait: icon buttons stacked on the right, quest panel uses the rest */
+@media (max-width:560px){
+  html,body{font-size:15px}
+  .hbtn .lbl{display:none}
+  .hbtn{padding:.3rem;gap:.15rem}
+  #topright .row{flex-direction:column;gap:6px}
+  #quest{max-width:calc(100vw - 92px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px));padding:.55rem .7rem;box-sizing:border-box}
+  #quest h3{font-size:1.02rem} #quest p{font-size:.92rem}
+  #inv{top:calc(env(safe-area-inset-top,0px) + 232px);max-width:150px;font-size:.82rem;justify-content:flex-end}
+  #inv span{white-space:normal;text-align:right}
+  #compass{top:auto;bottom:calc(env(safe-area-inset-bottom,0px) + 158px);left:auto;right:calc(env(safe-area-inset-right,0px) + 34px);transform:none;width:50px;height:50px}
+  #prompt{bottom:calc(env(safe-area-inset-bottom,0px) + 158px);max-width:calc(100vw - 120px);white-space:normal;text-align:center;left:16px;transform:none}
+  #dialog{width:calc(100vw - 20px);bottom:calc(env(safe-area-inset-bottom,0px) + 10px);padding:.9rem 1rem 1.6rem}
+  #dialog .txt{font-size:1.05rem}
+  .modal{padding:10px}
+  .card{padding:1.15rem 1.15rem;max-height:calc(100% - 20px)}
+  .card h2{font-size:1.4rem}
+  .fact-art{font-size:2.1rem}
+  #title h1{font-size:2rem}
+  #toast{font-size:1.25rem;top:40%}
+  #joy{width:116px;height:116px;left:calc(env(safe-area-inset-left,0px) + 18px);bottom:calc(env(safe-area-inset-bottom,0px) + 20px)}
+  #act{width:84px;height:84px;right:calc(env(safe-area-inset-right,0px) + 18px);bottom:calc(env(safe-area-inset-bottom,0px) + 34px)}
+  #runBtn{width:58px;height:58px;right:calc(env(safe-area-inset-right,0px) + 112px);bottom:calc(env(safe-area-inset-bottom,0px) + 22px)}
+}
+/* Phones in landscape: short screens, keep the middle of the view clear */
+@media (max-height:500px){
+  html,body{font-size:14px}
+  .hbtn .lbl{display:none}
+  .hbtn{padding:.3rem}
+  #quest{max-width:min(340px,40vw);padding:.45rem .65rem;top:calc(env(safe-area-inset-top,0px) + 8px)}
+  #quest p{font-size:.9rem;line-height:1.3}
+  #steps{display:none}
+  #topright{top:calc(env(safe-area-inset-top,0px) + 8px)}
+  #inv{top:calc(env(safe-area-inset-top,0px) + 62px);max-width:200px;font-size:.82rem}
+  #compass{top:calc(env(safe-area-inset-top,0px) + 8px);width:46px;height:46px}
+  #compass svg{width:26px;height:26px}
+  #prompt{bottom:calc(env(safe-area-inset-bottom,0px) + 18px);max-width:calc(100vw - 340px);white-space:normal;text-align:center}
+  #dialog{width:min(640px,calc(100vw - 40px));bottom:calc(env(safe-area-inset-bottom,0px) + 8px);padding:.7rem 1rem 1.4rem}
+  #dialog .txt{font-size:1.05rem;line-height:1.38}
+  #dialog .who{font-size:1.05rem;margin-bottom:.1rem}
+  .modal{padding:8px}
+  .card{max-height:calc(100% - 16px);padding:.95rem 1.2rem;width:min(620px,100%)}
+  .card h2{font-size:1.3rem;margin:.15rem 0 .35rem}
+  .card p{margin:.35rem 0}
+  .fact-art{font-size:1.7rem}
+  .card .actions{margin-top:.6rem}
+  #title h1{font-size:1.8rem}
+  .controls{grid-template-columns:auto 1fr auto 1fr;gap:.2rem .7rem}
+  #joy{width:112px;height:112px;left:calc(env(safe-area-inset-left,0px) + 20px);bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
+  #act{width:80px;height:80px;right:calc(env(safe-area-inset-right,0px) + 20px);bottom:calc(env(safe-area-inset-bottom,0px) + 24px)}
+  #runBtn{width:56px;height:56px;right:calc(env(safe-area-inset-right,0px) + 112px);bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
+}
+@media (prefers-reduced-motion:reduce){#compass svg,#toast{transition:none}}
+#loading{position:fixed;inset:0;display:grid;place-items:center;font-family:var(--display);font-size:1.4rem;background:#1d140d;z-index:9}
+</style>
+</head>
+<body>
+<div id="loading">Lighting the hearth…</div>
+
+<div id="hud" hidden>
+  <div id="quest" class="panel">
+    <div class="eyebrow"><span id="qStep">Chore 1 of 11</span><span class="chev" aria-hidden="true"></span></div>
+    <h3 id="qTitle">Good morning</h3>
+    <p id="qText"></p>
+    <div id="steps"></div>
+  </div>
+  <div id="compass" class="panel" aria-hidden="true">
+    <svg viewBox="0 0 24 24"><path d="M12 2 L19 20 L12 15.5 L5 20 Z" fill="#d98b3a" stroke="#f1e2c4" stroke-width="1.2" stroke-linejoin="round"/></svg>
+    <small id="dist"></small>
+  </div>
+  <div id="topright">
+    <div class="row">
+      <button id="journalBtn" class="hbtn" type="button" title="Journal (J)" aria-label="Journal"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5zM5 19.5A1.5 1.5 0 0 0 6.5 21H19"/></svg><span class="lbl">Journal</span> <span id="factCount">0</span></button>
+      <button id="soundBtn" class="hbtn" type="button" title="Sound (M to mute)" aria-label="Sound"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4zM16.5 9.5a3.5 3.5 0 0 1 0 5M19 7a7 7 0 0 1 0 10"/></svg><span class="lbl">Sound</span></button>
+      <button id="fsBtn" class="hbtn" type="button" title="Full screen (F)" aria-label="Full screen"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg><span class="lbl">Full screen</span></button>
+      <button id="helpBtn" class="hbtn" type="button" title="Help (H)" aria-label="Help"><span class="q">?</span></button>
+    </div>
+  </div>
+  <div id="inv" class="panel"></div>
+  <div id="prompt" class="panel" hidden></div>
+  <div id="toast"></div>
+</div>
+
+<div id="dialog" class="panel" hidden role="dialog" aria-live="polite">
+  <div class="who" id="dWho"></div>
+  <div class="txt" id="dTxt"></div>
+  <div class="more" id="dMore">E / Space / tap to continue</div>
+</div>
+
+<div id="title" class="modal" hidden>
+  <div class="card panel">
+    <div class="eyebrow">Neolithic Cyprus · Larnaca district</div>
+    <h1>Children of Choirokoitia</h1>
+    <div class="date">A day in a stone-age village, about 9,000 years ago</div>
+    <p>On a steep hill above the Maroni river stands a village of round stone houses, wrapped in a great stone wall. There is no pottery and no metal yet, only stone, bone, wood, clay and clever hands. You are a child who lives here, and today the whole family needs your help.</p>
+    <fieldset class="hero">
+      <legend>Who will you play?</legend>
+      <div class="choice">
+        <input type="radio" name="hero" id="heroGirl" value="girl" checked><label for="heroGirl"><svg viewBox="0 0 40 56" aria-hidden="true"><path d="M27 14c3 4 3 10 1 15" stroke="#24170e" stroke-width="4" fill="none" stroke-linecap="round"/><circle cx="20" cy="12" r="8" fill="#a8714b"/><path d="M12 11a8 8 0 0 1 16 0c-3-3-13-3-16 0z" fill="#24170e"/><path d="M15 21h10l6 26H9z" fill="#b5532c"/><rect x="13" y="30" width="14" height="3" fill="#7fc3b0"/><path d="M15 47v7M25 47v7" stroke="#a8714b" stroke-width="3"/></svg><span>Girl</span></label>
+        <input type="radio" name="hero" id="heroBoy" value="boy"><label for="heroBoy"><svg viewBox="0 0 40 56" aria-hidden="true"><circle cx="20" cy="12" r="8" fill="#a8714b"/><path d="M12 11a8 8 0 0 1 16 0c-4-2-12-2-16 0z" fill="#24170e"/><path d="M15 21h10l5 22H10z" fill="#c08a3e"/><rect x="13" y="30" width="14" height="3" fill="#7fc3b0"/><path d="M15 43v11M25 43v11" stroke="#a8714b" stroke-width="3"/></svg><span>Boy</span></label>
+      </div>
+    </fieldset>
+    <label for="nameInput">What is your name?</label>
+    <input id="nameInput" maxlength="16" value="Ana" autocomplete="off">
+    <div class="controls">
+      <b>Move</b><span>W A S D or arrow keys (hold Shift to run)</span>
+      <b>Look</b><span>Drag with the mouse, scroll to zoom</span>
+      <b>Act / talk</b><span>E or Space</span>
+      <b>Touch</b><span>Joystick on the left, drag to look, big button to act</span>
+      <b>Sound</b><span>Turn your volume up. Press M to mute</span>
+    </div>
+    <div class="actions">
+      <button id="startBtn" class="btn" type="button">Begin the day</button>
+      <button id="titleQuizBtn" class="btn ghost" type="button">Village quiz</button>
+      <button id="titleFsBtn" class="btn ghost" type="button">Play full screen</button>
+    </div>
+    <p class="fsnote">Already played? The <b>Village quiz</b> has a question about every fact in the journal, to check what you remember.</p>
+    <p class="fsnote" id="fsNote" hidden>Tip: on iPhone, tap Share then "Add to Home Screen" to play full screen.</p>
+  </div>
+</div>
+
+<div id="fact" class="modal" hidden>
+  <div class="card panel">
+    <div class="fact-art" id="fArt"></div>
+    <div class="eyebrow">Did you know?</div>
+    <h2 id="fTitle"></h2>
+    <div id="fText"></div>
+    <div class="actions"><button id="fBtn" class="btn" type="button">Add to my journal</button></div>
+  </div>
+</div>
+
+<div id="mg" class="modal" hidden>
+  <div class="card panel">
+    <div class="eyebrow">Saddle quern</div>
+    <h2>Grind the grain into flour</h2>
+    <p>Push the rubbing stone when the marker is inside the green part. Five good pushes make enough flour.</p>
+    <div class="bar" id="mgBar"><div class="zone" id="mgZone"></div><div class="mark" id="mgMark"></div></div>
+    <div class="actions" style="align-items:center;justify-content:space-between">
+      <span class="count" id="mgCount">0 / 5</span>
+      <button id="mgBtn" class="btn" type="button">Push! (E)</button>
+    </div>
+  </div>
+</div>
+
+<div id="journal" class="modal" hidden>
+  <div class="card panel">
+    <div class="eyebrow">What I learned today</div>
+    <h2>My journal</h2>
+    <div id="journalList"></div>
+    <div class="actions"><button class="btn" type="button" data-close="journal">Back to the village</button></div>
+  </div>
+</div>
+
+<div id="help" class="modal" hidden>
+  <div class="card panel">
+    <div class="eyebrow">How to play</div>
+    <h2>Helping the family</h2>
+    <p>Follow the arrow at the top of the screen and the glowing golden stone in the world. They always point to your next chore.</p>
+    <div class="controls">
+      <b>Move</b><span>W A S D or arrow keys, Shift to run</span>
+      <b>Look</b><span>Drag with the mouse, scroll to zoom</span>
+      <b>Act / talk</b><span>E or Space</span>
+      <b>Journal</b><span>J</span>
+      <b>Mute</b><span>M, or the Sound button</span>
+    </div>
+    <p>Villagers who are not part of a chore have things to tell you too. Talk to everyone!</p>
+    <div class="actions"><button class="btn" type="button" data-close="help">Got it</button></div>
+  </div>
+</div>
+
+<div id="soundPanel" class="modal" hidden>
+  <div class="card panel">
+    <div class="eyebrow">Sound</div>
+    <h2>Music and sounds</h2>
+    <div class="sliders">
+      <label for="musicVol">Music</label><input id="musicVol" type="range" min="0" max="1" step="0.05">
+      <label for="sfxVol">Sounds of the village</label><input id="sfxVol" type="range" min="0" max="1" step="0.05">
+    </div>
+    <div class="actions">
+      <button id="muteBtn" class="btn ghost" type="button">Mute all</button>
+      <button class="btn" type="button" data-close="soundPanel">Done</button>
+    </div>
+  </div>
+</div>
+
+<div id="quiz" class="modal" hidden>
+  <div class="card panel" role="dialog" aria-labelledby="qzQ">
+    <div class="qzTop"><span class="eyebrow" id="qzStep"></span><span class="qzScore" id="qzScore"></span></div>
+    <div class="qzBar" aria-hidden="true"><i id="qzFill"></i></div>
+    <h2 id="qzQ"></h2>
+    <div class="opts" id="qzOpts"></div>
+    <p id="qzFeedback" aria-live="polite"></p>
+    <div class="qzFact" id="qzFact"></div>
+    <div id="qzReview"></div>
+    <div class="actions">
+      <button id="qzNext" class="btn" type="button" hidden>Next</button>
+      <button id="qzAgain" class="btn" type="button" hidden>Try a new quiz</button>
+      <button id="qzLeave" class="btn ghost" type="button">Leave quiz</button>
+    </div>
+  </div>
+</div>
+
+<div id="end" class="modal" hidden>
+  <div class="card panel">
+    <div class="eyebrow">Night falls over Choirokoitia</div>
+    <h2 id="endTitle"></h2>
+    <div id="endText"></div>
+    <div class="actions">
+      <button id="quizBtn" class="btn" type="button">Take the village quiz</button>
+      <button class="btn ghost" type="button" data-close="end">Keep exploring</button>
+    </div>
+  </div>
+</div>
+
+<div id="touch" hidden>
+  <div id="joy"><div id="knob"></div></div>
+  <button id="runBtn" type="button">Run</button>
+  <button id="act" type="button">Act</button>
+</div>
+
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+const $ = id => document.getElementById(id);
+const V3 = THREE.Vector3;
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const rnd = mulberry32(7);
+const rr = (a, b) => a + rnd() * (b - a);
+
+/* ======================= WORLD SHAPE ======================= */
+const WATER = -2.6;
+const riverZ = x => 48 + 7 * Math.sin(x / 22);
+function heightAt(x, z){
+  const r2 = x * x + z * z;
+  let h = 14 * Math.exp(-r2 / 1800);                       // the hill of Choirokoitia
+  h += 1.2 * Math.sin(x * 0.05 + 1.3) * Math.cos(z * 0.043) + 0.6 * Math.sin(x * 0.11 + z * 0.07) + 0.3 * Math.sin(x * 0.23 - z * 0.19);
+  const d = Math.abs(z - riverZ(x));                        // the Maroni river valley
+  h -= 6 * Math.exp(-d * d / 72);
+  if (d < 6) h -= (6 - d) * 0.7;
+  if (z < -50) h += (-z - 50) * 0.1;                        // rising toward the Troodos foothills
+  if (x < -38 && x > -72 && z > -18 && z < 14) h = lerp(h, 2.4, 0.6); // gentler fields
+  return h;
+}
+function nearWater(x, z){
+  for (let i = 0; i < 8; i++){ const a = i / 8 * Math.PI * 2; if (heightAt(x + Math.cos(a) * 2.4, z + Math.sin(a) * 2.4) < WATER) return true; }
+  return false;
+}
+function bankPoint(x){
+  const rz = riverZ(x);
+  for (let z = rz - 14; z < rz; z += 0.2){ if (heightAt(x, z) < WATER + 0.25) { const zz = z - 1.4; return new V3(x, heightAt(x, zz), zz); } }
+  return new V3(x, heightAt(x, rz - 6), rz - 6);
+}
+
+/* ======================= RENDERER ======================= */
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.setSize(innerWidth, innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.prepend(renderer.domElement);
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xbcd8ea);
+scene.fog = new THREE.Fog(0xcfe0ea, 90, 330);
+const camera = new THREE.PerspectiveCamera(58, innerWidth / innerHeight, 0.1, 700);
+const hemi = new THREE.HemisphereLight(0xdcebff, 0x8a6b45, 1.1);
+const sun = new THREE.DirectionalLight(0xfff0d0, 2.6);
+sun.castShadow = true; sun.shadow.mapSize.set(2048, 2048);
+Object.assign(sun.shadow.camera, { left: -45, right: 45, top: 45, bottom: -45, near: 1, far: 260 });
+sun.shadow.bias = -0.0004; sun.shadow.normalBias = 0.04;
+scene.add(hemi, sun, sun.target);
+
+const matCache = {};
+function mat(color, o = {}){
+  const k = color + JSON.stringify(o);
+  if (!matCache[k] || o.unique) matCache[k] = new THREE.MeshStandardMaterial(Object.assign({ color, roughness: 0.92, flatShading: true }, o, { unique: undefined }));
+  return matCache[k];
+}
+function mesh(geo, m, x = 0, y = 0, z = 0, cast = true){
+  const o = new THREE.Mesh(geo, m); o.position.set(x, y, z); o.castShadow = cast; o.receiveShadow = true; return o;
+}
+const colliders = [];
+const addCollider = (x, z, r) => colliders.push({ x, z, r });
+
+/* ======================= TERRAIN ======================= */
+function inField(x, z){ return x < -40 && x > -70 && z > -15 && z < 11; }
+{
+  const S = 320, N = 160;
+  const g = new THREE.PlaneGeometry(S, S, N, N); g.rotateX(-Math.PI / 2);
+  const p = g.attributes.position, cols = new Float32Array(p.count * 3), c = new THREE.Color(), t = new THREE.Color();
+  for (let i = 0; i < p.count; i++){
+    const x = p.getX(i), z = p.getZ(i), y = heightAt(x, z); p.setY(i, y);
+    const r = Math.hypot(x, z), n = 0.5 + 0.5 * Math.sin(x * 0.31) * Math.sin(z * 0.27);
+    c.setRGB(0.70, 0.63, 0.37, THREE.SRGBColorSpace);
+    const d = Math.abs(z - riverZ(x));
+    if (d < 18) c.lerp(t.setRGB(0.40, 0.52, 0.25, THREE.SRGBColorSpace), 1 - d / 18);
+    if (z < -50) c.lerp(t.setRGB(0.43, 0.46, 0.27, THREE.SRGBColorSpace), clamp((-50 - z) / 12, 0, 1));
+    if (r < 31) c.lerp(t.setRGB(0.72, 0.58, 0.42, THREE.SRGBColorSpace), clamp((31 - r) / 5, 0, 1));
+    if (inField(x, z)) c.lerp(t.setRGB(0.55, 0.42, 0.27, THREE.SRGBColorSpace), 0.85);
+    if (y < WATER + 0.8) c.lerp(t.setRGB(0.47, 0.38, 0.28, THREE.SRGBColorSpace), 0.8);
+    c.multiplyScalar(0.9 + 0.2 * n);
+    cols[i * 3] = c.r; cols[i * 3 + 1] = c.g; cols[i * 3 + 2] = c.b;
+  }
+  g.setAttribute('color', new THREE.BufferAttribute(cols, 3));
+  g.computeVertexNormals();
+  const terrain = new THREE.Mesh(g, new THREE.MeshStandardMaterial({ vertexColors: true, roughness: 1, flatShading: true }));
+  terrain.receiveShadow = true; scene.add(terrain);
+
+  const water = new THREE.Mesh(new THREE.PlaneGeometry(S, S).rotateX(-Math.PI / 2),
+    new THREE.MeshStandardMaterial({ color: 0x4b8ca3, roughness: 0.25, metalness: 0.1, transparent: true, opacity: 0.85 }));
+  water.position.y = WATER; scene.add(water);
+}
+// distant Troodos mountains
+for (let i = 0; i < 14; i++){
+  const x = -260 + i * 40 + rr(-10, 10), h = rr(40, 85);
+  const m = mesh(new THREE.ConeGeometry(rr(45, 70), h, 6), mat(0x7d8c96), x, h / 2 - 8, rr(-290, -250), false);
+  m.material = mat(0x7a8a92, { flatShading: true, fog: true }); scene.add(m);
+}
+
+/* grass tufts and rocks */
+{
+  const tuft = new THREE.ConeGeometry(0.18, 0.6, 4); tuft.translate(0, 0.3, 0);
+  const im = new THREE.InstancedMesh(tuft, mat(0xffffff), 1800);
+  const m4 = new THREE.Matrix4(), q = new THREE.Quaternion(), s = new V3(), col = new THREE.Color();
+  let n = 0;
+  while (n < 1800){
+    const x = rr(-150, 150), z = rr(-150, 150), y = heightAt(x, z);
+    if (y < WATER + 0.3 || Math.hypot(x, z) < 26 || inField(x, z)) continue;
+    q.setFromEuler(new THREE.Euler(rr(-.2, .2), rr(0, 6), rr(-.2, .2)));
+    const sc = rr(0.6, 1.5); s.set(sc, sc * rr(0.7, 1.4), sc);
+    m4.compose(new V3(x, y - 0.05, z), q, s); im.setMatrixAt(n, m4);
+    col.setHSL(rr(0.12, 0.22), rr(0.35, 0.55), rr(0.32, 0.5)); im.setColorAt(n, col); n++;
+  }
+  im.receiveShadow = true; scene.add(im);
+  const rock = new THREE.DodecahedronGeometry(0.5, 0);
+  const rm = new THREE.InstancedMesh(rock, mat(0x9a9284), 180);
+  for (let i = 0; i < 180; i++){
+    const x = rr(-150, 150), z = rr(-150, 150);
+    if (Math.hypot(x, z) < 30 || inField(x, z)) { i--; continue; }
+    q.setFromEuler(new THREE.Euler(rr(0, 3), rr(0, 3), 0)); const sc = rr(0.4, 1.6); s.set(sc, sc * 0.7, sc * rr(0.8, 1.2));
+    m4.compose(new V3(x, heightAt(x, z), z), q, s); rm.setMatrixAt(i, m4);
+  }
+  rm.castShadow = rm.receiveShadow = true; scene.add(rm);
+}
+
+/* clouds */
+const clouds = [];
+for (let i = 0; i < 9; i++){
+  const g = new THREE.Group();
+  for (let j = 0; j < 4; j++){ const m = mesh(new THREE.IcosahedronGeometry(rr(4, 8), 0), mat(0xffffff, { roughness: 1 }), j * 6 - 9, rr(-1, 1), rr(-3, 3), false); m.scale.y = 0.45; g.add(m); }
+  g.position.set(rr(-200, 200), rr(55, 75), rr(-200, 120)); scene.add(g); clouds.push(g);
+}
+
+/* ======================= TREES ======================= */
+function tree(kind, x, z, s = 1){
+  const g = new THREE.Group(), y = heightAt(x, z);
+  g.position.set(x, y, z); g.scale.setScalar(s); g.rotation.y = rr(0, 6);
+  if (kind === 'pine'){
+    g.add(mesh(new THREE.CylinderGeometry(0.18, 0.28, 3, 6), mat(0x5a3d26), 0, 1.5, 0));
+    for (let i = 0; i < 3; i++) g.add(mesh(new THREE.ConeGeometry(1.9 - i * 0.5, 2.6, 7), mat(0x2f4f2c), 0, 2.6 + i * 1.3, 0));
+    addCollider(x, z, 0.5 * s);
+  } else {
+    const trunkC = kind === 'olive' ? 0x6e655a : kind === 'fig' ? 0x9c958a : 0x5d4630;
+    const leafC = kind === 'olive' ? 0x8c9a6a : kind === 'fig' ? 0x5c8236 : kind === 'pistachio' ? 0x4b6a30 : 0x6a7d3f;
+    const tr = mesh(new THREE.CylinderGeometry(0.22, 0.38, 2.2, 6), mat(trunkC), 0, 1.1, 0); tr.rotation.z = kind === 'olive' ? 0.18 : 0.05; g.add(tr);
+    for (let i = 0; i < 5; i++){
+      const b = mesh(new THREE.IcosahedronGeometry(rr(0.9, 1.4), 0), mat(leafC), rr(-1.1, 1.1), rr(2.3, 3.2), rr(-1.1, 1.1)); b.scale.y = 0.75; g.add(b);
+    }
+    addCollider(x, z, 0.55 * s);
+  }
+  scene.add(g); return g;
+}
+for (let i = 0; i < 140; i++){ const x = rr(-140, 140), z = rr(-150, -62); tree('pine', x, z, rr(0.9, 1.5)); }
+for (let i = 0; i < 40; i++){
+  const x = rr(-140, 140), z = rr(-60, 120), r = Math.hypot(x, z);
+  if (r < 34 || inField(x, z) || heightAt(x, z) < WATER + 0.6 || Math.abs(z - riverZ(x)) < 7) continue;
+  if (Math.hypot(x - 38, z - 12) < 10) continue;
+  tree(rnd() < 0.5 ? 'olive' : 'scrub', x, z, rr(0.7, 1.1));
+}
+// river reeds
+{
+  const reed = new THREE.CylinderGeometry(0.03, 0.04, 1.6, 4); reed.translate(0, 0.8, 0);
+  const im = new THREE.InstancedMesh(reed, mat(0x7c8a3c), 700); const m4 = new THREE.Matrix4(); let n = 0;
+  while (n < 700){
+    const x = rr(-150, 150), z = riverZ(x) + rr(-10, 10), y = heightAt(x, z);
+    if (y < WATER - 0.1 || y > WATER + 1.2) continue;
+    m4.makeRotationFromEuler(new THREE.Euler(rr(-.2, .2), 0, rr(-.2, .2))); m4.setPosition(x, y, z); im.setMatrixAt(n++, m4);
+  }
+  scene.add(im);
+}
+
+/* ======================= THE VILLAGE ======================= */
+const HOUSES = [
+  [6, 2, 2.6, 'home'], [0, -6, 2.8], [-7, -2, 2.4], [-4, 7, 2.6], [12, -6, 2.3], [14, 4, 2.5], [5, 12, 2.2],
+  [-12, -10, 2.6], [-14, 4, 2.3], [2, -15, 2.5], [-6, -17, 2.2], [11, -15, 2.4], [18, -3, 2.0], [-18, -4, 2.2],
+  [-10, 14, 2.3], [18, 10, 2.2]
+];
+const HEARTH = new V3(2, 0, 5.6); HEARTH.y = heightAt(HEARTH.x, HEARTH.z);
+let homeWallMat, homeCracks = [];
+function makeHouse([x, z, r, tag]){
+  const g = new THREE.Group(); let gMin = 1e9, gMax = -1e9;
+  for (let i = 0; i < 12; i++){ const a = i / 12 * Math.PI * 2, h = heightAt(x + Math.cos(a) * r, z + Math.sin(a) * r); gMin = Math.min(gMin, h); gMax = Math.max(gMax, h); }
+  const stoneH = gMax + 0.9 - (gMin - 0.6);
+  g.add(mesh(new THREE.CylinderGeometry(r * 1.02, r * 1.07, stoneH, 18), mat(0x9b9180), 0, gMin - 0.6 + stoneH / 2, 0));
+  // band of stones for texture
+  for (let i = 0; i < 18; i++){
+    const a = i / 18 * Math.PI * 2 + rr(0, .2);
+    const s = mesh(new THREE.DodecahedronGeometry(rr(0.25, 0.4), 0), mat(rnd() < .5 ? 0x8a8173 : 0xaaa192), Math.cos(a) * r * 1.06, gMax + rr(0.1, 0.7), Math.sin(a) * r * 1.06, false);
+    g.add(s);
+  }
+  const wallM = tag === 'home' ? (homeWallMat = mat(0xa38457, { unique: true })) : mat(rnd() < .5 ? 0xc9a46b : 0xbf9a62);
+  g.add(mesh(new THREE.CylinderGeometry(r * 0.99, r * 1.0, 1.6, 18), wallM, 0, gMax + 1.7, 0));
+  g.add(mesh(new THREE.CylinderGeometry(r * 1.08, r * 1.04, 0.28, 18), mat(0x8c6b46), 0, gMax + 2.62, 0));
+  g.add(mesh(new THREE.CylinderGeometry(r * 0.95, r * 0.95, 0.05, 18), mat(0xb58f62), 0, gMax + 2.78, 0, false));
+  // roof poles sticking out
+  for (let i = 0; i < 6; i++){ const a = i / 6 * Math.PI * 2; const p = mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.5, 4), mat(0x5a3d26), Math.cos(a) * r * 1.12, gMax + 2.55, Math.sin(a) * r * 1.12, false); p.rotation.z = Math.PI / 2; p.rotation.y = -a; g.add(p); }
+  // door faces the nearest courtyard (village centre or hearth)
+  const toward = tag === 'home' ? HEARTH : new V3(rr(-3, 3), 0, rr(-3, 3));
+  const da = Math.atan2(toward.z - z, toward.x - x);
+  const dx = Math.cos(da) * r, dz = Math.sin(da) * r, dy = heightAt(x + dx, z + dz);
+  const door = mesh(new THREE.BoxGeometry(0.35, 1.35, 0.9), mat(0x2a1b10), dx, dy + 0.6, dz, false); door.rotation.y = -da; g.add(door);
+  const sill = mesh(new THREE.BoxGeometry(0.5, 0.25, 1.2), mat(0x8a8173), dx * 1.04, dy + 0.05, dz * 1.04); sill.rotation.y = -da; g.add(sill);
+  if (tag === 'home'){
+    for (let i = 0; i < 5; i++){
+      const a = da + 0.7 + i * 0.35; const c = mesh(new THREE.BoxGeometry(0.06, rr(0.6, 1.2), 0.06), mat(0x4a3420), Math.cos(a) * r * 1.0, gMax + 1.7, Math.sin(a) * r * 1.0, false);
+      c.rotation.z = rr(-.5, .5); c.rotation.y = -a; g.add(c); homeCracks.push(c);
+    }
+  }
+  if (rnd() < 0.45){ // a ladder up to the flat roof
+    const a = da + Math.PI * 0.6, lx = Math.cos(a) * (r + 0.45), lz = Math.sin(a) * (r + 0.45), ly = heightAt(x + lx, z + lz);
+    const lad = new THREE.Group(); lad.position.set(lx, ly, lz); lad.rotation.y = -a + Math.PI / 2; lad.rotation.x = 0;
+    for (const s of [-0.25, 0.25]){ const p = mesh(new THREE.CylinderGeometry(0.04, 0.04, 3.4, 4), mat(0x6b4a2c), s, 1.6, 0); lad.add(p); }
+    for (let i = 0; i < 6; i++) { const rg = mesh(new THREE.CylinderGeometry(0.03, 0.03, 0.55, 4), mat(0x6b4a2c), 0, 0.4 + i * 0.5, 0); rg.rotation.z = Math.PI / 2; lad.add(rg); }
+    lad.rotation.z = 0; lad.children.forEach(c => c.position.z = 0); lad.rotateX(-0.25); g.add(lad);
+  }
+  g.position.set(x, 0, z); scene.add(g);
+  addCollider(x, z, r * 1.06);
+  return { x, z, r, g, top: gMax };
+}
+const houses = HOUSES.map(makeHouse);
+const HOME = houses[0];
+
+/* the great village wall with its stairway entrance */
+const WALL_R = 28;
+{
+  const step = 3 * Math.PI / 180;
+  for (let deg = 140; deg <= 400; deg += 3){
+    if (deg > 172 && deg < 188) continue;
+    const a = deg * Math.PI / 180, x = Math.cos(a) * WALL_R, z = Math.sin(a) * WALL_R, y = heightAt(x, z);
+    const seg = mesh(new THREE.BoxGeometry(WALL_R * step + 0.25, 3.4, 2), mat(rnd() < .5 ? 0x988e7d : 0xa59b88), x, y + 0.6, z);
+    seg.rotation.y = Math.atan2(-Math.cos(a), -Math.sin(a)) + Math.PI / 2; scene.add(seg);
+    for (let k = 0; k < 2; k++){ const s = mesh(new THREE.DodecahedronGeometry(rr(.3, .5), 0), mat(0x8a8173), x + rr(-.6, .6), y + rr(0.4, 2.0), z + rr(-.6, .6), false); scene.add(s); }
+    addCollider(x, z, 1.15);
+  }
+  // gate towers and stairs
+  for (const deg of [170.5, 189.5]){
+    const a = deg * Math.PI / 180, x = Math.cos(a) * WALL_R, z = Math.sin(a) * WALL_R, y = heightAt(x, z);
+    scene.add(mesh(new THREE.CylinderGeometry(1.7, 1.9, 4.6, 10), mat(0x9a907f), x, y + 1.0, z)); addCollider(x, z, 1.8);
+  }
+  for (let i = 0; i < 4; i++){
+    const x = -WALL_R + 1.6 + i * 0.9, y = heightAt(x, 0);
+    scene.add(mesh(new THREE.BoxGeometry(0.9, 0.3 + i * 0.05, 3.2), mat(0xa9a08d), x, y + 0.05, 0));
+  }
+}
+
+/* hearth with fire */
+const fireLight = new THREE.PointLight(0xff8a3a, 4, 16, 1.2);
+const flames = [];
+{
+  const hy = HEARTH.y;
+  for (let i = 0; i < 9; i++){ const a = i / 9 * Math.PI * 2; scene.add(mesh(new THREE.DodecahedronGeometry(0.28, 0), mat(0x7d756a), HEARTH.x + Math.cos(a) * 0.75, hy + 0.1, HEARTH.z + Math.sin(a) * 0.75)); }
+  for (let i = 0; i < 3; i++){ const l = mesh(new THREE.CylinderGeometry(0.08, 0.08, 1, 5), mat(0x4a2e1a), HEARTH.x, hy + 0.15, HEARTH.z); l.rotation.z = Math.PI / 2; l.rotation.y = i * 1.05; scene.add(l); }
+  for (let i = 0; i < 3; i++){
+    const f = mesh(new THREE.ConeGeometry(0.28 - i * 0.06, 0.9 - i * 0.15, 6), new THREE.MeshBasicMaterial({ color: [0xff6a1a, 0xff9a2a, 0xffd25a][i] }), HEARTH.x, hy + 0.55, HEARTH.z, false);
+    scene.add(f); flames.push(f);
+  }
+  fireLight.position.set(HEARTH.x, hy + 1.2, HEARTH.z); scene.add(fireLight);
+  addCollider(HEARTH.x, HEARTH.z, 0.9);
+}
+const smoke = [];
+for (let i = 0; i < 6; i++){ const s = mesh(new THREE.SphereGeometry(0.3, 6, 5), new THREE.MeshStandardMaterial({ color: 0x9a948c, transparent: true, opacity: 0.4, roughness: 1 }), HEARTH.x, HEARTH.y + 1, HEARTH.z, false); s.userData.t = i / 6; scene.add(s); smoke.push(s); }
+
+/* grandmother's quern */
+const QUERN = new V3(11.2, 0, 8.6); QUERN.y = heightAt(QUERN.x, QUERN.z);
+scene.add(mesh(new THREE.BoxGeometry(1.2, 0.3, 0.7), mat(0x7f7a70), QUERN.x, QUERN.y + 0.12, QUERN.z));
+scene.add(mesh(new THREE.CapsuleGeometry(0.14, 0.4, 3, 6).rotateZ(Math.PI / 2), mat(0x6c665c), QUERN.x, QUERN.y + 0.4, QUERN.z));
+
+/* stone-carver's workshop: andesite bowls */
+const CARVER = new V3(-3.6, 0, 2.4); CARVER.y = heightAt(CARVER.x, CARVER.z);
+function stoneBowl(x, y, z, s = 1){
+  const pts = []; for (let i = 0; i <= 6; i++){ const t = i / 6; pts.push(new THREE.Vector2(0.05 + Math.sin(t * Math.PI / 2) * 0.35, t * 0.25)); }
+  pts.push(new THREE.Vector2(0.3, 0.25), new THREE.Vector2(0.28, 0.1));
+  const b = mesh(new THREE.LatheGeometry(pts, 12), mat(0x5b5f63, { side: THREE.DoubleSide }), x, y, z); b.scale.setScalar(s); return b;
+}
+for (let i = 0; i < 4; i++) scene.add(stoneBowl(CARVER.x + 0.9 + i * 0.5, heightAt(CARVER.x + 1, CARVER.z) + 0.02, CARVER.z + 0.9 - (i % 2) * 0.5, rr(0.8, 1.2)));
+
+/* goat pen east of the village */
+const PEN = new V3(38, 0, 12); PEN.y = heightAt(PEN.x, PEN.z); const PEN_R = 5;
+for (let i = 0; i < 26; i++){
+  const a = i / 26 * Math.PI * 2; if (a > 2.8 && a < 3.5) continue; // opening facing the village
+  const x = PEN.x + Math.cos(a) * PEN_R, z = PEN.z + Math.sin(a) * PEN_R;
+  scene.add(mesh(new THREE.CylinderGeometry(0.08, 0.1, 1.4, 5), mat(0x6b4a2c), x, heightAt(x, z) + 0.5, z));
+  const b = mesh(new THREE.DodecahedronGeometry(0.35, 0), mat(0x948a78), x, heightAt(x, z) + 0.1, z); scene.add(b);
+}
+
+/* wheat fields */
+{
+  const stalk = new THREE.ConeGeometry(0.05, 1.1, 4); stalk.translate(0, 0.55, 0);
+  const im = new THREE.InstancedMesh(stalk, mat(0xffffff), 3200); const m4 = new THREE.Matrix4(), col = new THREE.Color();
+  for (let i = 0; i < 3200; i++){
+    const x = rr(-69, -41), z = rr(-14, 10);
+    if (Math.abs(z + 2) < 1.2) { i--; continue; } // a path through the field
+    m4.makeRotationFromEuler(new THREE.Euler(rr(-.15, .15), 0, rr(-.15, .15))); m4.scale(new V3(1, rr(0.8, 1.25), 1)); m4.setPosition(x, heightAt(x, z), z);
+    im.setMatrixAt(i, m4); col.setHSL(rr(0.1, 0.14), rr(0.55, 0.7), rr(0.5, 0.62)); im.setColorAt(i, col);
+  }
+  scene.add(im);
+}
+
+/* ======================= PEOPLE & ANIMALS ======================= */
+function makePerson(o){
+  const g = new THREE.Group();
+  const skin = mat(o.skin || 0xa8714b), tunic = mat(o.tunic), hair = mat(o.hair || 0x24170e);
+  const legGeo = new THREE.CylinderGeometry(0.065, 0.055, 0.5, 6); legGeo.translate(0, -0.25, 0);
+  const legL = new THREE.Group(); legL.position.set(-0.09, 0.5, 0); legL.add(mesh(legGeo, skin));
+  const legR = new THREE.Group(); legR.position.set(0.09, 0.5, 0); legR.add(mesh(legGeo, skin));
+  g.add(legL, legR);
+  g.add(mesh(new THREE.CylinderGeometry(0.16, 0.31, 0.74, 8), tunic, 0, 0.71, 0));
+  g.add(mesh(new THREE.CylinderGeometry(0.19, 0.2, 0.06, 8), mat(o.belt || 0x5a3a1e), 0, 0.86, 0));
+  const armGeo = new THREE.CylinderGeometry(0.05, 0.045, 0.5, 6); armGeo.translate(0, -0.25, 0);
+  const armL = new THREE.Group(); armL.position.set(-0.2, 1.03, 0); armL.rotation.z = -0.12; armL.add(mesh(armGeo, skin));
+  const armR = new THREE.Group(); armR.position.set(0.2, 1.03, 0); armR.rotation.z = 0.12; armR.add(mesh(armGeo, skin));
+  g.add(armL, armR);
+  const head = mesh(new THREE.SphereGeometry(0.16, 12, 10), skin, 0, 1.25, 0); g.add(head);
+  const h = mesh(new THREE.SphereGeometry(0.172, 12, 10, 0, Math.PI * 2, 0, Math.PI * 0.55), hair, 0, 1.265, -0.015); h.rotation.x = -0.35; g.add(h);
+  for (const s of [-1, 1]) g.add(mesh(new THREE.SphereGeometry(0.022, 6, 5), mat(0x111111), s * 0.055, 1.27, 0.145, false));
+  if (o.braid){ const b = mesh(new THREE.CylinderGeometry(0.045, 0.025, 0.42, 6), hair, 0, 1.07, -0.16); b.rotation.x = 0.25; g.add(b); }
+  if (o.longHair){ const b = mesh(new THREE.BoxGeometry(0.3, 0.38, 0.08), hair, 0, 1.12, -0.13); g.add(b); }
+  if (o.beard){ const b = mesh(new THREE.SphereGeometry(0.11, 8, 6), hair, 0, 1.15, 0.09); b.scale.set(1, 0.85, 0.7); g.add(b); }
+  if (o.necklace){ const n = mesh(new THREE.TorusGeometry(0.13, 0.018, 5, 14), mat(o.necklace), 0, 1.06, 0.02, false); n.rotation.x = Math.PI / 2 - 0.3; g.add(n); }
+  if (o.prop) armR.add(o.prop);
+  g.scale.setScalar(o.scale || 1);
+  return { group: g, legL, legR, armL, armR, head, phase: rr(0, 6) };
+}
+function animatePerson(p, speed, dt, idleT){
+  p.phase += dt * (speed > 0.1 ? speed * 2.4 : 1);
+  if (speed > 0.1){
+    const a = Math.sin(p.phase) * Math.min(1, speed / 3.5) * 0.75;
+    p.legL.rotation.x = a; p.legR.rotation.x = -a; p.armL.rotation.x = -a * 0.8; p.armR.rotation.x = a * 0.8;
+  } else {
+    p.legL.rotation.x *= 0.8; p.legR.rotation.x *= 0.8;
+    p.armL.rotation.x = Math.sin(p.phase * 0.8) * 0.05; p.armR.rotation.x = idleT ? -0.6 + Math.sin(p.phase * 4) * 0.4 : Math.sin(p.phase * 0.8 + 1) * 0.05;
+  }
+}
+function makeLabel(text){
+  const c = document.createElement('canvas'); c.width = 512; c.height = 96; const x = c.getContext('2d');
+  x.font = '46px "Bree Serif", Georgia, serif'; const w = x.measureText(text).width + 40;
+  x.fillStyle = 'rgba(59,42,30,0.82)'; x.beginPath(); x.roundRect((512 - w) / 2, 14, w, 68, 12); x.fill();
+  x.fillStyle = '#f1e2c4'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(text, 256, 50);
+  const sp = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false }));
+  sp.scale.set(2.6, 0.49, 1); return sp;
+}
+const npcs = {};
+function addNPC(id, name, x, z, o, facing){
+  const p = makePerson(o); p.id = id; p.name = name;
+  p.group.position.set(x, heightAt(x, z), z);
+  p.group.rotation.y = facing ?? rr(0, 6);
+  p.baseRot = p.group.rotation.y;
+  const lab = makeLabel(name); lab.position.set(0, 1.75, 0); p.group.add(lab);
+  scene.add(p.group); addCollider(x, z, 0.45 * (o.scale || 1)); npcs[id] = p; return p;
+}
+const ADULT = 1.18;
+const spear = (() => { const g = new THREE.Group(); const s = mesh(new THREE.CylinderGeometry(0.025, 0.025, 1.9, 5), mat(0x6b4a2c), 0, -0.45, 0.1); s.rotation.x = Math.PI / 2 - 0.2; g.add(s); const t = mesh(new THREE.ConeGeometry(0.05, 0.18, 4), mat(0x2a2a30, { roughness: 0.3 }), 0, -0.25, 1.05); t.rotation.x = Math.PI / 2; g.add(t); return g; })();
+addNPC('mother', 'Mother', 3.6, 4.2, { tunic: 0x9e5a32, longHair: true, scale: ADULT, necklace: 0x7fc3b0 }, -2.2);
+addNPC('father', 'Father', -50, -1, { tunic: 0x7c6a48, beard: true, scale: ADULT * 1.04 }, 1.2);
+addNPC('grandma', 'Grandmother', 11.8, 9.6, { tunic: 0x6e5a48, hair: 0xd8d2c4, longHair: true, scale: ADULT * 0.95, skin: 0x9e6a46 }, -2.6);
+addNPC('carver', 'Stone-carver', CARVER.x, CARVER.z, { tunic: 0x857055, beard: true, hair: 0x5a4636, scale: ADULT }, 0.6);
+addNPC('uncle', 'Uncle', 6, -44, { tunic: 0x6a5434, beard: true, scale: ADULT * 1.05, prop: spear }, 0.4);
+addNPC('elder', 'Village Elder', -23, 3, { tunic: 0xb7a78a, hair: 0xe2ddd2, beard: true, scale: ADULT * 0.97, necklace: 0x7fc3b0 }, -1.5);
+const TRADER_POS = bankPoint(30);
+addNPC('trader', 'Traveller', TRADER_POS.x, TRADER_POS.z, { tunic: 0x3f5f6a, beard: true, hair: 0x30251c, scale: ADULT }, Math.PI);
+addNPC('knapper', 'Flint-knapper', 8, -10.5, { tunic: 0x8a7a5a, beard: true, scale: ADULT }, 2.4);
+addNPC('weaver', 'Basket-weaver', -8.5, 10.5, { tunic: 0xa0703e, longHair: true, scale: ADULT }, 0.9);
+addNPC('friend', 'Friend', -1, -1, { tunic: 0x8f6a3a, braid: false, scale: 0.8 }, 2);
+
+// trader's dugout canoe and basket of obsidian
+{
+  const c = mesh(new THREE.CylinderGeometry(0.45, 0.45, 4.2, 10, 1, false, 0, Math.PI), mat(0x5c3d22, { side: THREE.DoubleSide }), TRADER_POS.x + 1.5, WATER + 0.25, TRADER_POS.z + 3.2);
+  c.rotation.z = Math.PI / 2; c.rotation.x = Math.PI; c.rotation.y = 0.3; scene.add(c);
+  const by = heightAt(TRADER_POS.x + 1, TRADER_POS.z);
+  scene.add(mesh(new THREE.CylinderGeometry(0.35, 0.28, 0.35, 10), mat(0xa47a42), TRADER_POS.x + 1, by + 0.15, TRADER_POS.z));
+  for (let i = 0; i < 6; i++) scene.add(mesh(new THREE.TetrahedronGeometry(0.09, 0), mat(0x111116, { roughness: 0.15, metalness: 0.3 }), TRADER_POS.x + 1 + rr(-.15, .15), by + 0.36, TRADER_POS.z + rr(-.15, .15), false));
+}
+// uncle's drying rack with a deer hide and antlers
+{
+  const x = 8, z = -42.5, y = heightAt(x, z);
+  for (const s of [-0.9, 0.9]) scene.add(mesh(new THREE.CylinderGeometry(0.05, 0.05, 2.2, 5), mat(0x6b4a2c), x + s, y + 1.0, z));
+  const bar = mesh(new THREE.CylinderGeometry(0.04, 0.04, 2.0, 5), mat(0x6b4a2c), x, y + 2.05, z); bar.rotation.z = Math.PI / 2; scene.add(bar);
+  scene.add(mesh(new THREE.BoxGeometry(1.5, 1.2, 0.04), mat(0x8a5a32), x, y + 1.35, z));
+  addCollider(x, z, 1.0);
+}
+
+function makeGoat(color){
+  const g = new THREE.Group(), m = mat(color);
+  const body = mesh(new THREE.CapsuleGeometry(0.22, 0.55, 3, 8), m, 0, 0.55, 0); body.rotation.x = Math.PI / 2; g.add(body);
+  const head = mesh(new THREE.BoxGeometry(0.18, 0.2, 0.3), m, 0, 0.8, 0.45); g.add(head);
+  for (const s of [-1, 1]){ const h = mesh(new THREE.ConeGeometry(0.03, 0.25, 4), mat(0x3b3229), s * 0.06, 0.98, 0.38, false); h.rotation.x = -0.6; g.add(h); }
+  g.add(mesh(new THREE.ConeGeometry(0.04, 0.12, 4), mat(0x3b3229), 0, 0.64, 0.58, false));
+  const legs = [];
+  for (const [lx, lz] of [[-0.12, 0.25], [0.12, 0.25], [-0.12, -0.25], [0.12, -0.25]]){
+    const lg = new THREE.Group(); lg.position.set(lx, 0.42, lz);
+    const geo = new THREE.CylinderGeometry(0.035, 0.03, 0.42, 5); geo.translate(0, -0.21, 0); lg.add(mesh(geo, m)); g.add(lg); legs.push(lg);
+  }
+  return { group: g, legs, phase: 0 };
+}
+function makeDeer(){
+  const d = makeGoat(0x9a6a3c); d.group.scale.setScalar(1.6);
+  d.group.children.forEach(c => { if (c.geometry && c.geometry.type === 'ConeGeometry') c.visible = false; });
+  for (const s of [-1, 1]){ const a = mesh(new THREE.CylinderGeometry(0.02, 0.025, 0.35, 4), mat(0xd8c8a8), s * 0.08, 1.05, 0.4, false); a.rotation.z = s * 0.5; d.group.add(a);
+    const b = mesh(new THREE.BoxGeometry(0.16, 0.03, 0.06), mat(0xd8c8a8), s * 0.16, 1.2, 0.4, false); d.group.add(b); }
+  for (let i = 0; i < 6; i++) d.group.add(mesh(new THREE.SphereGeometry(0.04, 4, 3), mat(0xf0e4cc), rr(-.2, .2), 0.72, rr(-.3, .3), false));
+  return d;
+}
+function animateLegs(a, speed, dt){
+  a.phase += dt * speed * 5; const s = Math.sin(a.phase) * Math.min(1, speed) * 0.6;
+  a.legs[0].rotation.x = s; a.legs[3].rotation.x = s; a.legs[1].rotation.x = -s; a.legs[2].rotation.x = -s;
+}
+const goats = [[56, -6, 0xe8e2d4], [47, 30, 0x5e4a38], [62, 22, 0xc9b08a]].map(([x, z, c]) => {
+  const a = makeGoat(c); a.group.position.set(x, heightAt(x, z), z); scene.add(a.group);
+  return Object.assign(a, { state: 'wander', home: new V3(x, 0, z), target: new V3(x, 0, z), wait: rr(0, 3), speed: 0 });
+});
+// two goats already safely penned
+for (let i = 0; i < 2; i++){ const a = makeGoat(i ? 0x8a7258 : 0xdcd4c4); const x = PEN.x + rr(-2, 2), z = PEN.z + rr(-2, 2); a.group.position.set(x, heightAt(x, z), z); scene.add(a.group); goats.push(Object.assign(a, { state: 'penned', extra: true, home: PEN.clone(), target: new V3(x, 0, z), wait: rr(0, 3), speed: 0 })); }
+const deer = [];
+for (let i = 0; i < 6; i++){ const d = makeDeer(), x = rr(-60, 60), z = rr(-120, -75); d.group.position.set(x, heightAt(x, z), z); scene.add(d.group); deer.push(Object.assign(d, { home: new V3(x, 0, z), target: new V3(x, 0, z), wait: rr(0, 4), speed: 0 })); }
+// a couple of village pigs
+const pigs = [];
+for (const [x, z] of [[-14, -16], [16, -10]]){
+  const p = makeGoat(0x5a4436); p.group.children.forEach(c => { if (c.geometry && c.geometry.type === 'ConeGeometry') c.visible = false; }); p.group.scale.set(1.1, 0.85, 1.1);
+  p.group.position.set(x, heightAt(x, z), z); scene.add(p.group); pigs.push(Object.assign(p, { home: new V3(x, 0, z), target: new V3(x, 0, z), wait: 2, speed: 0 }));
+}
+
+/* ======================= COLLECTIBLES ======================= */
+const pickups = [];
+function addPickup(kind, obj, x, z, yOff = 0){
+  obj.position.set(x, heightAt(x, z) + yOff, z); scene.add(obj);
+  const p = { kind, obj, pos: obj.position, taken: false }; pickups.push(p); return p;
+}
+function branch(){ const g = new THREE.Group(); const b = mesh(new THREE.CylinderGeometry(0.07, 0.11, 1.7, 5), mat(0x6a4a2e), 0, 0.1, 0); b.rotation.z = Math.PI / 2; g.add(b); const t = mesh(new THREE.CylinderGeometry(0.03, 0.05, 0.7, 4), mat(0x6a4a2e), 0.3, 0.25, 0.15); t.rotation.z = 0.8; g.add(t); g.rotation.y = rr(0, 6); return g; }
+for (const [x, z] of [[-12, -54], [-4, -58], [3, -52], [12, -57], [18, -53], [-18, -58]]) addPickup('wood', branch(), x, z);
+function sheaf(){ const g = new THREE.Group(); for (let i = 0; i < 14; i++){ const s = mesh(new THREE.ConeGeometry(0.04, 1.5, 4), mat(0xe0b452), rr(-.25, .25), 0.75, rr(-.25, .25), false); s.rotation.set(rr(-.2, .2), 0, rr(-.2, .2)); g.add(s); } g.add(mesh(new THREE.TorusGeometry(0.2, 0.04, 4, 10).rotateX(Math.PI / 2), mat(0x8a6a3a), 0, 0.6, 0, false)); return g; }
+for (const [x, z] of [[-46, -6], [-55, 4], [-60, -9], [-48, 7], [-64, 2], [-57, -12]]) addPickup('grain', sheaf(), x, z);
+const FRUIT_TREES = [['olive', -38, -34, 0x2e3a1e, 'olives'], ['fig', -30, -44, 0x5a2a4a, 'figs'], ['pistachio', -46, -46, 0xb04a3a, 'pistachios']];
+for (const [kind, x, z, fc, name] of FRUIT_TREES){
+  tree(kind, x, z, 1.3);
+  for (let i = 0; i < 3; i++){
+    const a = i / 3 * Math.PI * 2 + 0.4, g = new THREE.Group();
+    for (let k = 0; k < 4; k++) g.add(mesh(new THREE.SphereGeometry(kind === 'fig' ? 0.1 : 0.06, 6, 5), mat(fc), rr(-.12, .12), rr(-.1, .1), rr(-.12, .12), false));
+    const p = addPickup('fruit', g, x + Math.cos(a) * 1.9, z + Math.sin(a) * 1.9, 2.0); p.label = name;
+  }
+}
+for (const x of [-12, -18, -24, -8]){
+  const b = bankPoint(x), m = mesh(new THREE.SphereGeometry(0.45, 8, 6), mat(0x8a4f30, { roughness: 0.6 }), 0, 0, 0); m.scale.y = 0.45;
+  addPickup('clay', m, b.x, b.z, 0.05);
+}
+
+/* objective marker */
+const marker = mesh(new THREE.OctahedronGeometry(0.32, 0), new THREE.MeshBasicMaterial({ color: 0xffc94a }), 0, 0, 0, false);
+const markerRing = mesh(new THREE.TorusGeometry(0.55, 0.05, 6, 24), new THREE.MeshBasicMaterial({ color: 0xffc94a, transparent: true, opacity: 0.6 }), 0, 0, 0, false);
+markerRing.rotation.x = Math.PI / 2; scene.add(marker, markerRing);
+
+/* ======================= PLAYER ======================= */
+const HERO_LOOK = {
+  girl: { tunic: 0xb5532c, braid: true, scale: 0.8, belt: 0x7fc3b0 },
+  boy: { tunic: 0xc08a3e, scale: 0.82, belt: 0x7fc3b0 },
+};
+const HERO_NAME = { girl: 'Ana', boy: 'Ari' };
+let HERO = 'girl';
+const player = makePerson(HERO_LOOK.girl);
+function setHero(kind){
+  HERO = kind;
+  const old = player.group, np = makePerson(HERO_LOOK[kind]);
+  np.group.position.copy(old.position); np.group.rotation.copy(old.rotation);
+  scene.remove(old); scene.add(np.group); Object.assign(player, np);
+}
+player.group.position.set(4.8, heightAt(4.8, 6.4), 6.4); player.group.rotation.y = -2.4;
+scene.add(player.group);
+const pState = { vel: new V3(), speed: 0 };
+const cam = { yaw: 0.9, pitch: 0.42, dist: 7.2 };
+
+/* ======================= GAME STATE ======================= */
+let NAME = 'Ana';
+const S = { stage: 0, skin: false, water: false, wood: 0, sickle: false, grain: 0, penned: 0, fruit: 0, fruitKinds: {}, bowl: false, obsidian: false, clay: 0, plaster: 0, bone: false, pendant: false, done: false };
+const learned = [];
+const TOTAL_STAGES = 11;
+const STAGE_TITLES = ['Good morning', 'Water from the river', 'Wood for the hearth', 'The harvest', 'Grinding grain', 'Runaway goats', 'Gifts of the wild trees', 'A trade across the sea', 'Fresh plaster', 'A needle of bone', 'The Elder’s story', 'Home by the fire'];
+
+const FACTS = {
+  water: { art: '\u{1FAA8}', title: 'A village without pots', text: '<p>The people of Choirokoitia lived in the <b>Aceramic Neolithic</b>, which means the "Neolithic without pottery". They had not started making clay pots yet.</p><p>Instead, skilled craftspeople carved beautiful bowls from hard grey <b>andesite</b> stone found in the Maroni river. Baskets, wooden containers and animal skins probably held water and food too.</p>' },
+  hearth: { art: '\u{1F525}', title: 'The heart of every home', text: '<p>Each round house had a <b>hearth</b> for cooking and for warmth on cold winter nights. Archaeologists still find ash, burnt bones and charred seeds in them.</p><p>Fire was also used to heat stones for cooking, and to make lime plaster.</p>' },
+  farming: { art: '\u{1F33E}', title: 'Among the first farmers', text: '<p>The villagers grew cereals such as <b>einkorn wheat, emmer wheat and barley</b>, and pulses such as <b>lentils</b> and peas. These crops had first been tamed in the Near East and were carried to Cyprus by boat.</p><p>They harvested with sickles made of sharp <b>chert</b> (flint-like stone) blades set in wooden handles. The grain stalks polished the blades, leaving a shine archaeologists call "sickle gloss".</p>' },
+  quern: { art: '\u{1FAD3}', title: 'Flour from stone', text: '<p>Many <b>grinding stones</b> (querns and rubbers) have been found in the houses of Choirokoitia. Grinding grain by hand was hard, slow work that people did almost every day.</p><p>The flour was used for porridge and flat breads baked on hot stones.</p>' },
+  animals: { art: '\u{1F410}', title: 'Animals that came by boat', text: '<p>Before people arrived, Cyprus had no goats, sheep, pigs or deer. Neolithic settlers brought them across the sea in boats from the mainland.</p><p>At Choirokoitia, people kept <b>sheep, goats and pigs</b>. Cattle had been brought to the island earlier, but by this time they had disappeared, and they did not return to Cyprus for thousands of years.</p>' },
+  fruit: { art: '\u{1F33F}', title: 'Food from the wild', text: '<p>Farming did not stop people from gathering. Seeds found at the site show the villagers collected wild fruits and nuts such as <b>figs, olives and pistachios</b>, as well as plums and other plants.</p><p>A mix of farming, herding, hunting and gathering kept the village fed in good years and bad.</p>' },
+  obsidian: { art: '\u{1F48E}', title: 'Treasure from across the sea', text: '<p><b>Obsidian</b> is a shiny black volcanic glass that makes razor-sharp blades. There is none on Cyprus. The obsidian found at Choirokoitia came from <b>central Anatolia</b> (modern Turkey), so it had to cross the sea.</p><p>This shows that Neolithic people sailed and kept in touch with the mainland. Local craftspeople also made jewellery from <b>picrolite</b>, a soft blue-green stone from Cyprus, and from shells and carnelian.</p>' },
+  house: { art: '\u{1F3E0}', title: 'Round houses of stone and mud', text: '<p>The houses of Choirokoitia were <b>round</b>. Their walls were built of river stones and <b>mudbrick</b>, then covered with mud plaster. Most archaeologists now think they had <b>flat roofs</b> of branches, reeds and packed earth.</p><p>Several round buildings were grouped around a small courtyard to make a family home. Floors were re-plastered again and again, and some larger houses had stone pillars holding up an upper floor.</p>' },
+  deer: { art: '\u{1F98C}', title: 'Hunters of the forest', text: '<p>The most important wild animal was the <b>Mesopotamian fallow deer</b>, which lived in the woods of Cyprus. Hunting gave the village much of its meat.</p><p>Nothing was wasted. Hides became clothes and bags, and bones were shaped into <b>needles, awls and points</b> for sewing and making things.</p>' },
+  wall: { art: '\u{1F9F1}', title: 'The great village wall', text: '<p>A massive stone wall ran around the village. Its entrance was a clever <b>stairway built into the wall</b>, so people climbed up and through it to come in.</p><p>As the village grew, a new wall was built further out. Building it needed the whole community to work together.</p>' },
+  ancestors: { art: '\u{1F56F}\u{FE0F}', title: 'Keeping the ancestors close', text: '<p>When someone died, the people of Choirokoitia <b>buried them under the floor of their house</b>, in a pit, lying curled up on one side. Sometimes gifts were placed with them, such as stone bowls or necklaces.</p><p>This suggests that families wanted to keep their ancestors near them. Little human figures carved in stone show they had rich beliefs too.</p>' },
+  discovery: { art: '\u{1F50D}', title: 'How do we know all this?', text: '<p>Choirokoitia was discovered in <b>1934</b> and first excavated by <b>Porphyrios Dikaios</b> of the Cyprus Department of Antiquities. Excavations later continued under the French archaeologist <b>Alain Le Brun</b>.</p><p>It is one of the best-preserved prehistoric villages in the eastern Mediterranean, and in <b>1998</b> it became a <b>UNESCO World Heritage Site</b>. Today you can visit it near the village of Choirokoitia and walk around full-size reconstructed houses.</p>' },
+  chert: { art: '\u{1FA93}', title: 'Tools of chert', text: '<p>Most everyday tools were made by <b>knapping</b> chert, a hard stone found in the hills. Striking it carefully breaks off sharp flakes and blades, used as knives, scrapers, borers and sickle blades.</p>' },
+  baskets: { art: '\u{1F9FA}', title: 'Baskets and mats', text: '<p>Without pottery, containers of plant fibre were very important. Reeds and rushes from the river could be woven into baskets and mats. Prints of matting have even been found pressed into clay at Neolithic sites in Cyprus.</p>' },
+  boats: { art: '\u{1F6F6}', title: 'Sailors of the Stone Age', text: '<p>Cyprus is an island, so the first farmers, their seeds and their animals all had to cross the sea, at least 60 km at the shortest crossing from the mainland. Nobody has found one of their boats, but the animals they brought prove they made the journey many times.</p>' },
+};
+
+/* ======================= SOUND (all generated with Web Audio, no files) ======================= */
+const Sound = (() => {
+  const pref = { music: 0.55, sfx: 0.8, muted: false };
+  try { Object.assign(pref, JSON.parse(localStorage.getItem('choiro-sound') || '{}')); } catch (e) {}
+  const save = () => { try { localStorage.setItem('choiro-sound', JSON.stringify(pref)); } catch (e) {} };
+  let ctx = null, master, musicG, sfxG, ambG, noise, verb;
+  const A = {};
+  let dusk = 0, birdT = 3, crackT = 0, goatT = 8, beatN = 0, drumOn = false;
+  const NOTE = n => 440 * Math.pow(2, (n - 69) / 12);
+  const SCALE = [62, 64, 67, 69, 72, 74, 76];           // D E G A C D E: an old, open-sounding mode
+  const R = Math.random;
+
+  function impulse(sec, decay){
+    const len = ctx.sampleRate * sec, b = ctx.createBuffer(2, len, ctx.sampleRate);
+    for (let c = 0; c < 2; c++){ const d = b.getChannelData(c); for (let i = 0; i < len; i++) d[i] = (R() * 2 - 1) * Math.pow(1 - i / len, decay); }
+    return b;
+  }
+  function gain(v, dest){ const g = ctx.createGain(); g.gain.value = v; if (dest) g.connect(dest); return g; }
+  function env(g, t, a, peak, d){ g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(peak, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); }
+  function tone(type, f, t, dur, peak, dest, a = 0.005, f2){
+    const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.setValueAtTime(f, t);
+    if (f2) o.frequency.exponentialRampToValueAtTime(f2, t + a + dur);
+    env(g, t, a, peak, dur); o.connect(g); g.connect(dest); o.start(t); o.stop(t + a + dur + 0.05); return o;
+  }
+  function hiss(t, dur, peak, type, f, Q, dest, rate = 1, f2){
+    const s = ctx.createBufferSource(); s.buffer = noise; s.playbackRate.value = rate;
+    const fl = ctx.createBiquadFilter(); fl.type = type; fl.frequency.setValueAtTime(f, t); fl.Q.value = Q;
+    if (f2) fl.frequency.exponentialRampToValueAtTime(f2, t + dur);
+    const g = ctx.createGain(); env(g, t, 0.004, peak, dur);
+    s.connect(fl); fl.connect(g); g.connect(dest); s.start(t, R() * 1.5); s.stop(t + dur + 0.05);
+  }
+  function loopNoise(){ const s = ctx.createBufferSource(); s.buffer = noise; s.loop = true; s.start(0, R() * 2); return s; }
+  function panner(p){ if (!ctx.createStereoPanner) return gain(1, ambG); const n = ctx.createStereoPanner(); n.pan.value = p; n.connect(ambG); return n; }
+
+  /* ---- instruments ---- */
+  function flute(f, t, dur, dest = musicG, vol = 0.07){
+    const o = ctx.createOscillator(), o2 = ctx.createOscillator(), g = ctx.createGain(), g2 = gain(0.12);
+    o.type = 'sine'; o2.type = 'triangle';
+    o.frequency.setValueAtTime(f * 0.985, t); o.frequency.exponentialRampToValueAtTime(f, t + 0.09);
+    o2.frequency.setValueAtTime(f * 2, t);
+    const lfo = ctx.createOscillator(), lg = ctx.createGain(); lfo.frequency.value = 4.8 + R();
+    lg.gain.setValueAtTime(0, t); lg.gain.linearRampToValueAtTime(f * 0.007, t + Math.min(0.5, dur));
+    lfo.connect(lg); lg.connect(o.frequency); lg.connect(o2.frequency);
+    g.gain.setValueAtTime(0.0001, t); g.gain.linearRampToValueAtTime(vol, t + 0.13);
+    g.gain.linearRampToValueAtTime(vol * 0.75, t + dur); g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.55);
+    o.connect(g); o2.connect(g2); g2.connect(g); g.connect(dest);
+    for (const x of [o, o2, lfo]){ x.start(t); x.stop(t + dur + 0.6); }
+    hiss(t, 0.16, vol * 0.18, 'bandpass', f * 2, 2, dest);
+  }
+  function lyre(f, t, dest = musicG){
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 1800; lp.connect(dest);
+    tone('triangle', f, t, 2.2, 0.05, lp, 0.004); tone('sine', f * 2.01, t, 1.0, 0.015, lp, 0.004);
+  }
+  function drum(t, accent){
+    tone('sine', 95, t, 0.45, accent ? 0.16 : 0.09, musicG, 0.006, 42);
+    hiss(t, 0.06, accent ? 0.03 : 0.018, 'lowpass', 500, 0.7, musicG);
+  }
+  function stoneChime(f, t, vol, dest){ // a lithophone: ringing stone, inharmonic partials
+    tone('sine', f, t, 2.6, vol, dest, 0.003); tone('sine', f * 2.76, t, 1.1, vol * 0.4, dest, 0.003); tone('sine', f * 5.4, t, 0.5, vol * 0.18, dest, 0.003);
+  }
+
+  /* ---- music: generative, never quite repeats ---- */
+  function startMusic(){
+    const lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 480; A.droneLP = lp;
+    const dg = gain(0.045, musicG); lp.connect(dg);
+    for (const [n, det, v] of [[38, 0, 0.6], [45, 4, 0.5], [50, -5, 0.25]]){ const o = ctx.createOscillator(); o.type = 'sawtooth'; o.frequency.value = NOTE(n); o.detune.value = det; o.connect(gain(v, lp)); o.start(); }
+    const lfo = ctx.createOscillator(); lfo.frequency.value = 0.045; const lg = gain(0.018); lfo.connect(lg); lg.connect(dg.gain); lfo.start();
+    let next = ctx.currentTime + 2, left = 0, idx = 3, beat = ctx.currentTime + 4;
+    setInterval(() => {
+      if (!ctx || ctx.state !== 'running') return;
+      const now = ctx.currentTime;
+      if (next < now) next = now + 0.2;
+      while (next < now + 0.8){
+        if (left <= 0){ left = 4 + Math.floor(R() * 5); next += 3 + R() * 4.5; continue; }
+        idx = clamp(idx + [-2, -1, -1, 0, 1, 1, 2][Math.floor(R() * 7)], 0, SCALE.length - 1);
+        if (left === 1) idx = [0, 3, 5].reduce((a, b) => Math.abs(b - idx) < Math.abs(a - idx) ? b : a); // settle on D or A
+        const dur = [0.8, 1.1, 1.5, 2.2][Math.floor(R() * 4)] * (1 + dusk * 0.5);
+        flute(NOTE(SCALE[idx] - (dusk > 0.6 ? 12 : 0)), next, dur);
+        if (R() < 0.22) lyre(NOTE(SCALE[Math.floor(R() * 4)] - 12), next);
+        left--; next += dur;
+      }
+      if (beat < now) beat = now + 0.2;
+      while (beat < now + 0.8){
+        if (beatN % 16 === 0) drumOn = R() < 0.55;
+        if (drumOn) drum(beat, beatN % 4 === 0);
+        beat += 1.3 * (1 + dusk * 0.35); beatN++;
+      }
+    }, 150);
+  }
+
+  /* ---- ambience ---- */
+  function startAmbience(){
+    const w = loopNoise(), wf = ctx.createBiquadFilter(); wf.type = 'bandpass'; wf.frequency.value = 450; wf.Q.value = 0.6;
+    const wg = gain(0.03, ambG); w.connect(wf); wf.connect(wg);
+    const l1 = ctx.createOscillator(); l1.frequency.value = 0.07; const l1g = gain(220); l1.connect(l1g); l1g.connect(wf.frequency); l1.start();
+    const l2 = ctx.createOscillator(); l2.frequency.value = 0.11; const l2g = gain(0.015); l2.connect(l2g); l2g.connect(wg.gain); l2.start();
+
+    A.riverG = gain(0, ambG);
+    const r1 = loopNoise(), rf = ctx.createBiquadFilter(); rf.type = 'lowpass'; rf.frequency.value = 800; r1.connect(rf); rf.connect(A.riverG);
+    const r2 = loopNoise(), rf2 = ctx.createBiquadFilter(); rf2.type = 'bandpass'; rf2.frequency.value = 2600; rf2.Q.value = 1.2; r2.connect(rf2); rf2.connect(gain(0.35, A.riverG));
+
+    A.fireG = gain(0, ambG);
+    const f1 = loopNoise(), ff = ctx.createBiquadFilter(); ff.type = 'lowpass'; ff.frequency.value = 260; f1.connect(ff); ff.connect(A.fireG);
+
+    A.cricketG = gain(0, ambG);
+    const pulse = gain(0.5, A.cricketG);     // slow swell of the chorus, kept separate from the dusk level
+    const c = ctx.createOscillator(); c.frequency.value = 4400; const cg = gain(0.5); c.connect(cg); cg.connect(pulse);
+    const cl = ctx.createOscillator(); cl.type = 'square'; cl.frequency.value = 24; const clg = gain(0.5); cl.connect(clg); clg.connect(cg.gain);
+    const cs = ctx.createOscillator(); cs.frequency.value = 0.9; const csg = gain(0.5); cs.connect(csg); csg.connect(pulse.gain);
+    for (const o of [c, cl, cs]) o.start();
+  }
+  function bird(){
+    const t = ctx.currentTime, out = panner(R() * 1.6 - 0.8), base = 2100 + R() * 1600, n = 2 + Math.floor(R() * 4);
+    for (let i = 0; i < n; i++){ const s = t + i * (0.11 + R() * 0.06); tone('sine', base, s, 0.07, 0.022, out, 0.01, base * (1.25 + R() * 0.3)); }
+  }
+
+  /* ---- public API ---- */
+  const api = {
+    pref,
+    init(){
+      if (ctx){ ctx.resume(); return; }
+      const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return;
+      ctx = new AC();
+      const comp = ctx.createDynamicsCompressor(); comp.threshold.value = -16; comp.ratio.value = 3; comp.connect(ctx.destination);
+      master = gain(1, comp); musicG = gain(0, master); sfxG = gain(0, master); ambG = gain(0, master);
+      verb = ctx.createConvolver(); verb.buffer = impulse(3.2, 2.6); verb.connect(master);
+      musicG.connect(gain(0.55, verb)); sfxG.connect(gain(0.18, verb));
+      noise = ctx.createBuffer(1, ctx.sampleRate * 2, ctx.sampleRate);
+      const d = noise.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = R() * 2 - 1;
+      api.apply(); startAmbience(); startMusic();
+      document.addEventListener('visibilitychange', () => { if (!ctx) return; document.hidden ? ctx.suspend() : ctx.resume(); });
+    },
+    apply(){
+      save(); if (!ctx) return; const t = ctx.currentTime;
+      master.gain.setTargetAtTime(pref.muted ? 0 : 1, t, 0.08);
+      musicG.gain.setTargetAtTime(pref.music, t, 0.1); sfxG.gain.setTargetAtTime(pref.sfx, t, 0.1); ambG.gain.setTargetAtTime(pref.sfx * 0.9, t, 0.1);
+    },
+    toggleMute(){ pref.muted = !pref.muted; api.apply(); return pref.muted; },
+    update(dt, pos, dayT, fireD, riverD, goatD){
+      if (!ctx || ctx.state !== 'running') return; const t = ctx.currentTime;
+      dusk = clamp((dayT - 0.78) / 0.22, 0, 1);
+      A.riverG.gain.setTargetAtTime(Math.pow(clamp(1 - riverD / 38, 0, 1), 2) * 0.4, t, 0.3);
+      A.fireG.gain.setTargetAtTime(Math.pow(clamp(1 - fireD / 14, 0, 1), 2) * 0.16, t, 0.3);
+      A.cricketG.gain.setTargetAtTime(dusk * 0.006, t, 0.5);
+      A.droneLP.frequency.setTargetAtTime(480 - dusk * 160, t, 1);
+      if ((birdT -= dt) < 0){ birdT = 1.5 + R() * 5; if (dusk < 0.6 && pos.z > -120) bird(); }
+      if (fireD < 14 && (crackT -= dt) < 0){ crackT = 0.04 + R() * 0.3; const v = Math.pow(1 - fireD / 14, 2); hiss(t, 0.012 + R() * 0.03, v * (0.07 + R() * 0.15), 'highpass', 1500 + R() * 3500, 0.7, ambG); }
+      if ((goatT -= dt) < 0){ goatT = 6 + R() * 10; if (goatD < 25) api.bleat(clamp(1 - goatD / 25, 0.15, 1)); }
+    },
+    step(run, soft){
+      if (!ctx) return; const t = ctx.currentTime;
+      hiss(t, 0.07, run ? 0.11 : 0.08, 'lowpass', 450 + R() * 400, 1, sfxG, 0.8 + R() * 0.4);
+      if (soft) hiss(t, 0.18, 0.04, 'bandpass', 3200, 1.4, sfxG);
+    },
+    blip(){ if (!ctx) return; const t = ctx.currentTime; tone('sine', 620 + R() * 60, t, 0.08, 0.035, sfxG); tone('triangle', 1250, t, 0.04, 0.008, sfxG); },
+    click(){ if (!ctx) return; tone('sine', 900, ctx.currentTime, 0.03, 0.03, sfxG); },
+    chime(){ if (!ctx) return; const t = ctx.currentTime; [74, 81, 86].forEach((n, i) => stoneChime(NOTE(n), t + i * 0.13, 0.05 / (1 + i * 0.4), sfxG)); },
+    quest(){ if (!ctx) return; const t = ctx.currentTime + 0.05; [62, 67, 69, 74].forEach((n, i) => flute(NOTE(n + 12), t + i * 0.2, i === 3 ? 0.9 : 0.18, sfxG, 0.06)); },
+    pickup(kind){
+      if (!ctx) return; const t = ctx.currentTime;
+      if (kind === 'wood'){ tone('triangle', 170, t, 0.12, 0.13, sfxG); tone('triangle', 230, t + 0.09, 0.1, 0.1, sfxG); hiss(t, 0.05, 0.05, 'lowpass', 900, 1, sfxG); }
+      else if (kind === 'grain'){ hiss(t, 0.22, 0.09, 'bandpass', 2800, 1.2, sfxG, 1, 4500); hiss(t + 0.12, 0.18, 0.06, 'bandpass', 3400, 1.2, sfxG); }
+      else if (kind === 'fruit'){ tone('sine', 650, t, 0.08, 0.1, sfxG, 0.003, 320); }
+      else if (kind === 'clay'){ hiss(t, 0.28, 0.14, 'lowpass', 1300, 2, sfxG, 1, 250); tone('sine', 130, t, 0.2, 0.08, sfxG, 0.01, 70); }
+    },
+    water(){ if (!ctx) return; const t = ctx.currentTime; for (let i = 0; i < 14; i++){ const f = 280 + R() * 600; tone('sine', f, t + i * 0.07 + R() * 0.04, 0.05, 0.05, sfxG, 0.004, f * 1.9); } hiss(t, 0.9, 0.05, 'lowpass', 900, 1, sfxG); },
+    smear(){ if (!ctx) return; const t = ctx.currentTime; hiss(t, 0.35, 0.12, 'bandpass', 500, 1.5, sfxG, 1, 1800); hiss(t + 0.3, 0.12, 0.06, 'lowpass', 400, 1, sfxG); },
+    grind(ok){ if (!ctx) return; const t = ctx.currentTime; if (ok){ hiss(t, 0.32, 0.18, 'bandpass', 1100, 0.9, sfxG, 0.7, 500); } else tone('sine', 105, t, 0.2, 0.1, sfxG); },
+    bleat(vol = 1){
+      if (!ctx) return; const t = ctx.currentTime, o = ctx.createOscillator(); o.type = 'sawtooth';
+      const f = 300 + R() * 80; o.frequency.setValueAtTime(f, t); o.frequency.linearRampToValueAtTime(f * 0.9, t + 0.6);
+      const v = ctx.createOscillator(), vg = gain(22); v.frequency.value = 7 + R() * 2; v.connect(vg); vg.connect(o.frequency);
+      const g = ctx.createGain(); env(g, t, 0.05, 0.07 * vol, 0.55);
+      const b1 = ctx.createBiquadFilter(); b1.type = 'bandpass'; b1.frequency.value = 900; b1.Q.value = 3;
+      const b2 = ctx.createBiquadFilter(); b2.type = 'bandpass'; b2.frequency.value = 2400; b2.Q.value = 4;
+      o.connect(b1); o.connect(b2); b1.connect(g); b2.connect(g); g.connect(sfxG);
+      for (const x of [o, v]){ x.start(t); x.stop(t + 0.7); }
+    },
+    right(){ if (!ctx) return; const t = ctx.currentTime; stoneChime(NOTE(74), t, 0.05, sfxG); stoneChime(NOTE(81), t + 0.14, 0.05, sfxG); },
+    wrong(){ if (!ctx) return; const t = ctx.currentTime; tone('triangle', NOTE(57), t, 0.25, 0.07, sfxG, 0.01); tone('triangle', NOTE(55), t + 0.18, 0.35, 0.07, sfxG, 0.01); },
+    finale(){ if (!ctx) return; const t = ctx.currentTime + 0.1; [[62, 0.5], [69, 0.5], [67, 0.4], [69, 0.4], [74, 1.6]].reduce((s, [n, d]) => { flute(NOTE(n), t + s, d, sfxG, 0.06); return s + d; }, 0); lyre(NOTE(50), t); lyre(NOTE(57), t + 1.8); },
+  };
+  return api;
+})();
+
+/* ======================= UI ======================= */
+const ui = { dialog: false, fact: false, mg: null, modal: null, started: false };
+const busy = () => !ui.started || ui.dialog || ui.fact || ui.mg || ui.modal;
+function toast(t){ const el = $('toast'); el.textContent = t; el.style.opacity = 1; clearTimeout(toast.h); toast.h = setTimeout(() => el.style.opacity = 0, 1600); }
+
+let dq = null, dDone = null;
+function say(lines, done){ dq = lines.slice(); dDone = done || null; ui.dialog = true; $('dialog').hidden = false; nextLine(); }
+function nextLine(){
+  if (!dq || !dq.length){ $('dialog').hidden = true; ui.dialog = false; const d = dDone; dq = dDone = null; d && d(); return; }
+  Sound.blip();
+  const [who, txt] = dq.shift(); $('dWho').textContent = who === 'me' ? NAME : who; $('dTxt').textContent = txt.replaceAll('{N}', NAME).replaceAll('{child}', HERO === 'boy' ? 'son' : 'daughter');
+}
+$('dialog').addEventListener('click', nextLine);
+
+let fDone = null;
+function fact(key, done){
+  const f = FACTS[key]; if (!learned.includes(key)) learned.push(key);
+  $('fArt').textContent = f.art; $('fTitle').textContent = f.title; $('fText').innerHTML = f.text;
+  $('factCount').textContent = learned.length;
+  $('fact').hidden = false; ui.fact = true; fDone = done || null; $('fBtn').focus(); Sound.chime();
+}
+function closeFact(){ $('fact').hidden = true; ui.fact = false; const d = fDone; fDone = null; d && d(); }
+$('fBtn').addEventListener('click', closeFact);
+function facts(keys, done){ if (!keys.length) return done && done(); fact(keys[0], () => facts(keys.slice(1), done)); }
+
+function openModal(id){ ui.modal = id; $(id).hidden = false; }
+function closeModal(id){ $(id).hidden = true; if (ui.modal === id) ui.modal = null; }
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => closeModal(b.dataset.close)));
+function openJournal(){
+  const L = $('journalList'); L.innerHTML = '';
+  if (!learned.length) L.innerHTML = '<p>Nothing yet. Help your family and talk to villagers to fill your journal.</p>';
+  for (const k of learned){ const d = document.createElement('div'); d.innerHTML = `<b>${FACTS[k].art} ${FACTS[k].title}</b><p>${FACTS[k].text.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim()}</p>`; L.appendChild(d); }
+  openModal('journal');
+}
+$('journalBtn').addEventListener('click', openJournal);
+$('helpBtn').addEventListener('click', () => openModal('help'));
+
+function updateInv(){
+  const it = [];
+  if (S.skin) it.push(S.water ? '\u{1F4A7} Full waterskin' : '\u{1FAA3} Empty waterskin');
+  if (S.wood && S.stage === 2) it.push(`\u{1FAB5} Wood ${S.wood}/4`);
+  if (S.sickle && S.stage === 3) it.push('\u{1F52A} Chert sickle');
+  if (S.grain && S.stage <= 4) it.push(`\u{1F33E} Grain ${S.grain}/5`);
+  if (S.fruit && S.stage === 6) it.push(`\u{1F33F} Fruit ${S.fruit}/6`);
+  if (S.bowl) it.push('\u{1F963} Andesite bowl');
+  if (S.obsidian) it.push('\u{1F48E} Obsidian blades');
+  if (S.clay && S.stage === 8 && S.plaster < 5) it.push(`\u{1F7EB} Clay ${S.clay}/3`);
+  if (S.bone) it.push('\u{1F9B4} Deer bone');
+  if (S.pendant) it.push('\u{1F49A} Picrolite pendant');
+  $('inv').innerHTML = it.map(t => `<span>${t}</span>`).join('');
+}
+
+/* ======================= STORY / QUESTS ======================= */
+const P = { river: bankPoint(4), home: new V3(HOME.x, 0, HOME.z) };
+function nearestPickup(kind){
+  let best = null, bd = 1e9; const pp = player.group.position;
+  for (const p of pickups) if (p.kind === kind && !p.taken){ const d = p.pos.distanceToSquared(pp); if (d < bd){ bd = d; best = p; } }
+  return best;
+}
+function objective(){
+  const n = npcs;
+  switch (S.stage){
+    case 0: return { d: 'Mother is waiting by the hearth in your courtyard. Go and say good morning.', at: n.mother };
+    case 1: return S.water ? { d: 'Carry the water back to Mother.', at: n.mother } : { d: 'Fill the waterskin at the Maroni river, down the hill to the south.', at: P.river };
+    case 2: return S.wood < 4 ? { d: `Gather fallen branches at the edge of the pine forest to the north (${S.wood}/4). The way out is the stairway gate in the west wall, or go round by the river.`, at: nearestPickup('wood') } : { d: 'Bring the firewood to Mother at the hearth.', at: n.mother };
+    case 3: return !S.sickle ? { d: 'Father is working in the wheat fields outside the west gate. Go and help him.', at: n.father } : S.grain < 5 ? { d: `Cut ripe bundles of wheat and barley with your chert sickle (${S.grain}/5).`, at: nearestPickup('grain') } : { d: 'Show Father your harvest.', at: n.father };
+    case 4: return { d: 'Take the grain to Grandmother. Her grinding stone is in the courtyard east of your house.', at: n.grandma };
+    case 5: { const f = goats.find(g => g.state === 'follow'), w = goats.find(g => g.state === 'wander');
+      return { d: `Three goats have run off! Find them east of the village and lead them back to the pen (${S.penned}/3). Walk close and press E to call a goat.`, at: f ? { group: { position: PEN } } : w ? w : PEN }; }
+    case 6: return S.fruit < 6 ? { d: `Collect figs, olives and pistachios from the wild trees north-west of the village (${S.fruit}/6).`, at: nearestPickup('fruit') } : { d: 'Bring the fruit to Mother.', at: n.mother };
+    case 7: return S.obsidian ? { d: 'Bring the obsidian blades to the Stone-carver.', at: n.carver } : S.bowl ? { d: 'Find the Traveller who arrived by canoe on the riverbank to the south-east, and trade the bowl.', at: n.trader } : { d: 'The Stone-carver in the village wants to see you.', at: n.carver };
+    case 8: return S.plaster >= 5 ? { d: 'Tell Mother the wall is finished.', at: n.mother } : S.clay < 3 ? { d: `Dig sticky clay from the riverbank, south-west of the village (${S.clay}/3).`, at: nearestPickup('clay') } : { d: `Smear the clay over the cracks in your house wall (${S.plaster}/5).`, at: P.home };
+    case 9: return S.bone ? { d: 'Take the deer bone to Grandmother.', at: n.grandma } : { d: 'Uncle is back from the hunt. Find him by the drying rack north of the village wall.', at: n.uncle };
+    case 10: return { d: 'The sun is setting. The Village Elder is waiting by the stairway gate.', at: n.elder };
+    case 11: return { d: 'Go home to the hearth. Mother has cooked supper.', at: n.mother };
+    default: return { d: 'Explore the village, talk to everyone, or take the quiz from your journal.', at: null };
+  }
+}
+function targetPos(){
+  const o = objective().at; if (!o) return null;
+  if (o.isVector3) return o;
+  if (o.group) return o.group.position;
+  if (o.pos) return o.pos;
+  return null;
+}
+function refreshHUD(){
+  const st = Math.min(S.stage, TOTAL_STAGES);
+  $('qStep').textContent = S.stage > TOTAL_STAGES ? 'All chores done' : S.stage === 0 ? 'Morning' : `Chore ${st} of ${TOTAL_STAGES}`;
+  $('qTitle').textContent = STAGE_TITLES[Math.min(S.stage, STAGE_TITLES.length - 1)];
+  if (S.stage > TOTAL_STAGES) $('qTitle').textContent = 'A day well done';
+  $('qText').textContent = objective().d;
+  const steps = $('steps'); steps.innerHTML = '';
+  for (let i = 1; i <= TOTAL_STAGES; i++){ const e = document.createElement('i'); if (i < S.stage) e.className = 'done'; else if (i === S.stage) e.className = 'now'; steps.appendChild(e); }
+  updateInv();
+}
+function advance(to){ S.stage = to; $('quest').classList.remove('collapsed'); refreshHUD(); Sound.quest(); toast(to <= TOTAL_STAGES ? STAGE_TITLES[to] : 'Well done!'); }
+
+function remind(who){ say([[who, 'Remember: ' + objective().d]]); }
+const TALK = {
+  mother(){
+    const M = 'Mother';
+    if (S.stage === 0) return say([
+      [M, 'Good morning, {N}! The sun is already over the hills and there is so much to do today.'],
+      ['me', 'Good morning, Mother! What can I do?'],
+      [M, 'First we need water. Take this waterskin down to the Maroni river and fill it. Mind the steep path!'],
+      [M, 'You know we have no pots like the strange clay ones people will make long after us. Skins, baskets and stone bowls must do.'],
+    ], () => { S.skin = true; advance(1); });
+    if (S.stage === 1 && S.water) return say([[M, 'Lovely cold river water. Thank you, {N}!'], [M, 'Now the fire is getting low. Can you fetch firewood from the edge of the pine forest, north of the village?']],
+      () => facts(['water'], () => { S.water = false; S.skin = false; advance(2); }));
+    if (S.stage === 2 && S.wood >= 4) return say([[M, 'What a big bundle! The hearth will burn all day now.'], [M, 'Your father needs help in the fields. Go out through the stairway gate in the west wall.']],
+      () => facts(['hearth'], () => advance(3)));
+    if (S.stage === 6 && S.fruit >= 6) return say([[M, 'Sweet figs, olives and pistachios! We will dry some on the roof for winter.'], [M, 'Oh, the Stone-carver came by looking for you. He has a special job.']],
+      () => facts(['fruit'], () => advance(7)));
+    if (S.stage === 8 && S.plaster >= 5) return say([[M, 'The wall looks as good as new. Rain will not get in now!'], [M, 'Your uncle is back from hunting in the forest. Go and see what he brought.']],
+      () => facts(['house'], () => advance(9)));
+    if (S.stage === 11) return say([
+      [M, 'There you are, {N}. Come and sit by the fire. I made lentil stew and barley bread.'],
+      [M, 'You carried water, gathered wood, harvested, ground grain, found the goats, picked fruit, traded across the sea, mended our house and helped Grandmother.'],
+      ['me', 'And the Elder gave me this picrolite pendant!'],
+      [M, 'Then you are truly a {child} of Choirokoitia. Sleep well, little one.'],
+    ], () => facts(['discovery'], () => { advance(12); S.done = true; showEnd(); }));
+    if (S.stage > 11) return say([[M, 'The stars are out. Have you tried the village quiz in your journal?']], () => showEnd());
+    remind(M);
+  },
+  father(){
+    const F = 'Father';
+    if (S.stage === 3 && !S.sickle) return say([
+      [F, '{N}! Just in time. The einkorn wheat and barley are ripe and golden.'],
+      [F, 'Here is a sickle. Feel the row of sharp chert blades set into the wooden handle? Be careful.'],
+      [F, 'Cut five good bundles for me. Look for the tallest stalks.'],
+    ], () => { S.sickle = true; refreshHUD(); });
+    if (S.stage === 3 && S.grain >= 5) return say([[F, 'Five fine bundles! This grain was brought to our island by our ancestors long ago, in their boats.'], [F, 'Take it to Grandmother. She will show you how to grind it.']],
+      () => facts(['farming'], () => { S.sickle = false; advance(4); }));
+    if (S.stage < 3) return say([[F, 'Hello, {N}! Are your chores at home done? I could use your help later.']]);
+    if (S.stage === 3) return remind(F);
+    say([[F, 'The lentils will be ready soon too. A good year, if the rains are kind.']]);
+  },
+  grandma(){
+    const G = 'Grandmother';
+    if (S.stage === 4) return say([[G, 'Come, child, kneel beside me at the quern. Put a handful of grain on the big flat stone.'], [G, 'Now push the rubbing stone forward and back, nice and steady.']],
+      () => startGrind(() => say([[G, 'Look at that soft flour! Your arms will be strong like mine one day.'], [G, 'Oh dear, listen. The goats have broken out again! Three of them have run off to the east. Can you bring them back to the pen?']],
+        () => facts(['quern'], () => { S.grain = 0; advance(5); }))));
+    if (S.stage === 9 && S.bone) return say([[G, 'A deer leg bone, perfect. Watch: I scrape it on a rough stone to make it thin and sharp, then bore a little eye through it.'], [G, 'There! A new needle to sew hides into warm clothes for winter.'], [G, 'The sun is going down. The Elder wanted to talk to you by the gate before dark.']],
+      () => facts(['deer'], () => { S.bone = false; advance(10); }));
+    if (S.stage < 4) return say([[G, 'Hello, my sweet {N}. Grandmother is resting her old knees today.']]);
+    remind(G);
+  },
+  carver(){
+    const C = 'Stone-carver';
+    if (S.stage === 7 && !S.bowl && !S.obsidian) return say([
+      [C, 'Ah, {N}. I have finished this bowl, carved from andesite I found in the river. It took me many days of grinding.'],
+      [C, 'A traveller has come up the river in a canoe. He carries obsidian, black glass from a land far across the sea, to the north.'],
+      [C, 'Take him this bowl and ask for obsidian blades in return. Off you go, down to the river!'],
+    ], () => { S.bowl = true; refreshHUD(); });
+    if (S.stage === 7 && S.obsidian) return say([[C, 'Look how it shines! These blades are sharper than any chert. A fine trade, {N}.'], [C, 'Now, your mother asked for clay to mend your house. You will find the best clay on the riverbank, south-west of the village.']],
+      () => facts(['obsidian'], () => { S.obsidian = false; advance(8); }));
+    if (S.stage < 7) return say([[C, 'Grind, grind, grind. A stone bowl is made with patience, {N}.']]);
+    say([[C, 'These bowls are made from andesite, a hard stone. Some I carve with patterns, and the best go with the dead to their graves.']]);
+  },
+  trader(){
+    const T = 'Traveller';
+    if (S.stage === 7 && S.bowl) return say([
+      [T, 'Greetings, little one. I paddled along the coast and up this river. My obsidian came over the sea, from the mountains of a great land to the north.'],
+      ['me', 'The Stone-carver sends this andesite bowl. May we have obsidian blades for it?'],
+      [T, 'What fine work! Yes, a fair trade. Here are three blades. Do not cut yourself!'],
+    ], () => { S.bowl = false; S.obsidian = true; refreshHUD(); });
+    say([[T, 'The sea is wide, but our boats are strong. Your people’s grandparents crossed it too, with their goats and seeds.']], () => { if (!learned.includes('boats')) fact('boats'); });
+  },
+  uncle(){
+    const U = 'Uncle';
+    if (S.stage === 9) return say([
+      [U, '{N}! The hunt went well. We followed a fallow deer through the pine forest for half a day.'],
+      [U, 'The meat will feed many families, and the hide is drying here. Nothing is wasted.'],
+      [U, 'Here, take this leg bone to Grandmother. She needs a new needle.'],
+    ], () => { S.bone = true; refreshHUD(); });
+    say([[U, 'Shh, the deer have sharp ears. They live deep in the pine forest to the north.']]);
+  },
+  elder(){
+    const E = 'Village Elder';
+    if (S.stage === 10) return say([
+      [E, 'Come, {N}, sit with me by the wall as the sun goes down.'],
+      [E, 'Long, long ago, our ancestors crossed the sea in boats, bringing seeds, goats, sheep and pigs to this island.'],
+      [E, 'They built this village on the hill above the river. Together they raised this great wall, with its stairway, to keep the village safe.'],
+      [E, 'And our grandparents still sleep beneath the floors of our houses, so they are always close to us.'],
+      [E, 'You worked hard for the village today. Take this pendant of picrolite, the blue-green stone of our island.'],
+    ], () => facts(['wall', 'ancestors'], () => { S.pendant = true; advance(11); }));
+    if (S.stage < 10) return say([[E, 'Hello, child. Come back and see me when the sun is low. I have a story for you.']]);
+    say([[E, 'Wear your pendant with pride, {child} of Choirokoitia.']]);
+  },
+  knapper(){ say([['Flint-knapper', 'Tap, tap, crack! I strike this chert with a hammerstone to break off sharp blades.'], ['Flint-knapper', 'Knives, scrapers, borers and sickle blades. Nearly every tool in the village begins like this.']], () => { if (!learned.includes('chert')) fact('chert'); }); },
+  weaver(){ say([['Basket-weaver', 'I weave reeds and rushes from the river into baskets and mats.'], ['Basket-weaver', 'With no pots, baskets hold our grain, our fruit, everything!']], () => { if (!learned.includes('baskets')) fact('baskets'); }); },
+  friend(){
+    const lines = [
+      ['Friend', 'Let’s climb onto the roof later and watch the sea far away to the south!'],
+      ['Friend', 'My big brother says the river stones make the best walls. I helped carry some!'],
+      ['Friend', 'Did you see the traveller’s canoe? It is made from one whole tree trunk!'],
+    ];
+    say([lines[Math.floor(Math.random() * lines.length)]]);
+  },
+};
+
+/* grinding minigame */
+function startGrind(done){
+  ui.mg = { pos: 0, dir: 1, hits: 0, zone: 0.4, w: 0.22, done, flash: 0 };
+  $('mg').hidden = false; drawMG(); $('mgBtn').focus();
+}
+function drawMG(){ const m = ui.mg; $('mgZone').style.left = m.zone * 100 + '%'; $('mgZone').style.width = m.w * 100 + '%'; $('mgMark').style.left = m.pos * 100 + '%'; $('mgCount').textContent = `${m.hits} / 5`; }
+function mgHit(){
+  const m = ui.mg; if (!m) return; const bar = $('mgBar');
+  bar.classList.remove('hit', 'miss'); void bar.offsetWidth;
+  if (m.pos >= m.zone && m.pos <= m.zone + m.w){ m.hits++; bar.classList.add('hit'); m.zone = rr(0.05, 0.95 - m.w); m.w = Math.max(0.14, m.w - 0.015); Sound.grind(true); }
+  else { bar.classList.add('miss'); Sound.grind(false); }
+  drawMG();
+  if (m.hits >= 5){ setTimeout(() => { $('mg').hidden = true; const d = m.done; ui.mg = null; d && d(); }, 350); m.done2 = true; }
+}
+$('mgBtn').addEventListener('click', mgHit);
+
+/* interaction */
+function currentInteraction(){
+  const pp = player.group.position; let best = null, bd = 1e9;
+  const consider = (d, label, act) => { if (d < bd){ bd = d; best = { label, act }; } };
+  for (const id in npcs){ const n = npcs[id], d = n.group.position.distanceTo(pp); if (d < 2.6) consider(d, `Talk to ${n.name}`, () => { faceEachOther(n); TALK[id](); }); }
+  for (const p of pickups){
+    if (p.taken) continue; const d = Math.hypot(p.pos.x - pp.x, p.pos.z - pp.z); if (d > 2.2) continue;
+    if (p.kind === 'wood' && S.stage === 2 && S.wood < 4) consider(d, 'Pick up the branch', () => take(p, () => { S.wood++; toast(`Firewood ${S.wood}/4`); }));
+    if (p.kind === 'grain' && S.stage === 3 && S.sickle && S.grain < 5) consider(d, 'Cut the wheat with your sickle', () => take(p, () => { S.grain++; toast(`Grain ${S.grain}/5`); }));
+    if (p.kind === 'fruit' && S.stage === 6 && S.fruit < 6) consider(d, `Pick ${p.label}`, () => take(p, () => { S.fruit++; toast(`${p.label[0].toUpperCase() + p.label.slice(1)}! ${S.fruit}/6`); }));
+    if (p.kind === 'clay' && S.stage === 8 && S.clay < 3) consider(d, 'Dig up the clay', () => take(p, () => { S.clay++; toast(`Clay ${S.clay}/3`); }));
+  }
+  if (S.stage === 1 && S.skin && !S.water && nearWater(pp.x, pp.z)) consider(0.5, 'Fill the waterskin', () => { S.water = true; Sound.water(); toast('The waterskin is full'); refreshHUD(); });
+  if (S.stage === 8 && S.clay >= 3 && S.plaster < 5 && Math.hypot(pp.x - HOME.x, pp.z - HOME.z) < HOME.r + 1.8) consider(1, `Smear clay on the wall (${S.plaster}/5)`, () => {
+    S.plaster++; Sound.smear(); homeWallMat.color.lerpColors(new THREE.Color(0xa38457), new THREE.Color(0xd9b885), S.plaster / 5);
+    homeCracks.forEach((c, i) => c.visible = i >= S.plaster); player.armR.rotation.x = -1.6; toast(S.plaster >= 5 ? 'Like new!' : 'Smear, smooth, pat…'); refreshHUD();
+  });
+  if (S.stage === 5) for (const g of goats){ if (g.state !== 'wander') continue; const d = g.group.position.distanceTo(pp); if (d < 3) consider(d, 'Call the goat', () => { g.state = 'follow'; Sound.bleat(); toast('The goat follows you'); refreshHUD(); }); }
+  return best;
+}
+function take(p, after){ Sound.pickup(p.kind); p.taken = true; scene.remove(p.obj); player.armR.rotation.x = -1.4; after(); refreshHUD(); }
+function faceEachOther(n){
+  const a = n.group.position, b = player.group.position;
+  n.group.rotation.y = Math.atan2(b.x - a.x, b.z - a.z); player.group.rotation.y = Math.atan2(a.x - b.x, a.z - b.z);
+  n.talkT = 4;
+}
+function interact(){ if (busy()) return; const it = currentInteraction(); if (it) it.act(); }
+
+/* ======================= INPUT ======================= */
+const keys = {};
+let running = false;
+addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT') return;
+  const k = e.key.toLowerCase(); keys[k] = true;
+  if (['arrowup', 'arrowdown', 'arrowleft', 'arrowright', ' '].includes(k)) e.preventDefault();
+  if (e.repeat) return;
+  if (k === 'e' || k === ' ' || k === 'enter'){
+    if (ui.dialog) return nextLine();
+    if (ui.fact) return closeFact();
+    if (ui.mg) return mgHit();
+    if (ui.modal || !ui.started) return;
+    interact();
+  }
+  if (k === 'j' && ui.started && !ui.dialog && !ui.fact && !ui.mg){ ui.modal === 'journal' ? closeModal('journal') : !ui.modal && openJournal(); }
+  if (k === 'h' && ui.started && !busy()) openModal('help');
+  if (k === 'f' && fsSupported) toggleFullscreen();
+  if (k === 'm' && ui.started){ const m = Sound.toggleMute(); syncSoundUI(); toast(m ? 'Sound off' : 'Sound on'); }
+  if (k === 'escape' && ui.modal === 'quiz') leaveQuiz();
+  else if (k === 'escape' && ui.modal && ui.modal !== 'title') closeModal(ui.modal);
+});
+addEventListener('keyup', e => { keys[e.key.toLowerCase()] = false; });
+addEventListener('blur', () => { for (const k in keys) keys[k] = false; });
+
+const cv = renderer.domElement;
+let drag = null;
+cv.addEventListener('pointerdown', e => { drag = { id: e.pointerId, x: e.clientX, y: e.clientY }; cv.setPointerCapture(e.pointerId); });
+cv.addEventListener('pointermove', e => {
+  if (!drag || drag.id !== e.pointerId) return;
+  cam.yaw -= (e.clientX - drag.x) * 0.006; cam.pitch = clamp(cam.pitch + (e.clientY - drag.y) * 0.004, 0.12, 1.25);
+  drag.x = e.clientX; drag.y = e.clientY;
+});
+cv.addEventListener('pointerup', e => { if (drag && drag.id === e.pointerId) drag = null; });
+cv.addEventListener('pointercancel', () => drag = null);
+cv.addEventListener('wheel', e => { cam.dist = clamp(cam.dist + e.deltaY * 0.01, 4, 22); e.preventDefault(); }, { passive: false });
+
+// touch joystick
+const joy = { x: 0, y: 0, id: null };
+const joyEl = $('joy'), knob = $('knob');
+function joyMove(e){ const r = joyEl.getBoundingClientRect(); let dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2); const L = Math.hypot(dx, dy), M = r.width / 2 - 10; if (L > M){ dx *= M / L; dy *= M / L; } joy.x = dx / M; joy.y = dy / M; knob.style.transform = `translate(${dx}px,${dy}px)`; }
+joyEl.addEventListener('pointerdown', e => { joy.id = e.pointerId; joyEl.setPointerCapture(e.pointerId); joyMove(e); e.preventDefault(); });
+joyEl.addEventListener('pointermove', e => { if (e.pointerId === joy.id) joyMove(e); });
+const joyEnd = e => { if (e.pointerId === joy.id){ joy.id = null; joy.x = joy.y = 0; knob.style.transform = ''; } };
+joyEl.addEventListener('pointerup', joyEnd); joyEl.addEventListener('pointercancel', joyEnd);
+$('act').addEventListener('pointerdown', e => { e.preventDefault(); if (ui.dialog) nextLine(); else if (ui.fact) closeFact(); else if (ui.mg) mgHit(); else interact(); });
+$('runBtn').addEventListener('pointerdown', e => { e.preventDefault(); running = !running; $('runBtn').classList.toggle('on', running); });
+const isTouch = matchMedia('(pointer: coarse)').matches || 'ontouchstart' in window;
+let touchMode = isTouch;
+addEventListener('touchstart', () => { touchMode = true; }, { once: true, passive: true });
+
+/* ======================= TIME OF DAY ======================= */
+const SKY = [[0, 0xc7dcea], [0.35, 0xa6cdea], [0.7, 0xb9cfe0], [0.88, 0xeeaa78], [1, 0x2c3150]];
+let dayT = 0.05;
+function skyColor(t){ for (let i = 1; i < SKY.length; i++) if (t <= SKY[i][0]){ const a = SKY[i - 1], b = SKY[i]; return new THREE.Color(a[1]).lerp(new THREE.Color(b[1]), (t - a[0]) / (b[0] - a[0])); } return new THREE.Color(SKY[SKY.length - 1][1]); }
+function applyTime(t){
+  const a = Math.PI * (0.12 + 0.8 * t);
+  const p = player.group.position;
+  sun.position.set(p.x + Math.cos(a) * 90, p.y + Math.max(8, Math.sin(a) * 85), p.z + 30);
+  sun.target.position.copy(p);
+  const sky = skyColor(t); scene.background.copy(sky); scene.fog.color.copy(sky);
+  const dusk = clamp((t - 0.78) / 0.22, 0, 1);
+  sun.intensity = lerp(2.6, 0.25, dusk); sun.color.setHex(0xfff0d0).lerp(new THREE.Color(0xff9a50), clamp((t - 0.7) / 0.2, 0, 1));
+  hemi.intensity = lerp(1.1, 0.35, dusk);
+  fireLight.userData.base = lerp(4, 22, dusk);
+}
+
+/* ======================= LOOP ======================= */
+const clock = new THREE.Clock();
+const tmp = new V3();
+let stepAcc = 0;
+function moveWithCollision(pos, dx, dz, rad){
+  let nx = pos.x + dx, nz = pos.z + dz;
+  for (const c of colliders){ const ddx = nx - c.x, ddz = nz - c.z, d = Math.hypot(ddx, ddz), m = c.r + rad; if (d < m && d > 1e-4){ nx = c.x + ddx / d * m; nz = c.z + ddz / d * m; } }
+  if (Math.hypot(nx, nz) > 150) return;
+  if (heightAt(nx, nz) < WATER - 0.25){
+    if (heightAt(nx, pos.z) >= WATER - 0.25) nz = pos.z; else if (heightAt(pos.x, nz) >= WATER - 0.25) nx = pos.x; else return;
+  }
+  pos.x = nx; pos.z = nz; pos.y = heightAt(nx, nz);
+}
+function wanderAnimal(a, dt, radius, spd, flee){
+  const pos = a.group.position, pp = player.group.position;
+  if (flee && pos.distanceTo(pp) < 9){ tmp.subVectors(pos, pp).setY(0).normalize().multiplyScalar(8); a.target.set(pos.x + tmp.x, 0, pos.z + tmp.z); a.wait = 0; a.fast = true; }
+  const dx = a.target.x - pos.x, dz = a.target.z - pos.z, d = Math.hypot(dx, dz);
+  if (d < 0.3){ a.wait -= dt; a.speed = 0; a.fast = false; if (a.wait <= 0){ a.target.set(a.home.x + rr(-radius, radius), 0, a.home.z + rr(-radius, radius)); a.wait = rr(2, 6); } }
+  else { const s = (a.fast ? spd * 4 : spd); a.speed = s; const st = Math.min(d, s * dt); moveWithCollision(pos, dx / d * st, dz / d * st, 0.3); a.group.rotation.y = Math.atan2(dx, dz); }
+  animateLegs(a, a.speed, dt);
+}
+function update(dt, t){
+  // player movement
+  let f = 0, r = 0;
+  if (!busy()){
+    if (keys['w'] || keys['arrowup']) f += 1; if (keys['s'] || keys['arrowdown']) f -= 1;
+    if (keys['d'] || keys['arrowright']) r += 1; if (keys['a'] || keys['arrowleft']) r -= 1;
+    f -= joy.y; r += joy.x;
+  }
+  const L = Math.hypot(f, r); if (L > 1){ f /= L; r /= L; }
+  const run = keys['shift'] || running || Math.hypot(joy.x, joy.y) > 0.95;
+  const spd = (run ? 9 : 5) * Math.min(1, L);
+  const fx = -Math.sin(cam.yaw), fz = -Math.cos(cam.yaw), rx = Math.cos(cam.yaw), rz = -Math.sin(cam.yaw);
+  const mx = (fx * f + rx * r), mz = (fz * f + rz * r);
+  const pg = player.group;
+  if (L > 0.05){
+    moveWithCollision(pg.position, mx / Math.max(L, 1e-3) * spd * dt * Math.min(1, L), mz / Math.max(L, 1e-3) * spd * dt * Math.min(1, L), 0.3);
+    const want = Math.atan2(mx, mz); let dA = want - pg.rotation.y; dA = Math.atan2(Math.sin(dA), Math.cos(dA)); pg.rotation.y += dA * Math.min(1, dt * 12);
+  }
+  pg.position.y = heightAt(pg.position.x, pg.position.z);
+  animatePerson(player, spd, dt);
+  if (spd > 0.5){ stepAcc += spd * dt; if (stepAcc > (run ? 1.5 : 1.0)){ stepAcc = 0; Sound.step(run, inField(pg.position.x, pg.position.z)); } } else stepAcc = 0.7;
+  { const pp = pg.position; let gd = 1e9; for (const g of goats) gd = Math.min(gd, g.group.position.distanceTo(pp));
+    Sound.update(dt, pp, dayT, Math.hypot(pp.x - HEARTH.x, pp.z - HEARTH.z), Math.abs(pp.z - riverZ(pp.x)), gd); }
+  player.armR.rotation.x = lerp(player.armR.rotation.x, 0, 0.05);
+
+  // npcs idle
+  for (const id in npcs){ const n = npcs[id]; n.talkT = Math.max(0, (n.talkT || 0) - dt); animatePerson(n, 0, dt, n.talkT > 0 || id === 'knapper' || id === 'carver'); if (!n.talkT) n.group.rotation.y = lerp(n.group.rotation.y, n.baseRot, 0.02); }
+
+  // goats
+  for (const g of goats){
+    const pos = g.group.position;
+    if (g.state === 'follow'){
+      const idx = goats.filter(x => x.state === 'follow').indexOf(g);
+      const back = new V3(-Math.sin(pg.rotation.y), 0, -Math.cos(pg.rotation.y)).multiplyScalar(1.6 + idx * 1.3);
+      const tx = pg.position.x + back.x, tz = pg.position.z + back.z, dx = tx - pos.x, dz = tz - pos.z, d = Math.hypot(dx, dz);
+      if (d > 0.4){ const s = Math.min(d * 2.5, 10); const st = Math.min(d, s * dt); moveWithCollision(pos, dx / d * st, dz / d * st, 0.3); g.group.rotation.y = Math.atan2(dx, dz); g.speed = s; } else g.speed = 0;
+      animateLegs(g, g.speed, dt);
+      const dGoat = Math.hypot(pos.x - PEN.x, pos.z - PEN.z), dKid = Math.hypot(pg.position.x - PEN.x, pg.position.z - PEN.z);
+      if (dGoat < PEN_R - 1 || (dKid < PEN_R && dGoat < PEN_R + 5)){
+        g.state = 'penned'; g.home = PEN.clone(); g.target.set(PEN.x + rr(-2, 2), 0, PEN.z + rr(-2, 2)); S.penned++;
+        toast(`Goat in the pen! ${S.penned}/3`); Sound.bleat(0.8); refreshHUD();
+        if (S.penned >= 3) setTimeout(() => say([['me', 'All the goats are safe! Now, Mother wanted fruit from the wild trees north-west of the village…']], () => facts(['animals'], () => advance(6))), 400);
+      }
+    } else if (g.state === 'penned'){ wanderAnimal(g, dt, 2.5, 0.6, false); }
+    else wanderAnimal(g, dt, 4, 0.7, false);
+  }
+  for (const d of deer) wanderAnimal(d, dt, 12, 1.2, true);
+  for (const p of pigs) wanderAnimal(p, dt, 3, 0.6, false);
+
+  // fire, smoke, clouds
+  const base = fireLight.userData.base || 4;
+  fireLight.intensity = base * (0.85 + Math.random() * 0.3);
+  flames.forEach((fl, i) => { fl.scale.set(1, 0.8 + Math.sin(t * 9 + i * 2) * 0.2 + Math.random() * 0.1, 1); fl.rotation.y = t * (1 + i); });
+  for (const s of smoke){ s.userData.t = (s.userData.t + dt * 0.15) % 1; const k = s.userData.t; s.position.set(HEARTH.x + Math.sin(k * 6 + t) * 0.3 + k * 1.2, HEARTH.y + 1 + k * 6, HEARTH.z + k * 0.6); s.scale.setScalar(0.6 + k * 2.2); s.material.opacity = 0.35 * (1 - k); }
+  for (const c of clouds){ c.position.x += dt * 1.2; if (c.position.x > 240) c.position.x = -240; }
+
+  // time of day follows the chores
+  const want = S.stage >= 12 ? 1 : S.stage >= 11 ? 0.92 : S.stage >= 10 ? 0.84 : 0.05 + S.stage / 10 * 0.68;
+  dayT = lerp(dayT, want, Math.min(1, dt * 0.5)); applyTime(dayT);
+
+  // camera
+  const target = tmp.copy(pg.position).add(new V3(0, 1.1, 0));
+  const cx = target.x + Math.sin(cam.yaw) * Math.cos(cam.pitch) * cam.dist, cz = target.z + Math.cos(cam.yaw) * Math.cos(cam.pitch) * cam.dist;
+  let cy = target.y + Math.sin(cam.pitch) * cam.dist; cy = Math.max(cy, heightAt(cx, cz) + 0.6);
+  camera.position.lerp(new V3(cx, cy, cz), Math.min(1, dt * 10)); camera.lookAt(target);
+
+  // marker & compass
+  const tp = ui.started ? targetPos() : null;
+  marker.visible = markerRing.visible = !!tp; $('compass').style.visibility = tp ? 'visible' : 'hidden';
+  if (tp){
+    const isNPC = Object.values(npcs).some(n => n.group.position === tp);
+    const hy = (isNPC ? 2.9 : 1.8) + Math.sin(t * 3) * 0.2;
+    marker.position.set(tp.x, (tp.y || heightAt(tp.x, tp.z)) + hy, tp.z); marker.rotation.y = t * 2;
+    markerRing.position.set(tp.x, heightAt(tp.x, tp.z) + 0.08, tp.z); markerRing.scale.setScalar(1 + Math.sin(t * 3) * 0.15);
+    const dx = tp.x - pg.position.x, dz = tp.z - pg.position.z;
+    const rel = Math.atan2(dx, dz) - Math.atan2(fx, fz);
+    $('compass').querySelector('svg').style.transform = `rotate(${-rel}rad)`;
+    { const n = Math.round(Math.hypot(dx, dz)); $('dist').textContent = n + (n === 1 ? ' step' : ' steps'); }
+  }
+
+  // interaction prompt
+  const pr = $('prompt');
+  if (!busy()){
+    const it = currentInteraction();
+    if (it){ pr.hidden = false; const html = touchMode ? `\u261D ${it.label}` : `<kbd>E</kbd>${it.label}`; if (pr.dataset.h !== html){ pr.innerHTML = html; pr.dataset.h = html; } pr.classList.toggle('tap', touchMode); }
+    else pr.hidden = true;
+  } else pr.hidden = true;
+
+  syncTouch();
+  // minigame marker
+  if (ui.mg && !ui.mg.done2){ const m = ui.mg, sp = 0.75 + m.hits * 0.18; m.pos += m.dir * dt * sp; if (m.pos > 1){ m.pos = 1; m.dir = -1; } if (m.pos < 0){ m.pos = 0; m.dir = 1; } $('mgMark').style.left = m.pos * 100 + '%'; }
+}
+
+function frame(){
+  const dt = Math.min(clock.getDelta(), 0.05), t = clock.elapsedTime;
+  update(dt, t);
+  renderer.render(scene, camera);
+  requestAnimationFrame(frame);
+}
+function onResize(){ camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight); }
+addEventListener('resize', onResize);
+addEventListener('orientationchange', () => setTimeout(onResize, 200));
+
+/* ======================= END & QUIZ ======================= */
+function showEnd(){
+  if (!$('end').dataset.played){ Sound.finale(); $('end').dataset.played = 1; }
+  $('endTitle').textContent = `Well done, ${NAME}!`;
+  $('endText').innerHTML = `<p>You helped your family through a whole day in Choirokoitia, one of the oldest villages in Cyprus. You learned <b>${learned.length} of ${Object.keys(FACTS).length}</b> facts. Open your journal to read them again.</p><p>Think you remember everything? Try the village quiz, or keep exploring under the stars.</p>`;
+  openModal('end');
+}
+/* Quiz bank: every journal fact has at least one question. The first option is the correct one; options are shuffled when shown. */
+const QUIZ_BANK = [
+  { f: 'water', q: 'What does "Aceramic Neolithic" mean?', o: ['The Neolithic without pottery', 'The Neolithic with metal tools', 'The time of the first cities', 'The Neolithic of the islands'], why: 'The villagers had not started making clay pots yet.' },
+  { f: 'water', q: 'What did craftspeople carve their bowls from?', o: ['Andesite stone from the river', 'Clay from the riverbank', 'Bronze', 'Glass'], why: 'Without pottery, hard grey andesite stone was carved into beautiful bowls.' },
+  { f: 'hearth', q: 'What was the hearth in each house used for?', o: ['Cooking and keeping warm', 'Storing grain', 'Keeping the goats', 'Burying the dead'], why: 'Archaeologists find ash, burnt bones and charred seeds in the hearths.' },
+  { f: 'farming', q: 'Which crops did the villagers grow?', o: ['Einkorn wheat, barley and lentils', 'Potatoes and maize', 'Rice and tea', 'Oranges and tomatoes'], why: 'Wheat, barley and lentils came from the Near East. Potatoes and maize come from the Americas and arrived thousands of years later.' },
+  { f: 'farming', q: 'What were the blades of their sickles made of?', o: ['Chert, a flint-like stone', 'Iron', 'Bronze', 'Shell'], why: 'There was no metal yet. Sharp chert blades were set into wooden handles.' },
+  { f: 'quern', q: 'How did people turn grain into flour?', o: ['By rubbing it between grinding stones', 'In a water mill', 'By pounding it with metal hammers', 'By soaking it in the river'], why: 'Many querns and rubbing stones have been found in the houses.' },
+  { f: 'animals', q: 'How did goats, sheep and pigs first reach Cyprus?', o: ['People brought them in boats', 'They swam across the sea', 'They walked over a land bridge', 'They had always lived on the island'], why: 'Neolithic settlers carried their animals across the sea from the mainland.' },
+  { f: 'animals', q: 'Which farm animal had disappeared from Cyprus by the time of Choirokoitia?', o: ['Cattle', 'Goats', 'Sheep', 'Pigs'], why: 'Cattle had been brought earlier but vanished, and did not return for thousands of years.' },
+  { f: 'fruit', q: 'Which wild foods did the villagers gather?', o: ['Figs, olives and pistachios', 'Bananas and coconuts', 'Potatoes and pumpkins', 'Cocoa beans'], why: 'Seeds found at the site show they collected wild fruits and nuts as well as farming.' },
+  { f: 'obsidian', q: 'Where did the shiny black obsidian come from?', o: ['Central Anatolia, across the sea', 'The Troodos mountains', 'The Maroni river', 'It was made in the hearth'], why: 'There is no obsidian on Cyprus, so it proves Neolithic people sailed and traded.' },
+  { f: 'obsidian', q: 'What is picrolite?', o: ['A soft blue-green stone from Cyprus used for jewellery', 'A kind of wheat', 'A type of boat', 'A volcanic glass from Anatolia'], why: 'Craftspeople made pendants and beads from picrolite.' },
+  { f: 'house', q: 'What shape were the houses of Choirokoitia?', o: ['Round', 'Square', 'Triangular', 'They lived in tents'], why: 'Round houses of stone and mudbrick were grouped around small courtyards.' },
+  { f: 'house', q: 'What do most archaeologists now think the roofs were like?', o: ['Flat, made of branches, reeds and earth', 'Covered in clay tiles', 'Tall and pointed, made of straw', 'There were no roofs'], why: 'Flat roofs could also be used for drying food and working.' },
+  { f: 'deer', q: 'Which wild animal did the villagers hunt most?', o: ['Mesopotamian fallow deer', 'Mammoth', 'Lion', 'Brown bear'], why: 'Fallow deer from the woods gave meat, hides and bone.' },
+  { f: 'deer', q: 'What were deer bones made into?', o: ['Needles, awls and points', 'Bowls and cups', 'Roof beams', 'Coins'], why: 'Nothing was wasted. Bone tools were used for sewing and making things.' },
+  { f: 'wall', q: 'How did people get through the great village wall?', o: ['By a stairway built into the wall', 'Through a gate on wheels', 'Over a drawbridge', 'Through a tunnel under the river'], why: 'The entrance was a clever stairway built into the thick stone wall.' },
+  { f: 'ancestors', q: 'Where did families bury their dead?', o: ['Under the floors of their houses', 'In a cemetery far away', 'In the river', 'On the flat roofs'], why: 'Burials under the floor kept the ancestors close to the family.' },
+  { f: 'discovery', q: 'When did Choirokoitia become a UNESCO World Heritage Site?', o: ['1998', '1934', '1878', '2020'], why: 'It was discovered in 1934 and listed by UNESCO in 1998.' },
+  { f: 'discovery', q: 'Who first excavated Choirokoitia?', o: ['Porphyrios Dikaios', 'Howard Carter', 'Arthur Evans', 'Heinrich Schliemann'], why: 'Dikaios of the Cyprus Department of Antiquities began the excavations after the site was found in 1934.' },
+  { f: 'chert', q: 'What is "knapping"?', o: ['Striking stone to break off sharp flakes', 'Weaving reeds into baskets', 'Grinding grain into flour', 'Sewing hides together'], why: 'Knappers made knives, scrapers, borers and sickle blades from chert.' },
+  { f: 'baskets', q: 'Why were baskets and mats so important in the village?', o: ['With no pottery, they held grain and food', 'They were used as boats', 'They were used as money', 'They were only for decoration'], why: 'Reeds and rushes from the river were woven into containers.' },
+  { f: 'boats', q: 'Why must the first farmers of Cyprus have used boats?', o: ['Cyprus is an island', 'The rivers were too deep to cross', 'Boats were faster than walking', 'They lived on the boats'], why: 'People, seeds and animals all had to cross at least 60 km of sea.' },
+];
+const shuffle = a => { const b = a.slice(); for (let i = b.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [b[i], b[j]] = [b[j], b[i]]; } return b; };
+let quiz = null;
+function buildQuiz(){
+  // one question for every fact, picked at random when a fact has several, in random order
+  const byFact = {};
+  for (const item of QUIZ_BANK) (byFact[item.f] = byFact[item.f] || []).push(item);
+  return shuffle(Object.keys(FACTS).map(f => { const list = byFact[f]; return list[Math.floor(Math.random() * list.length)]; }));
+}
+function startQuiz(){
+  Sound.init();
+  quiz = { items: buildQuiz(), i: 0, score: 0, missed: [], from: ui.started ? 'game' : 'title' };
+  closeModal('end'); closeModal('title'); closeModal('journal');
+  openModal('quiz'); showQ();
+}
+function leaveQuiz(){
+  closeModal('quiz');
+  if (quiz && quiz.from === 'title') openModal('title');
+  quiz = null;
+}
+function showQ(){
+  const z = quiz, n = z.items.length;
+  $('qzScore').textContent = `${z.score} correct`;
+  $('qzFill').style.width = (z.i / n * 100) + '%';
+  $('qzReview').innerHTML = ''; $('qzFeedback').textContent = ''; $('qzFeedback').className = '';
+  $('qzAgain').hidden = true; $('qzNext').hidden = true;
+  if (z.i >= n){
+    const pct = z.score / n;
+    $('qzStep').textContent = 'Quiz complete'; $('qzFact').textContent = '';
+    $('qzQ').textContent = `You scored ${z.score} out of ${n}`;
+    $('qzOpts').innerHTML = '';
+    $('qzFeedback').textContent = pct === 1 ? 'Perfect! You remembered every fact. You could be an archaeologist.' : pct >= 0.8 ? 'Excellent work! You really understand life in Neolithic Choirokoitia.' : pct >= 0.5 ? 'Good work! Read the facts below, then try a new quiz.' : 'Good try! Read the facts below, play the game again, and have another go.';
+    if (z.missed.length){
+      const uniq = [...new Set(z.missed)];
+      $('qzReview').innerHTML = '<h3>Facts to look at again</h3>' + uniq.map(k => `<details><summary>${FACTS[k].art} ${FACTS[k].title}</summary>${FACTS[k].text}</details>`).join('');
+    }
+    $('qzAgain').hidden = false; $('qzLeave').textContent = z.from === 'title' ? 'Back to the start' : 'Back to the village';
+    if (pct >= 0.8) Sound.finale();
+    $('qzAgain').focus(); return;
+  }
+  const item = z.items[z.i];
+  $('qzStep').textContent = `Question ${z.i + 1} of ${n}`;
+  $('qzFact').textContent = '';
+  $('qzQ').textContent = item.q;
+  $('qzLeave').textContent = 'Leave quiz';
+  const O = $('qzOpts'); O.innerHTML = '';
+  const correct = item.o[0];
+  shuffle(item.o).forEach(text => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = text;
+    b.onclick = () => {
+      [...O.children].forEach(c => { c.disabled = true; if (c.textContent === correct) c.classList.add('right'); });
+      const fb = $('qzFeedback');
+      if (text === correct){ z.score++; Sound.right(); fb.textContent = 'Correct! ' + item.why; }
+      else { z.missed.push(item.f); Sound.wrong(); b.classList.add('wrong'); fb.className = 'no'; fb.textContent = `Not quite. The answer is "${correct}". ${item.why}`; }
+      $('qzScore').textContent = `${z.score} correct`;
+      $('qzFact').textContent = `From your journal: ${FACTS[item.f].art} ${FACTS[item.f].title}`;
+      const nx = $('qzNext'); nx.hidden = false; nx.textContent = z.i === n - 1 ? 'See my score' : 'Next question';
+      nx.onclick = () => { z.i++; showQ(); }; nx.focus();
+    };
+    O.appendChild(b);
+  });
+  O.firstChild.focus({ preventScroll: true });
+  $('quiz').querySelector('.card').scrollTop = 0;
+}
+$('quizBtn').addEventListener('click', startQuiz);
+$('titleQuizBtn').addEventListener('click', startQuiz);
+$('qzAgain').addEventListener('click', () => { const from = quiz.from; startQuiz(); quiz.from = from; });
+$('qzLeave').addEventListener('click', leaveQuiz);
+// the journal always offers the quiz
+const jActions = document.querySelector('#journal .actions');
+const jq = document.createElement('button'); jq.className = 'btn ghost'; jq.type = 'button'; jq.textContent = 'Take the quiz';
+jq.onclick = startQuiz; jActions.appendChild(jq);
+
+/* sound panel */
+function syncSoundUI(){
+  $('musicVol').value = Sound.pref.music; $('sfxVol').value = Sound.pref.sfx;
+  $('muteBtn').textContent = Sound.pref.muted ? 'Turn sound on' : 'Mute all';
+  const sb = $('soundBtn'); sb.classList.toggle('off', Sound.pref.muted);
+  sb.querySelector('.lbl').textContent = Sound.pref.muted ? 'Sound off' : 'Sound';
+  sb.setAttribute('aria-label', Sound.pref.muted ? 'Sound (muted)' : 'Sound');
+  sb.querySelector('path').setAttribute('d', Sound.pref.muted ? 'M4 9h4l5-4v14l-5-4H4zM16 9.5l5 5M21 9.5l-5 5' : 'M4 9h4l5-4v14l-5-4H4zM16.5 9.5a3.5 3.5 0 0 1 0 5M19 7a7 7 0 0 1 0 10');
+}
+$('soundBtn').addEventListener('click', () => { Sound.init(); syncSoundUI(); openModal('soundPanel'); });
+$('musicVol').addEventListener('input', e => { Sound.pref.music = +e.target.value; Sound.apply(); });
+$('sfxVol').addEventListener('input', e => { Sound.pref.sfx = +e.target.value; Sound.apply(); Sound.click(); });
+$('muteBtn').addEventListener('click', () => { Sound.toggleMute(); syncSoundUI(); });
+syncSoundUI();
+
+/* full screen */
+const fsRoot = document.documentElement;
+const fsSupported = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
+const isFS = () => !!(document.fullscreenElement || document.webkitFullscreenElement);
+async function toggleFullscreen(){
+  try {
+    if (isFS()) await (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    else {
+      await (fsRoot.requestFullscreen || fsRoot.webkitRequestFullscreen).call(fsRoot, { navigationUI: 'hide' });
+      // phones play best sideways; ignore browsers that refuse
+      if (isTouch && Math.min(screen.width, screen.height) < 600 && screen.orientation && screen.orientation.lock) screen.orientation.lock('landscape').catch(() => {});
+    }
+  } catch (e) { toast('Full screen is not available here'); }
+}
+function syncFS(){
+  const on = isFS(), b = $('fsBtn');
+  b.querySelector('.lbl').textContent = on ? 'Exit full screen' : 'Full screen';
+  b.setAttribute('aria-label', on ? 'Exit full screen' : 'Full screen');
+  b.querySelector('path').setAttribute('d', on ? 'M9 4v5H4M15 4v5h5M20 15h-5v5M4 15h5v5' : 'M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5');
+  $('titleFsBtn').textContent = on ? 'Exit full screen' : 'Play full screen';
+}
+['fullscreenchange', 'webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => { syncFS(); setTimeout(onResize, 120); }));
+$('fsBtn').addEventListener('click', toggleFullscreen);
+$('titleFsBtn').addEventListener('click', toggleFullscreen);
+if (!fsSupported){ $('fsBtn').hidden = true; $('titleFsBtn').hidden = true; if (isTouch) $('fsNote').hidden = false; }
+
+/* touch-friendly HUD */
+if (isTouch) $('dMore').textContent = 'Tap to continue';
+$('quest').addEventListener('click', () => { if (isTouch) $('quest').classList.toggle('collapsed'); });
+$('prompt').addEventListener('click', () => interact());
+let touchShown = null;
+function syncTouch(){
+  const show = ui.started && touchMode && !busy();
+  if (show !== touchShown){ touchShown = show; $('touch').hidden = !show; }
+}
+
+/* ======================= START ======================= */
+$('loading').hidden = true;
+openModal('title'); $('nameInput').focus(); $('nameInput').select();
+document.querySelectorAll('input[name="hero"]').forEach(r => r.addEventListener('change', () => {
+  const kind = r.value, ni = $('nameInput');
+  if (!ni.value.trim() || Object.values(HERO_NAME).includes(ni.value.trim())) ni.value = HERO_NAME[kind];
+}));
+function begin(){
+  const kind = document.querySelector('input[name="hero"]:checked').value;
+  if (kind !== HERO) setHero(kind);
+  NAME = ($('nameInput').value.trim() || HERO_NAME[kind]).slice(0, 16);
+  Sound.init();
+  closeModal('title'); ui.started = true; $('hud').hidden = false;
+  refreshHUD();
+  setTimeout(() => say([['me', 'What a beautiful morning in Choirokoitia! I can smell the smoke from our hearth.'], ['me', 'Mother is calling me. I should go and see what she needs.']]), 400);
+}
+$('startBtn').addEventListener('click', begin);
+$('nameInput').addEventListener('keydown', e => { if (e.key === 'Enter') begin(); });
+frame();
+</script>
+</body>
+</html>

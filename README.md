@@ -1,8 +1,9 @@
-# Neolithic-History-Game
+# History Games
 
-## Shadows over Geneva
+Two educational browser games. Open `index.html` for the menu, or go straight to a game:
 
-[`shadows-over-geneva/`](shadows-over-geneva/) is an interwar (1919–1939) decision game for Cambridge IGCSE and
-AS & A Level History students. Players sit on the League of Nations Council, or advise the leaders of Germany or
-Italy, and must make the calls history actually made. Open `shadows-over-geneva/index.html`, or share the
-single-file build `shadows-over-geneva/dist/shadows-over-geneva.html`.
+- [`shadows-over-geneva/`](shadows-over-geneva/): interwar international relations, 1919–1939, for Cambridge IGCSE and AS & A Level History.
+- [`choirokoitia/`](choirokoitia/): *Children of Choirokoitia*, a 3D game set in the Neolithic village of Choirokoitia, Cyprus.
+
+When GitHub Pages is switched on for this repository, the menu is at
+`https://mikellidestheo-alt.github.io/Neolithic-History-Game/`.
